@@ -14,7 +14,7 @@ preamble: "This chapter provides a quick overview of how to set up the project a
 
 The easiest way to set up a new empty Episerver project is with [Episerver CMS Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=EPiServer.EpiserverCMSVisualStudioExtension).
 
-![create empty test project with Episerver CMS Visual Studio Extension](.\resources\create_empty_episerver_project.png)
+![Create empty test project](./resources/create_empty_episerver_project.png)
 
 ### Activate Web.config transform
 
