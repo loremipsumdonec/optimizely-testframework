@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Lorem/bin
+/Lorem/.vs/Lorem
+/Lorem/App_Data
+/Lorem/obj/Debug
+/Lorem/packages
+/Lorem/Lorem.csproj.user
+/Lorem.Test/bin/Debug/net48
+/Lorem.Test/obj
+/Lorem/modules/_protected
