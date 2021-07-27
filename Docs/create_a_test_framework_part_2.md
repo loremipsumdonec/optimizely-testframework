@@ -251,7 +251,7 @@ public void StartEpiserver_IContentRepositoryIsNotNull()
 
 If you run the code the test case will now succeed, which will indicate that we have successfully started Episerver in the test project. You can find the complete code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/Lorem.Test/StartEpiserverTest.cs).
 
-![episerver started](.\resources\test_project_episerver_started.png)
+![episerver started](./resources/test_project_episerver_started.png)
 
 ## Conclusion
 

@@ -21,6 +21,6 @@ The goal of this post/tutorial is to develop a framework to make it relatively e
 
 In addition to building a test framework, I will also show an example of a Azure DevOps pipeline in to run the tests so that they become part of the release flow.
 
-![Tests in a Azure DevOps pipeline](.\resources\azure_devops_pipeline_tests.png)
+![Tests in a Azure DevOps pipeline](./resources/azure_devops_pipeline_tests.png)
 
 > This is an example of a real project that I'm currently working with, it has a total of 534 tests, but because of a “bug” it only shows 272 tests in Azure DevOps.

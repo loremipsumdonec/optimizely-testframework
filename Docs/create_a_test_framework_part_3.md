@@ -97,7 +97,7 @@ If we start the web application and visit the website, after we have run the abo
 
 If we continue to http://localhost:63238/Episerver we will notice that we do not have any users to log in with.
 
-![login to Episerver Cms](resources\test_project_create_start_page_login.png)
+![login to Episerver Cms](./resources/test_project_create_start_page_login.png)
 
 Episerver is set to use _ASP.NET Identity_ and not _ASP.NET Membership_, so there is no connection with _WindowsMembershipProvider_. As the test project creates a new database at each test session, we will need a function to also set up a user every time.
 
@@ -141,7 +141,7 @@ private void CreateUser(string username, string password, string email)
 > The test case will create an administrator user with username Administrator and password Administrator
 >
 
-![verify start page in Episerver Cms](resources\test_project_create_start_page_login_with_user.png)
+![verify start page in Episerver Cms](./resources/test_project_create_start_page_login_with_user.png)
 
 ## A major problem
 
@@ -221,7 +221,7 @@ As you can see from the picture below, it takes around 18 seconds to run the tes
 
 If we do a rough calculation and estimate that it takes on average 6 seconds to run a test case, it will take around 600 seconds (5 minutes) to run 100 test cases. It is a long time. We will need to do something about this.
 
-![Episerver engine start and stop](.\resources\episerver_engine_start_and_stop_test_case.png)
+![Episerver engine start and stop](./resources/episerver_engine_start_and_stop_test_case.png)
 
 ## Conclusion
 

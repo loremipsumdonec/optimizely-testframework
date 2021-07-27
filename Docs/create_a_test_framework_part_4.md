@@ -75,7 +75,7 @@ public void StartWithEpiserverEngineSecondIteration_RunMultipleTimesNoUser_Singl
 
 When we run the test case, it does not make a huge difference in time, it is faster but not much. We may get an average of 4-5 seconds per test case.
 
-![compare with database restore](resources\hunt_for_speed_compare_with_db_restore.png)
+![compare with database restore](./resources/hunt_for_speed_compare_with_db_restore.png)
 
 
 The reason why it takes several seconds to run the reset is because when you set the database _singel user mode_ there are some active transactions that must be discarded and this is what takes time.
@@ -164,13 +164,13 @@ The test case is faster than the previous by 4-5 seconds and it differs around 8
 
 > There will always be a test case that gets the cost of starting up Episerver and this takes around 10 - 20 seconds depending on the scale of the project.
 
-![compare with delete content](resources\hunt_for_speed_compare_with_delete_content.png)
+![compare with delete content](./resources/hunt_for_speed_compare_with_delete_content.png)
 
 
 
 If we run each test case several times, the time difference becomes clearer. Below is an image where test cases have been run 20 times. There we see that there is no major difference between the first and second iteration of the service. While the third iteration is much faster.
 
-![compare with delete content](resources\hunt_for_speed_20_times.png)
+![compare with delete content](./resources/hunt_for_speed_20_times.png)
 
 ## With a user
 
