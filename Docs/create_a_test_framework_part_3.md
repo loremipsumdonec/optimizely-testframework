@@ -12,7 +12,7 @@ preamble: "In the previous chapter we successfully started Episerver in the test
 
 ## First iteration of the service
 
-The first step is that we move the code from the previous chapter into a separate class, let's call it `EpiserverEngineFirstIteration`. Here we add two methods `Start` and `Stop` to handle Episerver, the complete code is in the file [EpiserverEngineFirstIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/Lorem.Test/Services/EpiserverEngineFirstIteration.cs). 
+The first step is that we move the code from the previous chapter into a separate class, let's call it `EpiserverEngineFirstIteration`. Here we add two methods `Start` and `Stop` to handle Episerver, the complete code is in the file [EpiserverEngineFirstIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/Services/EpiserverEngineFirstIteration.cs). 
 
 ```csharp
 public class EpiserverEngineFirstIteration
@@ -103,7 +103,7 @@ Episerver is set to use _ASP.NET Identity_ and not _ASP.NET Membership_, so ther
 
 ## Create a user
 
-I will not describe in detail how to set up a new user with `EPiServer.Cms.UI.AspNetIdentity` you can instead take a look at the method `CreateUser` in the file [EpiserverEngineTest.cs](https://github.com/loremipsumdonec/episerver-testframework/Lorem.Test/EpiserverEngineTest.cs). 
+I will not describe in detail how to set up a new user with `EPiServer.Cms.UI.AspNetIdentity` you can instead take a look at the method `CreateUser` in the file [EpiserverEngineTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/EpiserverEngineTest.cs). 
 
 When we use the `CreateUser` method, we will also be able to log in to Episerver Administration interface and check that we have really created a `Start page`.
 
