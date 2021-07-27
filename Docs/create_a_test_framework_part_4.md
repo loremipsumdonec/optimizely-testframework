@@ -44,7 +44,7 @@ RESTORE DATABASE successfully processed 1131 pages in 0.123 seconds (71.836 MB/s
 
 With the above information we can continue and create a second iteration of the service that will take a backup of the database and restore it before every test case. The service also needs to be a [singletone](https://www.geeksforgeeks.org/singleton-design-pattern/) so that it is available throughout the test session.
 
-> I will not go into detail in this implementation, it is easier if you simply check the source code yourself, [EpiserverEngineSecondIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/Lorem.Test/Services/EpiserverEngineSecondIteration.cs). 
+> I will not go into detail in this implementation, it is easier if you simply check the source code yourself, [EpiserverEngineSecondIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/Services/EpiserverEngineSecondIteration.cs). 
 
 If we create a new test case with the latest iteration of the service, we can then compare the results with previous test case.
 
@@ -133,7 +133,7 @@ private void ClearContents()
 
 ### Third iteration of the service
 
-It's time to build a third iteration of the service where we focus on deleting the content in Episerver. The complete code for this service is available in the file [EpiserverEngineThirdIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/Lorem.Test/Services/EpiserverEngineThirdIteration.cs). We can the create a new test case with the third iteration of the service.
+It's time to build a third iteration of the service where we focus on deleting the content in Episerver. The complete code for this service is available in the file [EpiserverEngineThirdIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/Services/EpiserverEngineThirdIteration.cs). We can the create a new test case with the third iteration of the service.
 
 ```csharp
 [Theory]
