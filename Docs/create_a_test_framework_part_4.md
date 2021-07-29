@@ -3,6 +3,7 @@ url: "/episerver/create-a-test-framework/part-4/"
 date: "2021-07-27"
 book: "/episerver/create-a-test-framework/"
 type: "chapter"
+tags: ["episerver"]
 
 title: "Fixing the problems"
 preamble: "In the previous chapter, we encountered two problems that we need to fix. The biggest problem is that we can not create a user several times in the same test session and the other is the time it takes to run several test cases."
@@ -177,5 +178,5 @@ We have now solved the first problem with speed, but we have not directly dealt 
 
 ## Conclusion
 
-We have now solved both problems and have a reasonably good foundation to be able to build on. In the next chapter, we will start looking at how to create test cases so that these will be a little easier to understand and work with.
+We have now solved both problems and have a reasonably good foundation to be able to build on. In the next and last chapter, we will start looking at how to create test cases so that these will be a little easier to understand and work with.
 

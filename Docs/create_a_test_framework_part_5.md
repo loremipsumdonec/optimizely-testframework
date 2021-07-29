@@ -77,10 +77,6 @@ public void GetChildren_CreateManyChildren_HasExpectedChildren()
 
 It is important that you and your team decide how you want to write your test cases and at what level of ambition you want. Then build a service that will enable you to work in that way.
 
-The following sections concerning the structure of test cases will be according to the way I prefer. It's not necessarily the way that might suit you. The goal here is to give you inspiration.
-
-> It is free to take the code that is in this repository and adapt it to your needs.
-
 ## A real test case
 
 Now it is time to show a real test case that tests an implementation of a bread crumb function, the code for the test case is in the file BreadcrumbsServiceTest.cs and you can find the implementation in the BreadCrumbs directory in the repository.
@@ -118,7 +114,7 @@ public class BreadcrumbsServiceTest
 
 Most people probably know the benefits of building automated test cases.
 
-In smaller projects I use the test framework to speed up the development of functions, as you do not need to jump between Visual studio and a browser to debug a function. With a test framework, it will be possible to activate the function with a test case and then stay in the Visual studio.
+In smaller projects I use the test framework to speed up the development of functions, as you do not need to jump between Visual studio and a browser to debug a function. With a test framework, it will be possible to activate the function with a test case and then stay in the Visual studio. Should there be any problem, I can still start Episerver as a web application and use the same data.
 
 I also use the test framework to investigate different options for implementing a feature, and build a demo environment where you want to show all functions of the system.
 
@@ -135,6 +131,6 @@ As long as you have the will and the time, there should be no problems.
 
 ## Conclusion
 
-This is the end of this introduction. I raised some thoughts about the structure of the test cases and showed an example of a real test case that tests its own implementation. All code is available in the repository and use it as needed and adapt it to your way of working.
+I raised some thoughts about the structure of the test cases and showed an example of a real test case that tests its own implementation. All code is available in the repository and use it as needed and adapt it to your way of working.
 
-If you have questions or suggestions for improvements, contact me.
+I'm not sure when I'll write the next part. 
