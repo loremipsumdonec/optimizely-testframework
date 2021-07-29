@@ -1,12 +1,11 @@
 ---
-url: "/episerver/create-a-test-framework/part-4/"
+url: "/episerver/create-a-test-framework/part-5/"
 date: "2021-07-27"
 book: "/episerver/create-a-test-framework/"
 type: "chapter"
 
-title: "This is the last chapter and here I will raise my thoughts about the structure of the test cases and show some examples."
-preamble: "...."
-
+title: "The structure of a test case"
+preamble: "This is the last chapter and here I will raise my thoughts about the structure of the test cases and show some examples."
 ---
 
 ## How do you want to write the test cases?

@@ -12,9 +12,9 @@ preamble: "In the previous chapter, we encountered two problems that we need to 
 
 ## What are the options?
 
-Like everything else there are several ways to solve a problem. What we know is that we do not want start up Episerver in every test case. 
+Like everything else there are several ways to solve a problem. What we know is that we do not want to start up Episerver in every test case. 
 
-But this will block us from throw away the database before every test case. So we need some way to restore the database to the orginal state in some way.
+But this will block us from throw away the database before every test case. So, we need some way to restore the database to the orginal state in some way.
 
 ## Restore with a backup
 
@@ -73,25 +73,24 @@ public void StartWithEpiserverEngineSecondIteration_RunMultipleTimesNoUser_Singl
 }
 ```
 
-When we run the test case, it does not make a huge difference in time, it is faster but not much. We may get an average of 4-5 seconds per test case.
+When we run the test case, it does not make a huge difference in time, it’s faster but not much. We may get an average of 4-5 seconds per test case.
 
 ![compare with database restore](./resources/hunt_for_speed_compare_with_db_restore.png)
 
-
-The reason why it takes several seconds to run the reset is because when you set the database _singel user mode_ there are some active transactions that must be discarded and this is what takes time.
+The reason why it takes several seconds to run the reset is because when you set the database _singel user mode_ there are some active transactions that must be discarded, and this is what takes time.
 
 ```sql
 Nonqualified transactions are being rolled back. Estimated rollback completion: 0%.
 Nonqualified transactions are being rolled back. Estimated rollback completion: 100%.
 ```
 
-This will not really work well enough so we need to look at other options.
+This will not really work well enough, so we need to look at other options.
 
 ## Delete the content created
 
-When working with Episerver, you mainly handle some type of content: _page_, _block_ or _media_. So we can then use `IContentRepository` before each test case and force delete all content. If we look a little deeper into how Episerver stores data, we see that it is in a tree structure where everything has (usually) a parent. Everything is then connected to a root node.
+When working with Episerver, you mainly handle some type of content: _page_, _block_ or _media_. We can then use `IContentRepository` before each test case and force delete all content. If we look a little deeper into how Episerver stores data, we see that it is in a tree structure where everything has (usually) a parent. Everything is then connected to a root node.
 
-So by getting everything that is under root, we should be able to get all content and delete it.
+By getting everything that is under root, we should be able to get all content and delete it.
 
 ```csharp
 private void ClearContents()
@@ -105,7 +104,7 @@ private void ClearContents()
 }
 ```
 
-There are also other important things that cannot be deleted, such as the recycle bin. If you happen to delete these, you will not be able to start up Episerver. So we need a way to exclude these. Now in the beginning, we can naively exclude the content by name.
+There are also other important things that cannot be deleted, such as the recycle bin. If you happen to delete these, you will not be able to start up Episerver. We need a way to exclude these. Now in the beginning, we can naively exclude the content by name.
 
 ```csharp
 private void ClearContents()
@@ -133,7 +132,7 @@ private void ClearContents()
 
 ### Third iteration of the service
 
-It's time to build a third iteration of the service where we focus on deleting the content in Episerver. The complete code for this service is available in the file [EpiserverEngineThirdIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/Services/EpiserverEngineThirdIteration.cs). We can the create a new test case with the third iteration of the service.
+It's time to build a third iteration of the service where we focus on deleting the content in Episerver. The complete code for this service is available in the file [EpiserverEngineThirdIteration.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/Services/EpiserverEngineThirdIteration.cs). We can create a new test case with the third iteration of the service.
 
 ```csharp
 [Theory]
@@ -162,13 +161,11 @@ public void StartWithEpiserverEngineThirdIteration_RunMultipleTimesNoUser_Single
 
 The test case is faster than the previous by 4-5 seconds and it differs around 8-10 seconds from the test case with the first iteration of the service. It may not look like much. But if we look a little closer, we see that it is one test that takes 10 seconds and the remaining two runs faster.
 
-> There will always be a test case that gets the cost of starting up Episerver and this takes around 10 - 20 seconds depending on the scale of the project.
+> There will always be a test case that gets the cost of starting up Episerver and this takes around 10-30 seconds depending on the scale of the project.
 
 ![compare with delete content](./resources/hunt_for_speed_compare_with_delete_content.png)
 
-
-
-If we run each test case several times, the time difference becomes clearer. Below is an image where test cases have been run 20 times. There we see that there is no major difference between the first and second iteration of the service. While the third iteration is much faster.
+If we run each test case several times, the difference becomes clearer. Below is an image where test cases have been run 20 times. There we see that there is no major difference between the first and second iteration of the service. While the third iteration is much faster.
 
 ![compare with delete content](./resources/hunt_for_speed_20_times.png)
 
@@ -178,5 +175,5 @@ We have now solved the first problem with speed, but we have not directly dealt 
 
 ## Conclusion
 
-We have now solved both problems and have a reasonably good foundation to be able to build on. In the next and last chapter, we will start looking at how to create test cases so that these will be a little easier to understand and work with.
+We have now solved both problems and have a reasonably good foundation to be able to build on. In the next and last chapter (for now), we will start looking at how to create test cases so that these will be easier to understand and work with.
 

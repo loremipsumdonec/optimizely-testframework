@@ -55,11 +55,11 @@ Start by adding a new project based on the _xUnit Test Project (.NET Core) templ
 
 ![Test project created](./resources/test_project_created.png)
 
-> You solution should now have two projects; the episerver project and the test project.
+> Your solution should now have two projects: the episerver project and the test project.
 
 ### Add a project reference to the Episerver project
 
-In order to test the code in the Episerver project you will need to add a project reference for it in the test project. You will also need to add the same version of the following nuget packages.
+To test the code in the Episerver project you will need to add a project reference for it in the test project. You will also need to add the same version of the following nuget packages.
 
 - EPiServer.CMS
 - EPiServer.CMS.AspNet

@@ -40,7 +40,7 @@ public class EpiserverEngineFirstIteration
     ...
 }
 ```
-Now that we have moved the code to a seperate class. Let's  recreate the test case from the previous chapter. 
+Now that we have moved the code to a seperate class. Let’s recreate the test case from the previous chapter. 
 
 ```csharp
 [Fact]
@@ -104,7 +104,7 @@ Episerver is set to use _ASP.NET Identity_ and not _ASP.NET Membership_, so ther
 
 I will not describe in detail how to set up a new user with `EPiServer.Cms.UI.AspNetIdentity` you can instead take a look at the method `CreateUser` in the file [EpiserverEngineTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/EpiserverEngineTest.cs). 
 
-When we use the `CreateUser` method, we will also be able to log in to Episerver Administration interface and check that we have really created a `Start page`.
+When we use the `CreateUser` method, we will also be able to log in to Episerver Administration interface and check that we have really created a `StartPage`.
 
 ```csharp
 [Fact]
@@ -138,7 +138,6 @@ private void CreateUser(string username, string password, string email)
 
 ```
 > The test case will create an administrator user with username Administrator and password Administrator
->
 
 ![verify start page in Episerver Cms](./resources/test_project_create_start_page_login_with_user.png)
 
@@ -187,7 +186,7 @@ This can also be seen as a major problem and that prevents us from using the tes
 
 ## But before we give up
 
-For now we can go around the problem and dont create a user. What will happen when we run the same test case multiple times in a test session?
+For now, we can go around the problem and dont create a user. What will happen when we run the same test case multiple times in a test session?
 
 ```csharp
 [Theory]
@@ -218,7 +217,7 @@ public void StartWithEpiserverEngineFirstIteration_RunMultipleTimesNoUser_Single
 
 As you can see from the picture below, it takes around 18 seconds to run the test 3 times. Here it becomes clear that it takes time to run this type of test. 
 
-If we do a rough calculation and estimate that it takes on average 6 seconds to run a test case, it will take around 600 seconds (5 minutes) to run 100 test cases. It is a long time. We will need to do something about this.
+If we do a rough calculation and estimate that it takes on average 6 seconds to run a test case, then it will take around a total of 600 seconds (5 minutes) to run 100 test cases. That’s a long time. We will need to do something about this.
 
 ![Episerver engine start and stop](./resources/episerver_engine_start_and_stop_test_case.png)
 

@@ -5,14 +5,14 @@ book: "/episerver/create-a-test-framework/"
 type: "chapter"
 
 title: "Start Episerver"
-preamble: "This chapter will show how you can start Episerver in the testproject that was created in the previous chapter. "
+preamble: "This chapter will show how you can start Episerver in the test project that was created in the previous chapter."
 ---
 
 ## Create a test case
 
-To start Episerver, you will need to create an instance of the class `EPiServer.Framework.Initialization.InitializationEngine` where you flag that it should  run with `HostType.TestFramework` then you call the method `Initialize` to start up Episerver. 
+To start Episerver, you will need to create an instance of the class `EPiServer.Framework.Initialization.InitializationEngine` where you flag that it should run with `HostType.TestFramework` then you call the method `Initialize` to start up Episerver. 
 
-To test this we can start by setting up a simple test case where we use the code below. The goal of the test is that it can retrieve `IContentRepository`, you can also find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/StartEpiserverTest.cs)
+To test this, we can start by setting up a simple test case where we use the code below. The goal of the test is that it can retrieve `IContentRepository`, you can also find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/StartEpiserverTest.cs)
 
 ```csharp
 [Fact]
@@ -29,9 +29,9 @@ public void StartEpiserver_FirstTestCase_IContentRepositoryIsNotNull()
 }
 ```
 
-When you run the above a `System.Data.SqlClient.SqlException` will be thrown which is due to Episerver not being able to connect to a database. Which in itself is not so strange as the test process does not load _Web.config_.
+When you run the above a `System.Data.SqlClient.SqlException` will be thrown which is due to Episerver not being able to connect to a database. Which is not so strange as the test process does not load _Web.config_.
 
-> The test process is more like a console program and expects an App.config instead of an Web.config
+> The test process is more like a console program and expects an App.config instead of a Web.config
 
 ## Use the Web.config
 
@@ -86,9 +86,9 @@ EPiServer.Framework.Initialization.InitializationException : Initialize action f
 
 ## Create a hosting environment
 
-To solve the error message you need to add a new class that implements `EPiServer.Web.Hosting.IHostingEnvironment` and register it by setting the `EPiServer.Web.Hosting.GenericHostingEnvironment.Instance`. Episerver uses this to access some environment variables.
+To solve the error message, you need to add a new class that implements `EPiServer.Web.Hosting.IHostingEnvironment` and register it by setting the `EPiServer.Web.Hosting.GenericHostingEnvironment.Instance`. Episerver uses this to access some environment variables.
 
-> This is a class that I unfortunately do not know the origin of but it occurs in several other projects where you run Episerver as a console program and if you do a [search](https://www.google.com/search?q=NoneWebContextHostingEnvironment) you will find some.
+> This is a class that I unfortunately do not know the origin of, but it occurs in several other projects where you run Episerver as a console program and if you do a [search](https://www.google.com/search?q=NoneWebContextHostingEnvironment) you will find some.
 
 ```csharp
 public class NoneWebContextHostingEnvironment
@@ -121,7 +121,7 @@ public class NoneWebContextHostingEnvironment
 }
 ```
 
-The code below creates a new instance of `NoneWebContextHostingEnvironment` and registers it on ` EPiServer.Web.Hosting.GenericHostingEnvironment.Instance`. When you run the code you will get a new error message that I think most Episerver developers has seen.
+The code below creates a new instance of `NoneWebContextHostingEnvironment` and registers it on ` EPiServer.Web.Hosting.GenericHostingEnvironment.Instance`. When you run the code, you will get a new error message that I think most Episerver developers has seen.
 
 ```csharp
 private string GetWebConfig()
@@ -159,9 +159,9 @@ System.Data.SqlClient.SqlException : Cannot open database "Lorem" requested by t
 
 ## Create the database automatically
 
-The database is not something that you should have to create manually, it must be created automatically every time you start a new test session. This is quite easy to do as we only need to create an empty  database. 
+The database is not something that you should have to create manually, it must be created automatically every time you start a new test session. This is quite easy to do as we only need to create an empty database. 
 
-Before we run the final test case we need to update the _Web.config_ with the following configuration so that Episerver will automatically create the tables.
+Before we run the final test case, we need to update the _Web.config_ with the following configuration so that Episerver will automatically create the tables.
 
 ```xml
 <episerver.framework createDatabaseSchema="true" updateDatabaseSchema="true">
