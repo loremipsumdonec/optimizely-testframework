@@ -8,11 +8,8 @@ namespace Lorem.Models.Pages
 {
     [ContentType(DisplayName = "Article page", GUID = "198AEC77-9CB9-42F0-BC9F-9A0888A3F5AF")]
     public class ArticlePage
-        : PageData
+        : SitePage
     {
-        [Display(GroupName = SystemTabNames.Content, Order = 1)]
-        public virtual string Heading { get; set; }
-
         [UIHint(UIHint.Textarea)]
         [Display(GroupName = SystemTabNames.Content, Order = 2)]
         public virtual string Preamble { get; set; }

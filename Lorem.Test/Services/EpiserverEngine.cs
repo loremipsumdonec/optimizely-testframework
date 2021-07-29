@@ -33,10 +33,6 @@ namespace Lorem.Test.Services
             return _singelton;
         }
 
-        private EpiserverEngine() 
-        { 
-        }
-
         public void Add(IEpiserverTestFramework testFramework)
         {
             _testFrameworks.Add(testFramework);
