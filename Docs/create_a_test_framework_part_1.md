@@ -3,7 +3,6 @@ url: "/episerver/create-a-test-framework/part-1/"
 date: "2021-07-27"
 book: "/episerver/create-a-test-framework/"
 type: "chapter"
-tags: ["episerver"]
 
 title: "Create a foundation"
 preamble: "This chapter provides a quick overview of how to set up the project and ensure that the test project has access to Web.config from the Episerver project."

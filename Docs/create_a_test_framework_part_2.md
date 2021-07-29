@@ -3,7 +3,6 @@ url: "/episerver/create-a-test-framework/part-2/"
 date: "2021-07-27"
 book: "/episerver/create-a-test-framework/"
 type: "chapter"
-tags: ["episerver"]
 
 title: "Start Episerver"
 preamble: "This chapter will show how you can start Episerver in the testproject that was created in the previous chapter. "
