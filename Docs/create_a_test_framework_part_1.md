@@ -33,6 +33,8 @@ The project should use OWIN authentication which you install by adding [EPiServe
 
 If you plan to run the tests in a pipeline, for example Azure DevOps, it is recommended that you use a LocalDB in the test configuration.
 
+> Do not forget to create the database
+
 ```xml
   <connectionStrings>
     <add name="EPiServerDB"
@@ -42,6 +44,13 @@ If you plan to run the tests in a pipeline, for example Azure DevOps, it is reco
 ```
 
 > Agents that use the image [windows-latest](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md) in Azure Pipelines pool has support for LocalDB. Which makes it relatively easy to set up a test stage when someone makes a pull request or when it's time to send out a release.
+
+### Change Episerver configuration
+Change the with the following configuration in _Web.config_ so that Episerver will automatically create the tables in the database.
+
+```xml
+<episerver.framework createDatabaseSchema="true" updateDatabaseSchema="true">
+```
 
 ## Create a test project
 

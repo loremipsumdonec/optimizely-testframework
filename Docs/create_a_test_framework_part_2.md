@@ -84,6 +84,8 @@ But when you run the code you will get a new error message.
 EPiServer.Framework.Initialization.InitializationException : Initialize action failed for Initialize on class EPiServer.Framework.Initialization.Internal.VirtualPathProviderInitialization, EPiServer.Framework.AspNet, Version=11.15.1.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7
 ```
 
+> If you forgot to create the database, you will receive the error message `System.Data.SqlClient.SqlException : Cannot open database "Lorem" requested by the login`
+
 ## Create a hosting environment
 
 To solve the error message, you need to add a new class that implements `EPiServer.Web.Hosting.IHostingEnvironment` and register it by setting the `EPiServer.Web.Hosting.GenericHostingEnvironment.Instance`. Episerver uses this to access some environment variables.
@@ -156,16 +158,9 @@ public void StartEpiserver()
 ```bash
 System.Data.SqlClient.SqlException : Cannot open database "Lorem" requested by the login. The login failed.
 ```
-
 ## Create the database automatically
 
 The database is not something that you should have to create manually, it must be created automatically every time you start a new test session. This is quite easy to do as we only need to create an empty database. 
-
-Before we run the final test case, we need to update the _Web.config_ with the following configuration so that Episerver will automatically create the tables.
-
-```xml
-<episerver.framework createDatabaseSchema="true" updateDatabaseSchema="true">
-```
 
 ```csharp
 private string GetWebConfig()
