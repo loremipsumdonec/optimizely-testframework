@@ -11,3 +11,14 @@
 /Lorem.Test/bin/Debug/net48
 /Lorem.Test/obj
 /Lorem/modules/_protected
+/.vs
+/posts/create_a_test_framework/example/.vs/Lorem
+/posts/create_a_test_framework/example/Lorem/bin
+/posts/create_a_test_framework/example/Lorem/obj
+/posts/create_a_test_framework/example/Lorem.Test/bin/Debug/net48
+/posts/create_a_test_framework/example/Lorem.Test/obj
+/posts/create_a_test_framework/example/Lorem.Test/Web.config
+/posts/create_a_test_framework/example/packages
+/src/net48/Lorem.Testing.EPiServer.CMS/.vs
+/src/net48/Lorem.Testing.EPiServer.CMS/bin/Debug/net48
+/src/net48/Lorem.Testing.EPiServer.CMS/obj
