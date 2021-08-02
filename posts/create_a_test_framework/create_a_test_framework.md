@@ -4,6 +4,7 @@ date: "2021-07-27"
 book: "/episerver/create-a-test-framework/"
 type: "book"
 tags: ["optimizely",  "episerver", "integration testing"]
+theme: "pink"
 
 excerpt: "In this post, I intend to show how to build a testframework for Episerver Content Cloud and how to write different types of integration tests to check its implementation."
 
