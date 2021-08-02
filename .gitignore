@@ -30,3 +30,9 @@
 /samples/net48/Alloy/Alloy.Test/obj
 /samples/net48/Alloy/Alloy.Test/Web.config
 /samples/net48/Alloy/packages
+/samples/main/Alloy/.vs
+/samples/main/Alloy/Alloy.Test/bin/Debug/net5.0
+/samples/main/Alloy/Alloy.Test/obj
+/src/main/Lorem.Testing.EPiServer.CMS/bin/Debug/net5.0
+/src/main/Lorem.Testing.EPiServer.CMS/obj
+/samples/main/Alloy/Alloy/App_Data/Alloy.mdf
