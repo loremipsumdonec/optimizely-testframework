@@ -1,7 +1,7 @@
 ---
-url: "/optimizely/test_framework_for_net5/part-1/"
+url: "/optimizely/test-framework-for-net5/part-1/"
 date: "2021-08-03"
-book: "/optimizely/test_framework_for_net5/"
+book: "/optimizely/test-framework-for-net5/"
 type: "chapter"
 
 title: "Getting Started"
