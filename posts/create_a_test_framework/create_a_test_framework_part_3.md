@@ -1,8 +1,8 @@
 ---
 
-url: "/episerver/create-a-test-framework/part-3/"
+url: "/optimizely/create-a-test-framework/part-3/"
 date: "2021-07-27"
-book: "/episerver/create-a-test-framework/"
+book: "/optimizely/create-a-test-framework/"
 type: "chapter"
 
 title: "Create a Episerver service"
