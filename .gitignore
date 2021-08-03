@@ -36,3 +36,10 @@
 /src/main/Lorem.Testing.EPiServer.CMS/bin/Debug/net5.0
 /src/main/Lorem.Testing.EPiServer.CMS/obj
 /samples/main/Alloy/Alloy/App_Data/Alloy.mdf
+/posts/test_framework_for_net5/example/Lorem/obj
+/posts/test_framework_for_net5/example/Lorem/Lorem.csproj.user
+/posts/test_framework_for_net5/example/Lorem/bin/Debug/net5.0
+/posts/test_framework_for_net5/example/.vs/Lorem
+/posts/test_framework_for_net5/example/Lorem/.vs/Lorem
+/posts/test_framework_for_net5/example/Lorem.Test/bin/Debug/net5.0
+/posts/test_framework_for_net5/example/Lorem.Test/obj
