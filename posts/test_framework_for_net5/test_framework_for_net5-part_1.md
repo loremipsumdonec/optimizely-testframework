@@ -14,17 +14,17 @@ To get started with integration testing, you can start by setting up a new Optim
 
 > Don´t forget to create a database and update the connectionstring in the _appsettings.json_ or _appsettings.Development.json_
 
-An example of a solution that contains an empty Optimizely CMS 12 with an associated test project.
+An example of a solution that contains an empty Optimizely CMS 12 with an associated test project, you can find the complete project [here](https://github.com/loremipsumdonec/episerver-testframework/tree/posts/test_framework_for_net5/posts/test_framework_for_net5/example).
 
 ![](./resources/created_a_test_project.png)
 
-If you start the Episerver project, you will get a 404 error, which is not strange as there is no content, but if you look in the database, all tables and views will be there.
+If you start the web project, you will get a 404 error, which is not strange as there is no content, but if you look in the database, all tables and views will be there.
 
 ![](./resources/started_project_and_database_has_tables.png)
 
 ## Let's start
 
-Now it's time to add the first test case where we are testing to start Episerver. We will need to use the `WebApplicationFactory<TEntryPoint>` class and use `Startup` from the web project as the entry point, you can find the code in the file StartEpiserverTest.cs
+Now it's time to add the first test case where we are testing to start Episerver. We will need to use the `WebApplicationFactory<TEntryPoint>` class and use `Startup` from the web project as the entry point, you can find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/posts/test_framework_for_net5/posts/test_framework_for_net5/example/Lorem.Test/StartEpiserverTest.cs)
 
 ```csharp
 [Fact]
