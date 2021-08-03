@@ -12,7 +12,7 @@ preamble: "This chapter will show how you can start Episerver in the test projec
 
 To start Episerver, you will need to create an instance of the class `EPiServer.Framework.Initialization.InitializationEngine` where you flag that it should run with `HostType.TestFramework` then you call the method `Initialize` to start up Episerver. 
 
-To test this, we can start by setting up a simple test case where we use the code below. The goal of the test is that it can retrieve `IContentRepository`, you can also find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/Lorem.Test/StartEpiserverTest.cs)
+To test this, we can start by setting up a simple test case where we use the code below. The goal of the test is that it can retrieve `IContentRepository`, you can also find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/create_a_test_framework/example/Lorem.Test/StartEpiserverTest.cs)
 
 ```csharp
 [Fact]
@@ -243,7 +243,7 @@ public void StartEpiserver_IContentRepositoryIsNotNull()
 }
 ```
 
-If you run the code the test case will now succeed, which will indicate that we have successfully started Episerver in the test project. You can find the complete code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/Lorem.Test/StartEpiserverTest.cs).
+If you run the code the test case will now succeed, which will indicate that we have successfully started Episerver in the test project. You can find the complete code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/create_a_test_framework/example/Lorem.Test/StartEpiserverTest.cs).
 
 ![episerver started](./resources/test_project_episerver_started.png)
 
