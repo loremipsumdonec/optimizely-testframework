@@ -12,7 +12,7 @@ repository_base: "https://github.com/loremipsumdonec/episerver-testframework/blo
 
 excerpt: "In this post, I intend to show how to build a test framework for Optimizely CMS and how to write different types of integration tests to check its implementation."
 
-title: "Create a test framework for Optimizely CMS"
+title: "Create a test framework for Optimizely CMS 11"
 preamble: "In this post, I intend to show how to build a test framework for Optimizely CMS and how to write different types of integration tests to check its implementation."
 
 ---
