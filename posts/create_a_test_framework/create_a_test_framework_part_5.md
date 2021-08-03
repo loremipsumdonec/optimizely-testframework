@@ -1,7 +1,7 @@
 ---
-url: "/episerver/create-a-test-framework/part-5/"
+url: "/optimizely/create-a-test-framework/part-5/"
 date: "2021-07-27"
-book: "/episerver/create-a-test-framework/"
+book: "/optimizely/create-a-test-framework/"
 type: "chapter"
 
 title: "The structure of a test case"
