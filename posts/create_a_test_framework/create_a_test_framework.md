@@ -1,7 +1,7 @@
 ---
-url: "/episerver/create-a-test-framework/"
+url: "/optimizely/create-a-test-framework/"
 date: "2021-07-27"
-book: "/episerver/create-a-test-framework/"
+book: "/optimizely/create-a-test-framework/"
 type: "book"
 tags: ["optimizely",  "episerver", "integration testing"]
 theme: "pink"
@@ -10,10 +10,10 @@ repository_url: "https://github.com/loremipsumdonec/episerver-testframework"
 repository_name: "episerver-testframework"
 repository_base: "https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/create_a_test_framework"
 
-excerpt: "In this post, I intend to show how to build a testframework for Episerver Content Cloud and how to write different types of integration tests to check its implementation."
+excerpt: "In this post, I intend to show how to build a test framework for Optimizely CMS and how to write different types of integration tests to check its implementation."
 
-title: "Create a test framework for Content Cloud"
-preamble: "In this post, I intend to show how to build a test framework for Episerver Content Cloud and how to write different types of integration tests to check its implementation."
+title: "Create a test framework for Optimizely CMS"
+preamble: "In this post, I intend to show how to build a test framework for Optimizely CMS and how to write different types of integration tests to check its implementation."
 
 ---
 
