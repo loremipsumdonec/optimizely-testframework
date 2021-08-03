@@ -8,6 +8,7 @@ theme: "pink"
 
 repository_url: "https://github.com/loremipsumdonec/episerver-testframework"
 repository_name: "episerver-testframework"
+repository_base: "https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/create_a_test_framework"
 
 excerpt: "In this post, I intend to show how to build a testframework for Episerver Content Cloud and how to write different types of integration tests to check its implementation."
 
