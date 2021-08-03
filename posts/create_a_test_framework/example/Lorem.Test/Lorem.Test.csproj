@@ -36,9 +36,6 @@
     <None Update="Resources\Images\from_dummy_image_600x400_b.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Web.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -50,9 +47,5 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy /Y $(ProjectDir)..\Lorem\Web.config $(ProjectDir)" />
-  </Target>
 
 </Project>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem", "Lorem\Lorem.csproj", "{3DF9235E-17A4-452B-9305-AB0573859365}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lorem.Test", "Lorem.Test\Lorem.Test.csproj", "{C83670CB-A701-450F-8D5C-C4E48D43F2EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3DF9235E-17A4-452B-9305-AB0573859365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DF9235E-17A4-452B-9305-AB0573859365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DF9235E-17A4-452B-9305-AB0573859365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DF9235E-17A4-452B-9305-AB0573859365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C83670CB-A701-450F-8D5C-C4E48D43F2EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C83670CB-A701-450F-8D5C-C4E48D43F2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C83670CB-A701-450F-8D5C-C4E48D43F2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C83670CB-A701-450F-8D5C-C4E48D43F2EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {386361C6-982D-4D73-90B9-DA0F8B7748FA}
+	EndGlobalSection
+EndGlobal
