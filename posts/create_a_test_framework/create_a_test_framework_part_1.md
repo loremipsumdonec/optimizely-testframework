@@ -81,7 +81,9 @@ To test the code in the Episerver project you will need to add a project referen
 
 ### Copy the Web.config
 
-To be able to use the same _Web.config_ that is in the Episerver project, you need to set it up so that it is copied over to the test project. Which you can do with an `xcopy` in the _Pre-build event command line_ in the project settings in the test project.
+As default when you build the test project the build will include the configuration file from the Episerver project, but it will change name from Web.config to _*assembly name*.config_.  
+
+Instead of building an implementation or adding another configuration file I have preferred to set up an xcopy the _Pre-build event command line_.
 
 ![copy Web.config with xcopy](./resources/test_project_add_xcopy.png)
 
