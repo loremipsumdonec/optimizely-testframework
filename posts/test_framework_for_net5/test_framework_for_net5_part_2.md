@@ -4,7 +4,7 @@ book: "/optimizely/test-framework-for-net5"
 chapter: "/part-2"
 
 title: "Getting Started"
-preamble: "We have now managed to start the public preview of Optimizely CMS 12 in the test project, and it is much easier now than before. But before we have a basis for that, a little more functions are needed."
+preamble: "We have now managed to start the public preview of Optimizely CMS 12 in the test project, and it is much easier now than before. But before we have a base for that we need more functions."
 ---
 
 To start Optimizely CMS 12, we used `WebApplicationFactory<TEntryPoint>` and this class is a good base that we can extend on to get a service that has the full responsibility to manage Optimizely CMS 12.
