@@ -2,8 +2,8 @@
 date: "2021-07-27"
 type: "book"
 book: "/optimizely/create-a-test-framework"
-tags: []
 theme: "pink"
+state: "in_progress"
 
 repository_url: "https://github.com/loremipsumdonec/episerver-testframework"
 repository_name: "episerver-testframework"
