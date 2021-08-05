@@ -1,8 +1,7 @@
 ---
-url: "/optimizely/test-framework-for-net5/part-1/"
-date: "2021-08-03"
-book: "/optimizely/test-framework-for-net5/"
 type: "chapter"
+book: "/optimizely/test-framework-for-net5"
+chapter: "/part-1"
 
 title: "Getting Started"
 preamble: "This chapter provides information of how to set up a new Optimizely CMS 12 project with a test project that uses xUnit."

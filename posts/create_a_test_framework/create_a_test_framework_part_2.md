@@ -1,8 +1,7 @@
 ---
-url: "/optimizely/create-a-test-framework/part-2/"
-date: "2021-07-27"
-book: "/optimizely/create-a-test-framework/"
 type: "chapter"
+book: "/optimizely/create-a-test-framework"
+chapter: "/part-2"
 
 title: "Start Episerver"
 preamble: "This chapter will show how you can start Episerver in the test project that was created in the previous chapter."

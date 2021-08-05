@@ -1,9 +1,7 @@
 ---
-url: "/optimizely/create-a-test-framework/part-4/"
-date: "2021-07-27"
-book: "/optimizely/create-a-test-framework/"
 type: "chapter"
-tags: ["episerver"]
+book: "/optimizely/create-a-test-framework"
+chapter: "/part-4"
 
 title: "Fixing the problems"
 preamble: "In the previous chapter, we encountered two problems that we need to fix. The biggest problem is that we can not create a user several times in the same test session and the other is the time it takes to run several test cases."
