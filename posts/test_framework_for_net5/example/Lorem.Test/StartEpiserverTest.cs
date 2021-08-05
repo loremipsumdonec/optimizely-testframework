@@ -15,16 +15,5 @@ namespace Lorem.Test
             IContentRepository repository = factory.Services.GetInstance<IContentRepository>();
             Assert.NotNull(repository);
         }
-
-        [Fact]
-        public async void StartEpiserver_FirstTestCase_GetStartPage()
-        {
-            var factory = new WebApplicationFactory<Startup>();
-
-            var client = factory.CreateClient();
-            var response = await client.GetAsync("/");
-
-            response.EnsureSuccessStatusCode();
-        }
     }
 }
