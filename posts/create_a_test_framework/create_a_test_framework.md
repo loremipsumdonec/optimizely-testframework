@@ -1,18 +1,15 @@
 ---
-url: "/optimizely/create-a-test-framework/"
 date: "2021-07-27"
-book: "/optimizely/create-a-test-framework/"
 type: "book"
-tags: ["optimizely",  "episerver", "integration testing"]
+book: "/optimizely/create-a-test-framework"
 theme: "pink"
+state: "in_progress"
 
 repository_url: "https://github.com/loremipsumdonec/episerver-testframework"
 repository_name: "episerver-testframework"
 repository_base: "https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/create_a_test_framework"
 
-excerpt: "In this post, I intend to show how to build a test framework for Optimizely CMS and how to write different types of integration tests to check its implementation."
-
-title: "Create a test framework for Optimizely CMS 11"
+title: "Test framework for Optimizely CMS 11"
 preamble: "In this post, I intend to show how to build a test framework for Optimizely CMS and how to write different types of integration tests to check its implementation."
 
 ---

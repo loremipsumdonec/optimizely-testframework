@@ -1,8 +1,7 @@
 ---
-url: "/optimizely/create-a-test-framework/part-5/"
-date: "2021-07-27"
-book: "/optimizely/create-a-test-framework/"
 type: "chapter"
+book: "/optimizely/create-a-test-framework"
+chapter: "/part-5"
 
 title: "The structure of a test case"
 preamble: "This is the last chapter and here I will raise my thoughts about the structure of the test cases and show some examples."

@@ -1,18 +1,15 @@
 ---
-url: "/optimizely/test-framework-for-net5/"
 date: "2021-08-03"
-book: "/optimizely/test-framework-for-net5/"
 type: "book"
-tags: ["in progress"]
+book: "/optimizely/test-framework-for-net5"
 theme: "blue"
+state: "in_progress"
 
 repository_url: "https://github.com/loremipsumdonec/episerver-testframework"
 repository_name: "episerver-testframework"
 repository_base: "https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/test_framework_for_net5"
 
-excerpt: "Now when Optimizely has released a public preview of Optimizely CMS 12 that’s built with .NET 5, it's time to start exploring how to perform integration testing."
-
-title: "Create a test framework for Optimizely CMS 12"
+title: "Test framework for Optimizely CMS 12"
 preamble: "Now when Optimizely has released a public preview of Optimizely CMS 12 that’s built with .NET 5, it's time to start exploring how to perform integration testing."
 ---
 

@@ -1,9 +1,7 @@
 ---
-
-url: "/optimizely/create-a-test-framework/part-3/"
-date: "2021-07-27"
-book: "/optimizely/create-a-test-framework/"
 type: "chapter"
+book: "/optimizely/create-a-test-framework"
+chapter: "/part-3"
 
 title: "Create a Episerver service"
 preamble: "In the previous chapter we successfully started Episerver in the test project, but that code was not resuable. We need to break out the code into a service of some sort so that we can call it from our test cases."
