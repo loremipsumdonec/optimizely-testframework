@@ -21,11 +21,11 @@ In .NET 5, it is much easier to run integration tests that test from a client's 
 
 Which means that you get two instances of Optimizely CMS where one is run in an IIS and the other instance is run in the test process. This leads to a lot of other types of problems such as cache management. It is not impossible to achieve but in my opinion is not worth the effort.
 
-> It is possible to test contollers but I think it increases the complexity of the test cases. I prefer have lightweight controllers and not have any direct logic in these, instead they uses other services and which makes it easier to test (and maintain).
+> It is possible to test controllers but I think it increases the complexity of the test cases. I prefer have lightweight controllers and not have any direct logic in these, instead they uses other services and which makes it easier to test (and maintain).
 
 If you want to get started with integration testing, Microsoft has posted information this topic, see [Integration tests in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-5.0).
 
 ## The goal
 
-The goal is to show the steps and how to set up your own test framework similar to that used for Optimizely CMS 11.
+The goal is to show the steps how to start Optimizely CMS 12 in a test project. 
 

@@ -7,6 +7,7 @@ using EPiServer.SpecializedProperties;
 using Lorem.Testing.EPiServer.CMS.Builders;
 using Lorem.Testing.EPiServer.CMS.Utility;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -27,10 +28,6 @@ namespace Alloy.Test
 
         [Theory]
         [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        [InlineData(5)]
         public async void CreateSite(int _)
         {
             List<string> sellingPoints = new List<string>()
@@ -47,6 +44,15 @@ namespace Alloy.Test
                 "Direct communication to members",
             };
 
+            var cultures = new CultureInfo[]
+            {
+                 CultureInfo.GetCultureInfo("sv"),
+                 CultureInfo.GetCultureInfo("en")
+            };
+
+            Fixture.Create<StartPage>(cultures);
+
+            /*
             Fixture.CreateSite<StartPage>()
                .CreateMany<ProductPage>(5, (p, _) =>
                {
@@ -88,6 +94,7 @@ namespace Alloy.Test
 
             var response = await client.GetAsync("/");
             response.EnsureSuccessStatusCode();
+            */
         }
     }
 }

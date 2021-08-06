@@ -8,7 +8,7 @@ namespace Alloy.Test.Services
         : EpiserverEngine<Startup>
     {
         public DefaultEpiserverEngine()
-            : base(new CmsTestFrameworks())
+            : base(new CmsTestFramework())
         {
         }
     }
