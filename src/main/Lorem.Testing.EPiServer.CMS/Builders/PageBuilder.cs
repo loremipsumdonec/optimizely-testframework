@@ -3,6 +3,7 @@ using Lorem.Testing.EPiServer.CMS.Commands;
 using Lorem.Testing.EPiServer.CMS.Utility;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
@@ -25,6 +26,23 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         public IPageBuilder<T> Create(Action<T> build = null)
         {
             return Create<T>(build);
+        }
+
+        public IPageBuilder<T> Create(CultureInfo[] cultures, Action<T> build = null) 
+        {
+            foreach(var culture in cultures)
+            {
+                if(_pages.Count() == 0)
+                {
+                    Create(GetParent(), culture, build);
+                    continue;
+                }
+
+                //we need to translate this page here....
+
+            }
+
+            return new PageBuilder<T>(Fixture, _pages);
         }
 
         public IPageBuilder<T> Update(Action<T> build)
@@ -70,7 +88,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         public IPageBuilder<TPageType> Create<TPageType>(Action<TPageType> build = null) 
             where TPageType : PageData
         {
-            Create(GetParent(), build);
+            Create(GetParent(), build: build);
 
             return new PageBuilder<TPageType>(Fixture, _pages);
         }
@@ -93,7 +111,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                     continue;
                 }
 
-                Create<TPageType>(parent, p => build.Invoke(p, index));
+                Create<TPageType>(parent, build: p => build.Invoke(p, index));
             }
 
             return new PageBuilder<TPageType>(Fixture, _pages);
@@ -116,7 +134,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                     parent = _pages.Last().ContentLink;
                 }
 
-                Create(parent, build);
+                Create(parent, build:build);
             }
 
             return new PageBuilder<TPageType>(Fixture, _pages);
@@ -160,13 +178,15 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
             return parent;
         }
 
-        private void Create<TPageType>(ContentReference parent, Action<TPageType> build = null)
+        private void Create<TPageType>(ContentReference parent, CultureInfo culture = null, Action<TPageType> build = null)
         {
             var command = new CreatePage(
                 Fixture.GetContentType(typeof(TPageType)),
                 parent,
                 IpsumGenerator.Generate(1,3, false)
             );
+
+            command.Culture = culture;
 
             if (build != null)
             {

@@ -5,18 +5,18 @@ using System.Collections.Generic;
 
 namespace Lorem.Testing.EPiServer.CMS.TestFrameworks
 {
-    public class CmsTestFrameworks
+    public class CmsTestFramework
         : IEpiserverTestFramework
     {
         private readonly string _connectionStringName;
         private string _connectionString;
 
-        public CmsTestFrameworks()
+        public CmsTestFramework()
             : this("EPiServerDB")
         {
         }
 
-        public CmsTestFrameworks(string connectionStringName)
+        public CmsTestFramework(string connectionStringName)
         {
             _connectionStringName = connectionStringName;
         }

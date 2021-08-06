@@ -89,4 +89,4 @@ If we run the test case again, it will work.
 
 ## Conclusion
 
-It is much easier to get started with the testing and startup of Optimizely CMS in .NET 5 than how it worked in the .NET framework. But of course, there are some challenges that you must solve before you have a complete test framework. More about that in the next chapter.
+Now we have created a project with an associated test project, and started the public preview of Optimizely CMS 12.

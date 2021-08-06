@@ -1,14 +1,17 @@
 ﻿using EPiServer;
+using EPiServer.Core;
+using EPiServer.Security;
 using EPiServer.ServiceLocation;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Lorem.Test.Services
 {
-    public class EpiserverEngineFirstIteration<TEntryPoint>
+    public class EpiserverEngineSecondIteration<TEntryPoint>
         : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
     {
         private bool _started;
@@ -17,6 +20,7 @@ namespace Lorem.Test.Services
         {
             if(_started)
             {
+                Reset();
                 return;
             }
 
@@ -30,6 +34,33 @@ namespace Lorem.Test.Services
             }
 
             _started = true;
+        }
+
+        private void Reset()
+        {
+            ClearContents();
+        }
+
+        private void ClearContents()
+        {
+            var repository = ServiceLocator.Current.GetInstance<IContentRepository>();
+
+            var ignoreNames = new List<string>() {
+                "Root",
+                "Recycle Bin",
+                "SysGlobalAssets",
+                "SysContentAssets"
+            };
+
+            foreach (var content in repository.GetChildren<IContent>(ContentReference.RootPage))
+            {
+                if (ignoreNames.Contains(content.Name))
+                {
+                    continue;
+                }
+
+                repository.Delete(content.ContentLink, true, AccessLevel.NoAccess);
+            }
         }
 
         private void CreateCmsDatabase()

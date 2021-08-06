@@ -48,7 +48,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
         public ContentReference Parent { get; set; }
 
-        public CultureInfo Language { get; set; }
+        public CultureInfo Culture { get; set; }
 
         public SaveAction SaveAction { get; set; } = SaveAction.Publish | SaveAction.ForceCurrentVersion;
 
@@ -76,7 +76,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             return _repository.GetDefault<IContent>(
                     Parent,
                     ContentType.ID,
-                    Language);
+                    Culture);
         }
 
         private PageData Save(IContent content)

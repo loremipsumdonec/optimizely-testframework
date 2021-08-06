@@ -1,5 +1,6 @@
 ﻿using EPiServer.Core;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
@@ -11,6 +12,9 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
         public static IPageBuilder<T> Create<T>(this EpiserverFixture fixture, Action<T> build = null) where T : PageData
             => new PageBuilder<T>(fixture).Create(build);
+
+        public static IPageBuilder<T> Create<T>(this EpiserverFixture fixture, CultureInfo[] cultures, Action<T> build = null) where T : PageData
+            => new PageBuilder<T>(fixture).Create(cultures, build);
 
         public static IPageBuilder<T> CreateMany<T>(this EpiserverFixture fixture, int total, Action<T, int> build = null) where T : PageData
             => new PageBuilder<T>(fixture).CreateMany(total, build);
