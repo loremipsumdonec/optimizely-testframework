@@ -1,5 +1,6 @@
-﻿
-using EPiServer.Framework.Initialization;
+﻿using EPiServer.Framework.Initialization;
+using Lorem.Testing.EPiServer.CMS.Commands;
+using System.Collections.Generic;
 
 namespace Lorem.Testing.EPiServer.CMS.TestFrameworks
 {
@@ -9,6 +10,6 @@ namespace Lorem.Testing.EPiServer.CMS.TestFrameworks
 
         void AfterInitialize(InitializationEngine engine);
 
-        void Reset();
+        IEnumerable<IClearCommand> Reset();
     }
 }

@@ -4,6 +4,7 @@ using EPiServer.Framework.Configuration;
 using EPiServer.Framework.Initialization;
 using EPiServer.Security;
 using EPiServer.ServiceLocation;
+using Lorem.Testing.EPiServer.CMS.Commands;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -50,9 +51,14 @@ namespace Lorem.Testing.EPiServer.CMS.TestFrameworks
             SaveStartupReport();
         }
 
-        public void Reset()
+        public IEnumerable<IClearCommand> Reset()
         {
-            ClearContents();
+            return new List<IClearCommand>()
+            {
+                new ClearContents(),
+                new ClearCategories(),
+                new ClearSites()
+            };
         }
 
         private void ClearContents()

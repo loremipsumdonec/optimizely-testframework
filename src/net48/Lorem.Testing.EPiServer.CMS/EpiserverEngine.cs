@@ -4,6 +4,7 @@ using EPiServer.Framework.Configuration;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Hosting;
+using Lorem.Testing.EPiServer.CMS.Commands;
 using Lorem.Testing.EPiServer.CMS.TestFrameworks;
 using System;
 using System.Collections.Generic;
@@ -61,9 +62,18 @@ namespace Lorem.Testing.EPiServer.CMS
 
         private void Reset()
         {
-            foreach(var testFramework in _frameworks)
+            List<IClearCommand> clearCommands = new List<IClearCommand>();
+
+            foreach (var testFramework in _frameworks)
             {
-                testFramework.Reset();
+                clearCommands.AddRange(
+                    testFramework.Reset()
+                );
+            }
+
+            foreach (var command in clearCommands)
+            {
+                command.Clear();
             }
         }
 
