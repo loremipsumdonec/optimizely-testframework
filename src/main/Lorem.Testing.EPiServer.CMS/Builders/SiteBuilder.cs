@@ -1,6 +1,7 @@
 ﻿using EPiServer.Core;
 using Lorem.Testing.EPiServer.CMS.Commands;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -16,6 +17,8 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
         public ISiteBuilder<T> CreateSite()
         {
+            Enable(Fixture.Cultures);
+
             var startPage = Fixture.Latest
                 .Where(p => p is PageData)
                 .Select(p => (PageData)p)
@@ -30,12 +33,21 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                 Fixture.Get<string>("episerver.site.name"),
                 Fixture.Get<Uri>("episerver.site.url"),
                 startPage.ContentLink,
-                Fixture.Get<CultureInfo>("episerver.site.language")
+                Fixture.Cultures[0]
             );
 
             Fixture.Site = command.Execute();
 
             return this;
+        }
+
+        public void Enable(IEnumerable<CultureInfo> cultures)
+        {
+            foreach(var culture in cultures)
+            {
+                var command = new UpdateLanguage(culture, true);
+                command.Execute();
+            }
         }
     }
 }

@@ -50,10 +50,7 @@ namespace Alloy.Test
                  CultureInfo.GetCultureInfo("en")
             };
 
-            Fixture.Create<StartPage>(cultures);
-
-            /*
-            Fixture.CreateSite<StartPage>()
+            Fixture.CreateSite<StartPage>(cultures)
                .CreateMany<ProductPage>(5, (p, _) =>
                {
                    p.UniqueSellingPoints = sellingPoints.PickRandom(3, 7).ToList();
@@ -74,6 +71,7 @@ namespace Alloy.Test
                    }
                });
 
+            /*
             Fixture.CreateBlock<JumbotronBlock, StartPage>((b, s) =>
             {
                 ProductPage product = (ProductPage)Fixture.Contents.Where(p => p is ProductPage).PickRandom();
