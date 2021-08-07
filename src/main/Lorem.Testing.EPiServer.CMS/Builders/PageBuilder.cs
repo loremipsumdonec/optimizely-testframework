@@ -49,14 +49,16 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         {
             foreach(var content in Fixture.Contents
                 .Where(c => c is TPageType)
-                .Select(c => c as TPageType))
+                .Select(c => (TPageType)c))
             {
                 foreach(var culture in Fixture.Cultures)
                 {
+                    var latest = Fixture.GetLatestAs(culture);
+
                     Update(
-                        (TPageType)(PageData)content,
+                        content,
                         culture,
-                        p => build.Invoke((TPageType)(PageData)p, Fixture.Latest.Select(c => (T)c))
+                        p => build.Invoke((TPageType)p, Fixture.GetLatestAs(culture).Select(c => (T)c))
                     );
                 }
             }
@@ -64,23 +66,17 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
             return new PageBuilder<T>(Fixture);
         }
 
-        public IPageBuilder<T> Update(PageData page, CultureInfo culture, Action<T> build = null)
+        private void Update(PageData page, CultureInfo culture, Action<object> build = null)
         {
             var command = new UpdateContent(page)
             {
-                Culture = culture
+                Culture = culture,
+                Build = build
             };
-
-            if (build != null)
-            {
-                command.Build = p => build.Invoke((T)p);
-            }
 
             PageData content = (PageData)command.Execute();
 
             Add(content);
-            
-            return this;
         }
 
         public IPageBuilder<T> Update(T page)
@@ -227,7 +223,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
                 if (build == null)
                 {
-                    Update((T)(PageData)page, c);
+                    Update(page, c, null);
                     continue;
                 }
 

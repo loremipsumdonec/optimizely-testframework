@@ -8,7 +8,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
     }
 
     public interface IContentBuilder<T>
-        : IFixtureBuilder<T>, IContentBuilder where T : IContent
+        : IFixtureBuilder<T>, IContentBuilder where T : IContentData
     {
         IContentBuilder<T> Publish();
 

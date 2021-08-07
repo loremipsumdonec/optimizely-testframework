@@ -11,5 +11,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         : ISiteBuilder where T : PageData
     {
         ISiteBuilder<T> CreateSite();
+
+        ISiteBuilder<T> CreateSite(string name, string url);
     }
 }

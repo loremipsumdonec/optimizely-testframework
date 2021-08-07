@@ -5,6 +5,7 @@ using EPiServer.Security;
 using EPiServer.ServiceLocation;
 using System;
 using System.Globalization;
+using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Commands
 {
@@ -40,10 +41,21 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
         {
             IContent content = Content;
 
-            if(Culture != null)
+            if(Culture != null && content is ILocalizable localizable)
             {
-                content = _repository.CreateLanguageBranch<IContent>(Content.ContentLink, Culture);
-                content.Name = Content.Name;
+                if(!localizable.Language.Equals(Culture)
+                    && localizable.ExistingLanguages.Any(c => c.Equals(Culture)))
+                {
+                    content = (IContent)_repository.Get<ContentData>(
+                        content.ContentLink.ToReferenceWithoutVersion(),
+                        Culture
+                    ).CreateWritableClone();
+                }
+                else
+                {
+                    content = _repository.CreateLanguageBranch<IContent>(Content.ContentLink, Culture);
+                    content.Name = Content.Name;
+                }
             }
 
             Build?.Invoke(content);

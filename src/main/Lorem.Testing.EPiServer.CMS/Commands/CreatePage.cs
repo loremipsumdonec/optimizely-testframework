@@ -4,8 +4,6 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Security;
 using EPiServer.ServiceLocation;
-using EPiServer.Validation;
-using Lorem.Testing.EPiServer.CMS.Services;
 using System;
 using System.Globalization;
 
@@ -20,8 +18,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                   contentType, 
                   parent, 
                   name, 
-                  ServiceLocator.Current.GetInstance<IContentRepository>(),
-                  ServiceLocator.Current.GetInstance<IValidationService>()
+                  ServiceLocator.Current.GetInstance<IContentRepository>()
             )
         {
         }
@@ -30,15 +27,13 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             ContentType contentType,
             ContentReference parent,
             string name,
-            IContentRepository repository,
-            IValidationService service)
+            IContentRepository repository)
         {
             ContentType = contentType;
             Parent = parent;
             Name = name;
             
             _repository = repository;
-            //_service = (ToggleContextValidationService)service;
         }
 
         public string Name { get; set; }
@@ -60,10 +55,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
             if(Build != null)
             {
-                //_service.Enabled = false;
-                Save(content);
-                //_service.Enabled = true;
-
+                Save(content, SaveAction.SkipValidation | SaveAction.Default);
                 Build(content);
             }
 
@@ -78,11 +70,11 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                     Culture);
         }
 
-        private PageData Save(IContent content)
+        private PageData Save(IContent content, SaveAction saveAction = SaveAction.Publish)
         {
             var contentReference = _repository.Save(
                 content,
-                SaveAction,
+                saveAction,
                 AccessLevel.NoAccess
             );
 

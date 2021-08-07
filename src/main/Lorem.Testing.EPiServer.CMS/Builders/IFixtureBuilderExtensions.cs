@@ -1,6 +1,5 @@
 ﻿using EPiServer.Core;
 using System;
-using System.Collections.Generic;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
 {
@@ -10,7 +9,6 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
         public static IBlockBuilder<TBlockType> CreateBlock<TBlockType>(this IFixtureBuilder builder, Action<TBlockType> build = null)
             where TBlockType : BlockData => new BlockBuilder<TBlockType>(builder.Fixture).CreateBlock(build);
-
 
         #endregion
 
@@ -34,19 +32,19 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         #region Content
 
         public static IContentBuilder<T> Publish<T>(this IFixtureBuilder<T> builder)
-            where T : IContent => new ContentBuilder<T>(builder.Fixture).Publish();
+            where T : IContentData => new ContentBuilder<T>(builder.Fixture).Publish();
 
         public static IContentBuilder<T> Expire<T>(this IFixtureBuilder<T> builder)
-            where T : IContent => new ContentBuilder<T>(builder.Fixture).Expire();
+            where T : IContentData => new ContentBuilder<T>(builder.Fixture).Expire();
 
         public static IContentBuilder<T> Delete<T>(this IFixtureBuilder<T> builder)
-            where T : IContent => new ContentBuilder<T>(builder.Fixture).Delete();
+            where T : IContentData => new ContentBuilder<T>(builder.Fixture).Delete();
 
         public static void ForceDelete<T>(this IFixtureBuilder<T> builder)
-            where T : IContent => new ContentBuilder<T>(builder.Fixture).ForceDelete();
+            where T : IContentData => new ContentBuilder<T>(builder.Fixture).ForceDelete();
 
         public static IContentBuilder<T> Move<T>(this IFixtureBuilder<T> builder, ContentReference destination)
-            where T : IContent => new ContentBuilder<T>(builder.Fixture).Move(destination);
+            where T : IContentData => new ContentBuilder<T>(builder.Fixture).Move(destination);
 
         #endregion
     }

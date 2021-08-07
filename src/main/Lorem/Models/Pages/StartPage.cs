@@ -1,4 +1,5 @@
-﻿using EPiServer.DataAnnotations;
+﻿using EPiServer.Core;
+using EPiServer.DataAnnotations;
 
 namespace Lorem.Models.Pages
 {
@@ -6,5 +7,6 @@ namespace Lorem.Models.Pages
     public class StartPage
         : SitePage
     {
+        public virtual ContentArea ContentArea {get; set;}
     }
 }

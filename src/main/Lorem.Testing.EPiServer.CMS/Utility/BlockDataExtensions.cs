@@ -8,5 +8,10 @@ namespace Lorem.Testing.EPiServer.CMS.Utility
         {
             return ((IContent)block).ContentLink;
         }
+
+        public static ContentReference GetParentLink(this BlockData block)
+        {
+            return ((IContent)block).ParentLink;
+        }
     }
 }

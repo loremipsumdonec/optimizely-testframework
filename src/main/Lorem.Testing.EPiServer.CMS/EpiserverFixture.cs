@@ -1,4 +1,5 @@
-﻿using EPiServer.Core;
+﻿using EPiServer;
+using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
@@ -21,6 +22,22 @@ namespace Lorem.Testing.EPiServer.CMS
         public List<IContent> Contents { get; set; } = new List<IContent>();
 
         public List<IContent> Latest { get; set; } = new List<IContent>();
+
+        public List<IContent> GetLatestAs(CultureInfo culture)
+        {
+            var repository = GetInstance<IContentLoader>();
+
+            List<IContent> latest = new List<IContent>();
+
+            foreach(var content in Latest)
+            {
+                latest.Add(
+                    repository.Get<IContent>(content.ContentLink.ToReferenceWithoutVersion(), culture)
+                );
+            }
+
+            return latest;
+        }
 
         public void Add(IEnumerable<IContent> contents)
         {

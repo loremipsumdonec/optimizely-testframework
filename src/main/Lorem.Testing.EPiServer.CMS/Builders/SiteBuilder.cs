@@ -41,6 +41,32 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
             return this;
         }
 
+        public ISiteBuilder<T> CreateSite(string name, string url)
+        {
+            Enable(Fixture.Cultures);
+
+            var startPage = Fixture.Latest
+                .Where(p => p is PageData)
+                .Select(p => (PageData)p)
+                .LastOrDefault();
+
+            if (startPage == null)
+            {
+                throw new InvalidOperationException("Could not find a page to be used as start page");
+            }
+
+            var command = new CreateSite(
+                name,
+                new Uri(url),
+                startPage.ContentLink,
+                Fixture.Cultures[0]
+            );
+
+            Fixture.Site = command.Execute();
+
+            return this;
+        }
+
         public void Enable(IEnumerable<CultureInfo> cultures)
         {
             foreach(var culture in cultures)

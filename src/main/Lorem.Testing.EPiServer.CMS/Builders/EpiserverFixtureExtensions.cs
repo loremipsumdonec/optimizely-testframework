@@ -5,10 +5,13 @@ using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
 {
-    public static class EpiserverFixturePageBuilder
+    public static class EpiserverFixtureExtensions
     {
         public static ISiteBuilder<T> CreateSite<T>(this EpiserverFixture fixture, Action<T> build = null) where T : PageData
             => new PageBuilder<T>(fixture).Create<T>(build).CreateSite(fixture);
+
+        public static ISiteBuilder<T> CreateSite<T>(this EpiserverFixture fixture, string name, string url, Action<T> build = null) where T : PageData
+            => new PageBuilder<T>(fixture).Create<T>(build).CreateSite(fixture, name, url);
 
         public static ISiteBuilder<T> CreateSite<T>(this EpiserverFixture fixture, CultureInfo[] cultures,  Action<T> build = null) where T : PageData
         {
@@ -42,6 +45,9 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
             return new PageBuilder<T>(fixture);
         }
+
+        public static IBlockBuilder<TBlockType> CreateBlock<TBlockType>(this EpiserverFixture fixture, Action<TBlockType> build = null)
+            where TBlockType : BlockData => new BlockBuilder<TBlockType>(fixture).CreateBlock(build);
 
         public static IBlockBuilder<TBlockType> CreateBlock<TBlockType, TPageType>(this EpiserverFixture fixture, Action<TBlockType, TPageType> build)
             where TBlockType : BlockData where TPageType : PageData

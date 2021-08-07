@@ -30,7 +30,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
         public bool ForceDelete { get; set; }
 
-        public void Execute()
+        public IContent Execute()
         {
             if (ForceDelete)
             {
@@ -44,7 +44,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                     true
                 );
 
-                return;
+                return null;
             }
 
             _repository.Move(
@@ -53,6 +53,8 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                 AccessLevel.NoAccess,
                 AccessLevel.NoAccess
             );
+
+            return (IContent)_repository.Get<ContentData>(Content.ContentLink).CreateWritableClone();
         }
 
         private void Delete(MediaData mediaData)

@@ -6,18 +6,24 @@ namespace Xunit
 {
     public partial class Assert
     {
-        public static void IsPublished(IEnumerable<IContent> contents)
+        public static void IsPublished(IEnumerable<IContentData> contents)
         {
-            foreach(var content in contents) 
+            foreach(var content in contents)
             {
                 IsPublished(content);
             }
         }
 
-        public static void IsPublished(IContent content)
+        public static void IsPublished(IContentData content)
         {
             var repository = ServiceLocator.Current.GetInstance<IPublishedStateAssessor>();
-            True(repository.IsPublished(content, PagePublishedStatus.Published), $"Content {content.Name} with type {content.GetType()} is not published");
+            True(repository.IsPublished((IContent)content, PagePublishedStatus.Published), $"Content is not published");
+        }
+
+        public static void IsExpired(IContentData content)
+        {
+            var repository = ServiceLocator.Current.GetInstance<IPublishedStateAssessor>();
+            True(!repository.IsPublished((IContent)content, PagePublishedStatus.Published), $"Content has not expired");
         }
     }
 }

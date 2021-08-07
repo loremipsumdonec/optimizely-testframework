@@ -1,5 +1,6 @@
 ﻿using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace Lorem.Testing.EPiServer.CMS.Test.Services
         {
             Engine = engine;
             Engine.Start();
+
+            Register("episerver.site.name", "Lorem");
+            Register("episerver.site.url", new Uri("http://localhost:65099/"));
 
             Cultures.Add(CultureInfo.GetCultureInfo("en"));
         }
