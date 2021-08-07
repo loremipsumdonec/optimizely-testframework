@@ -14,7 +14,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
     internal class CreatePage
     {
         private readonly IContentRepository _repository;
-        private readonly ToggleContextValidationService _service;
 
         public CreatePage(ContentType contentType, ContentReference parent, string name)
             : this(

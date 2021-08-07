@@ -15,7 +15,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
     internal class CreateBlock
     {
         private readonly IContentRepository _repository;
-        private readonly ToggleContextValidationService _service;
         private readonly ContentAssetHelper _helper;
 
         public CreateBlock(ContentType contentType, ContentReference parent, string name)
