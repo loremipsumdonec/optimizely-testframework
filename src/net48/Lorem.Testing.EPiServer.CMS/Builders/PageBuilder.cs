@@ -3,6 +3,7 @@ using Lorem.Testing.EPiServer.CMS.Commands;
 using Lorem.Testing.EPiServer.CMS.Utility;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
@@ -10,7 +11,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
     public class PageBuilder<T>
         : FixtureBuilder<T>, IPageBuilder<T> where T : PageData
     {
-        private readonly List<PageData> _pages = new List<PageData>();
+        private List<PageData> _pages = new List<PageData>();
 
         public PageBuilder(EpiserverFixture fixture)
             : base(fixture)
@@ -48,15 +49,34 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         {
             foreach(var content in Fixture.Contents
                 .Where(c => c is TPageType)
-                .Select(c => c as TPageType))
+                .Select(c => (TPageType)c))
             {
-                var command = new UpdateContent(content);
-                command.Build = p => build.Invoke((TPageType)p, Fixture.Latest.Select(c=> (T)c));
+                foreach(var culture in Fixture.Cultures)
+                {
+                    var latest = Fixture.GetLatestAs(culture);
 
-                command.Execute();
+                    Update(
+                        content,
+                        culture,
+                        p => build.Invoke((TPageType)p, Fixture.GetLatestAs(culture).Select(c => (T)c))
+                    );
+                }
             }
 
             return new PageBuilder<T>(Fixture);
+        }
+
+        private void Update(PageData page, CultureInfo culture, Action<object> build = null)
+        {
+            var command = new UpdateContent(page)
+            {
+                Culture = culture,
+                Build = build
+            };
+
+            PageData content = (PageData)command.Execute();
+
+            Add(content);
         }
 
         public IPageBuilder<T> Update(T page)
@@ -70,7 +90,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         public IPageBuilder<TPageType> Create<TPageType>(Action<TPageType> build = null) 
             where TPageType : PageData
         {
-            Create(GetParent(), build);
+            Create(GetParent(), build: build);
 
             return new PageBuilder<TPageType>(Fixture, _pages);
         }
@@ -93,7 +113,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                     continue;
                 }
 
-                Create<TPageType>(parent, p => build.Invoke(p, index));
+                Create<TPageType>(parent, build: p => build.Invoke(p, index));
             }
 
             return new PageBuilder<TPageType>(Fixture, _pages);
@@ -116,7 +136,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                     parent = _pages.Last().ContentLink;
                 }
 
-                Create(parent, build);
+                Create(parent, build:build);
             }
 
             return new PageBuilder<TPageType>(Fixture, _pages);
@@ -160,20 +180,61 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
             return parent;
         }
 
-        private void Create<TPageType>(ContentReference parent, Action<TPageType> build = null)
+        private void Create<TPageType>(ContentReference parent, CultureInfo culture = null, Action<TPageType> build = null)
+            where TPageType : PageData
         {
-            var command = new CreatePage(
-                Fixture.GetContentType(typeof(TPageType)),
-                parent,
-                IpsumGenerator.Generate(1,3, false)
-            );
+            TPageType page = default;
 
-            if (build != null)
+            if(Fixture.Cultures.Count == 0)
             {
-                command.Build = p => build.Invoke((TPageType)p);
+                throw new InvalidOperationException("Need atleast one culture");
             }
 
-            _pages.Add(command.Execute());
+            List<CultureInfo> cultures = new List<CultureInfo>(Fixture.Cultures);
+
+            if(culture != null)
+            {
+                cultures.Clear();
+                cultures.Add(culture);
+            }
+
+            foreach(var c in cultures)
+            {
+                if(page is null)
+                {
+                    var command = new CreatePage(
+                        Fixture.GetContentType(typeof(TPageType)),
+                        parent,
+                        IpsumGenerator.Generate(1, 3, false)
+                    );
+
+                    command.Culture = c;
+
+                    if (build != null)
+                    {
+                        command.Build = p => build.Invoke((TPageType)p);
+                    }
+
+                    page = (TPageType)command.Execute();
+                    Add(page);
+
+                    continue;
+                }
+
+                if (build == null)
+                {
+                    Update(page, c, null);
+                    continue;
+                }
+
+                Update((T)(PageData)page, c, p => build.Invoke((TPageType)(PageData)p));
+            }
+        }
+
+        private void Add(PageData page) 
+        {
+            _pages = _pages.Where(p => !p.ContentGuid.Equals(page.ContentGuid)).ToList();
+            _pages.Add(page);
         }
     }
 }

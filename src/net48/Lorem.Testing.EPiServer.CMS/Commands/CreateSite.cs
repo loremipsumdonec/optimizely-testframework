@@ -1,5 +1,4 @@
 ﻿using EPiServer.Core;
-using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 using System;
@@ -10,7 +9,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
     public class CreateSite
     {
         private readonly ISiteDefinitionRepository _repository;
-        private readonly ILanguageBranchRepository _languageBranchRepository;
 
         public CreateSite(string name, Uri url, ContentReference startPage, CultureInfo language)
             : this(
@@ -18,8 +16,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                   url,
                   startPage,
                   language,
-                  ServiceLocator.Current.GetInstance<ISiteDefinitionRepository>(),
-                  ServiceLocator.Current.GetInstance<ILanguageBranchRepository>()
+                  ServiceLocator.Current.GetInstance<ISiteDefinitionRepository>()
             )
         {
         }
@@ -29,8 +26,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             Uri url,
             ContentReference startPage,
             CultureInfo language,
-            ISiteDefinitionRepository repository,
-            ILanguageBranchRepository languageBranchRepository
+            ISiteDefinitionRepository repository
         )
         {
             StartPage = startPage;
@@ -38,7 +34,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             Name = name;
             Url = url;
             _repository = repository;
-            _languageBranchRepository = languageBranchRepository;
         }
 
         public string Name { get; set; }
@@ -52,7 +47,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
         public SiteDefinition Execute()
         {
             var site = CreateSiteDefinition();
-            EnableLanguages();
             AddHosts(site);
 
             return site;
@@ -70,21 +64,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             _repository.Save(site);
 
             return site;
-        }
-
-        private void EnableLanguages()
-        {
-            foreach (var branch in _languageBranchRepository.ListAll())
-            {
-                if (branch.Culture.Equals(Language))
-                {
-                    _languageBranchRepository.Enable(Language);
-                }
-                else if (branch.Enabled)
-                {
-                    _languageBranchRepository.Disable(branch.Culture);
-                }
-            }
         }
 
         private void AddHosts(SiteDefinition site)

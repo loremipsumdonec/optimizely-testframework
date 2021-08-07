@@ -5,8 +5,6 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Security;
 using EPiServer.ServiceLocation;
-using EPiServer.Validation;
-using Lorem.Testing.EPiServer.CMS.Services;
 using System;
 using System.Globalization;
 
@@ -15,16 +13,14 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
     internal class CreateBlock
     {
         private readonly IContentRepository _repository;
-        private readonly ToggleContextValidationService _service;
         private readonly ContentAssetHelper _helper;
 
         public CreateBlock(ContentType contentType, ContentReference parent, string name)
             : this(
-                  contentType, 
-                  parent, 
-                  name, 
+                  contentType,
+                  parent,
+                  name,
                   ServiceLocator.Current.GetInstance<IContentRepository>(),
-                  ServiceLocator.Current.GetInstance<IValidationService>(),
                   ServiceLocator.Current.GetInstance<ContentAssetHelper>()
             )
         {
@@ -35,7 +31,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             ContentReference parent,
             string name,
             IContentRepository repository,
-            IValidationService service,
             ContentAssetHelper helper)
         {
             ContentType = contentType;
@@ -43,7 +38,6 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             Name = name;
             
             _repository = repository;
-            _service = (ToggleContextValidationService)service;
             _helper = helper;
         }
 
@@ -68,10 +62,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
             if(Build != null)
             {
-                _service.Enabled = false;
-                Save(content);
-                _service.Enabled = true;
-
+                Save(content, SaveAction.SkipValidation | SaveAction.Default);
                 Build(content);
             }
 
@@ -80,12 +71,14 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
         private ContentReference GetAssetFolder()
         {
-            if (HasAssetFolder)
+            var folder = _helper.GetOrCreateAssetFolder(Parent);
+
+            if(folder == null)
             {
                 return Parent;
             }
 
-            return _helper.GetOrCreateAssetFolder(Parent).ContentLink;
+            return folder.ContentLink;
         }
 
         private IContent GetDefault(ContentReference parent)
@@ -96,11 +89,11 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                     Language);
         }
 
-        private BlockData Save(IContent content)
+        private BlockData Save(IContent content, SaveAction saveAction = SaveAction.Publish)
         {
             var contentReference = _repository.Save(
                 content,
-                SaveAction,
+                saveAction,
                 AccessLevel.NoAccess
             );
 

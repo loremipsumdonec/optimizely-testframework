@@ -1,12 +1,16 @@
 ﻿using EPiServer.Core;
 using Lorem.Testing.EPiServer.CMS.Commands;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
 {
     public class ContentBuilder<T>
-        : FixtureBuilder<T>, IContentBuilder<T> where T: IContent
+        : FixtureBuilder<T>, IContentBuilder<T> where T: IContentData
     {
+        private List<IContent> _contents = new List<IContent>();
+
         public ContentBuilder(EpiserverFixture fixture)
             : base(fixture)
         {
@@ -19,12 +23,38 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
         public IContentBuilder<T> Publish()
         {
-            return this;
+            foreach (var latest in Fixture.Latest)
+            {
+                var command = new UpdateContent(latest);
+                command.Build = p =>
+                {
+                    IVersionable content = (IVersionable)p;
+                    content.StartPublish = DateTime.Now.AddSeconds(-2);
+                    content.StopPublish = null;
+                };
+
+                Add(command.Execute());
+            }
+
+            return new ContentBuilder<T>(Fixture, _contents);
         }
 
         public IContentBuilder<T> Expire()
         {
-            return this;
+            foreach(var latest in Fixture.Latest) 
+            {
+                var command = new UpdateContent(latest);
+                command.Build = p =>
+                {
+                    IVersionable content = (IVersionable)p;
+                    content.StartPublish = DateTime.Now.AddSeconds(-2);
+                    content.StopPublish = DateTime.Now.AddSeconds(-1);
+                };
+
+                Add(command.Execute());
+            }
+
+            return new ContentBuilder<T>(Fixture, _contents);
         }
 
         public IContentBuilder<T> Delete()
@@ -32,21 +62,25 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
             foreach(var latest in Fixture.Latest)
             {
                 var command = new DeleteContent(latest, false);
-                command.Execute();
+                var content = command.Execute();
+
+                Add(content);
             }
 
-            return this;
+            return new ContentBuilder<T>(Fixture, _contents);
         }
 
         public IContentBuilder<T> Move(ContentReference destination)
         {
             foreach (var latest in Fixture.Latest)
             {
-                var command = new DeleteContent(latest, false);
-                command.Execute();
+                var command = new MoveContent(latest, destination);
+                var content = command.Execute();
+
+                Add(content);
             }
 
-            return this;
+            return new ContentBuilder<T>(Fixture, _contents);
         }
 
         public void ForceDelete()
@@ -60,6 +94,17 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
             }
 
             Fixture.Latest.Clear();
+        }
+
+        private void Add(IContent content)
+        {
+            if(content == null)
+            {
+                return;
+            }
+
+            _contents = _contents.Where(p => !p.ContentGuid.Equals(content.ContentGuid)).ToList();
+            _contents.Add(content);
         }
     }
 }

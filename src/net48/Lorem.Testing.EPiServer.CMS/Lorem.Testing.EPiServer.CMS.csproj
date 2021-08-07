@@ -5,20 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Initialization\FileBlobProviderInitialization.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EPiServer.CMS" Version="11.15.1" />
     <PackageReference Include="EPiServer.CMS.AspNet" Version="11.20.4" />
     <PackageReference Include="EPiServer.CMS.TinyMce" Version="2.10.1" />
     <PackageReference Include="EPiServer.CMS.UI" Version="11.35.3" />
     <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="11.35.3" />
     <PackageReference Include="EPiServer.Framework" Version="11.20.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="TestFrameworks\" />
   </ItemGroup>
 
   <ItemGroup>

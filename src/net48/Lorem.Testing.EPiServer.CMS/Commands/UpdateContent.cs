@@ -4,6 +4,8 @@ using EPiServer.DataAccess;
 using EPiServer.Security;
 using EPiServer.ServiceLocation;
 using System;
+using System.Globalization;
+using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Commands
 {
@@ -29,22 +31,42 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
         public IContent Content { get; set; }
 
+        public CultureInfo Culture { get; set; }
+
         public SaveAction SaveAction { get; set; } = SaveAction.Publish;
 
         public Action<object> Build { get; set; }
 
         public IContent Execute()
         {
-            Build?.Invoke(Content);
-            var content = Save();
+            IContent content = Content;
 
-            return (IContent)content.CreateWritableClone();
+            if(Culture != null && content is ILocalizable localizable)
+            {
+                if(!localizable.Language.Equals(Culture)
+                    && localizable.ExistingLanguages.Any(c => c.Equals(Culture)))
+                {
+                    content = (IContent)_repository.Get<ContentData>(
+                        content.ContentLink.ToReferenceWithoutVersion(),
+                        Culture
+                    ).CreateWritableClone();
+                }
+                else
+                {
+                    content = _repository.CreateLanguageBranch<IContent>(Content.ContentLink, Culture);
+                    content.Name = Content.Name;
+                }
+            }
+
+            Build?.Invoke(content);
+
+            return (IContent)Save(content).CreateWritableClone();
         }
 
-        private ContentData Save()
+        private ContentData Save(IContent content)
         {
             var contentReference = _repository.Save(
-                Content,
+                content,
                 SaveAction,
                 AccessLevel.NoAccess
             );

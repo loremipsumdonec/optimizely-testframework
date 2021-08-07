@@ -1,0 +1,28 @@
+name: run_tests_net48
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+defaults:
+  run:
+    working-directory: ./src/net48
+
+jobs:
+  test:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: restore dependencies
+      run: nuget restore
+
+    - name: build
+      run: msbuild build
+
+    - name: test
+      run: vstest.console.exe Lorem.Testing.EPiServer.CMS.Test\bin\Debug\net48\Lorem.Testing.EPiServer.CMS.Test.dll /TestAdapterPath:Lorem.Testing.EPiServer.CMS.Test\bin\Debug\net48\

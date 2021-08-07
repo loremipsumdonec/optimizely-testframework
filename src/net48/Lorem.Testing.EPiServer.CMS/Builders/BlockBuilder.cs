@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
 {
-
     public class BlockBuilder<T>
         : FixtureBuilder<T>, IBlockBuilder<T> where T: BlockData
     {
@@ -50,13 +49,25 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
         private ContentReference GetParent()
         {
-            ContentReference parent = Fixture.Site.SiteAssetsRoot;
+            ContentReference parent = ContentReference.GlobalBlockFolder;
+
+            if(Fixture.Site != null)
+            {
+                parent = Fixture.Site.SiteAssetsRoot;
+            }
 
             var page = Fixture.Latest.LastOrDefault(p => p is PageData);
 
             if (page != null)
             {
                 parent = page.ContentLink;
+            }
+
+            var block = Fixture.Latest.LastOrDefault(p => p is BlockData);
+
+            if (block != null)
+            {
+                parent = block.ParentLink;
             }
 
             return parent;

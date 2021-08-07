@@ -11,12 +11,12 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 {
     internal class CreateUser
     {
-        public CreateUser(string username, string password, string email)
+        public CreateUser(string username, string password, string email, params string[] roles)
         {
             Username = username;
             Password = password;
             Email = email;
-            Roles = new List<string>();
+            Roles = new List<string>(roles);
         }
 
         public string Username { get; set; }
@@ -43,7 +43,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                 if (!store.Users.Any(x => x.UserName == Username))
                 {
                     ApplicationUser user = Create(Username, Password, Email, store);
-                    AddRolesToUser(new string[] { "WebAdmins", "WebEditors", "Administrators" }, user, store, connectionString);
+                    AddRolesToUser(Roles, user, store, connectionString);
 
                     store.UpdateAsync(user)
                         .GetAwaiter()

@@ -52,3 +52,10 @@
 /src/main/Lorem.Testing.EPiServer.CMS.Test/obj
 /src/main/Lorem.Testing.EPiServer.CMS/.vs/Lorem.Testing.EPiServer.CMS/DesignTimeBuild
 /src/main/Lorem.Testing.EPiServer.CMS/modules/_protected
+/src/net48/.vs/Lorem.Testing.EPiServer.CMS
+/src/net48/Lorem/bin
+/src/net48/Lorem/obj
+/src/net48/Lorem/Lorem.csproj.user
+/src/net48/Lorem.Testing.EPiServer.CMS.Test/bin/Debug/net48
+/src/net48/Lorem.Testing.EPiServer.CMS.Test/obj
+/src/net48/packages
