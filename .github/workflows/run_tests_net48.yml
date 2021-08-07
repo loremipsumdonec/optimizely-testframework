@@ -28,7 +28,7 @@ jobs:
       run: nuget restore
 
     - name: build
-      run: msbuild build
+      run: msbuild
 
     - name: test
       run: vstest.console.exe Lorem.Testing.EPiServer.CMS.Test\bin\Debug\net48\Lorem.Testing.EPiServer.CMS.Test.dll /TestAdapterPath:Lorem.Testing.EPiServer.CMS.Test\bin\Debug\net48\
