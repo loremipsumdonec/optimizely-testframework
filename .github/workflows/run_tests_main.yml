@@ -3,8 +3,12 @@ name: run_tests_main
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/main/**.cs'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'src/main/**.cs'
 
 defaults:
   run:

@@ -3,8 +3,12 @@ name: run_tests_net48
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/net48/**.cs'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'src/net48/**.cs'
 
 defaults:
   run:
