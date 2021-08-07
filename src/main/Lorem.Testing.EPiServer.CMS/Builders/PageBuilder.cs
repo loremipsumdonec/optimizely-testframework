@@ -11,7 +11,7 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
     public class PageBuilder<T>
         : FixtureBuilder<T>, IPageBuilder<T> where T : PageData
     {
-        private readonly List<PageData> _pages = new List<PageData>();
+        private List<PageData> _pages = new List<PageData>();
 
         public PageBuilder(EpiserverFixture fixture)
             : base(fixture)
@@ -26,23 +26,6 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         public IPageBuilder<T> Create(Action<T> build = null)
         {
             return Create<T>(build);
-        }
-
-        public IPageBuilder<T> Create(CultureInfo[] cultures, Action<T> build = null) 
-        {
-            foreach(var culture in cultures)
-            {
-                if(_pages.Count() == 0)
-                {
-                    Create(GetParent(), culture, build);
-                    continue;
-                }
-
-                //we need to translate this page here....
-
-            }
-
-            return new PageBuilder<T>(Fixture, _pages);
         }
 
         public IPageBuilder<T> Update(Action<T> build)
@@ -68,13 +51,36 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                 .Where(c => c is TPageType)
                 .Select(c => c as TPageType))
             {
-                var command = new UpdateContent(content);
-                command.Build = p => build.Invoke((TPageType)p, Fixture.Latest.Select(c=> (T)c));
-
-                command.Execute();
+                foreach(var culture in Fixture.Cultures)
+                {
+                    Update(
+                        (TPageType)(PageData)content,
+                        culture,
+                        p => build.Invoke((TPageType)(PageData)p, Fixture.Latest.Select(c => (T)c))
+                    );
+                }
             }
 
             return new PageBuilder<T>(Fixture);
+        }
+
+        public IPageBuilder<T> Update(PageData page, CultureInfo culture, Action<T> build = null)
+        {
+            var command = new UpdateContent(page)
+            {
+                Culture = culture
+            };
+
+            if (build != null)
+            {
+                command.Build = p => build.Invoke((T)p);
+            }
+
+            PageData content = (PageData)command.Execute();
+
+            Add(content);
+            
+            return this;
         }
 
         public IPageBuilder<T> Update(T page)
@@ -179,21 +185,60 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         }
 
         private void Create<TPageType>(ContentReference parent, CultureInfo culture = null, Action<TPageType> build = null)
+            where TPageType : PageData
         {
-            var command = new CreatePage(
-                Fixture.GetContentType(typeof(TPageType)),
-                parent,
-                IpsumGenerator.Generate(1,3, false)
-            );
+            TPageType page = default;
 
-            command.Culture = culture;
-
-            if (build != null)
+            if(Fixture.Cultures.Count == 0)
             {
-                command.Build = p => build.Invoke((TPageType)p);
+                throw new InvalidOperationException("Need atleast one culture");
             }
 
-            _pages.Add(command.Execute());
+            List<CultureInfo> cultures = new List<CultureInfo>(Fixture.Cultures);
+
+            if(culture != null)
+            {
+                cultures.Clear();
+                cultures.Add(culture);
+            }
+
+            foreach(var c in cultures)
+            {
+                if(page is null)
+                {
+                    var command = new CreatePage(
+                        Fixture.GetContentType(typeof(TPageType)),
+                        parent,
+                        IpsumGenerator.Generate(1, 3, false)
+                    );
+
+                    command.Culture = c;
+
+                    if (build != null)
+                    {
+                        command.Build = p => build.Invoke((TPageType)p);
+                    }
+
+                    page = (TPageType)command.Execute();
+                    Add(page);
+
+                    continue;
+                }
+
+                if (build == null)
+                {
+                    Update((T)(PageData)page, c);
+                    continue;
+                }
+
+                Update((T)(PageData)page, c, p => build.Invoke((TPageType)(PageData)p));
+            }
+        }
+
+        private void Add(PageData page) 
+        {
+            _pages = _pages.Where(p => !p.ContentGuid.Equals(page.ContentGuid)).ToList();
+            _pages.Add(page);
         }
     }
 }

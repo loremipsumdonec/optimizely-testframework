@@ -5,6 +5,7 @@ using EPiServer.Web;
 using Lorem.Testing.EPiServer.CMS.Commands;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS
@@ -14,6 +15,8 @@ namespace Lorem.Testing.EPiServer.CMS
         private Dictionary<string, object> _register = new Dictionary<string, object>();
 
         public SiteDefinition Site { get; set; }
+
+        public List<CultureInfo> Cultures { get; set; } = new List<CultureInfo>();
 
         public List<IContent> Contents { get; set; } = new List<IContent>();
 

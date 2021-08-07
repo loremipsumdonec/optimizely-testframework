@@ -14,6 +14,8 @@ namespace Alloy.Test.Services
             Engine = engine;
             Engine.Start();
 
+            Cultures.Add(CultureInfo.GetCultureInfo("en"));
+
             Register("episerver.site.name", "lorem");
             Register("episerver.site.url", new Uri("http://localhost:57728/"));
             Register("episerver.site.language", CultureInfo.GetCultureInfo("en"));

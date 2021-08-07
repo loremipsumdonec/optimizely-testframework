@@ -43,3 +43,10 @@
 /posts/test_framework_for_net5/example/Lorem/.vs/Lorem
 /posts/test_framework_for_net5/example/Lorem.Test/bin/Debug/net5.0
 /posts/test_framework_for_net5/example/Lorem.Test/obj
+/src/main/.vs/Lorem.Testing.EPiServer.CMS/v16
+/src/main/Lorem/.vs/Lorem
+/src/main/Lorem/bin/Debug/net5.0
+/src/main/Lorem/obj
+/src/main/Lorem.Testing.EPiServer.CMS/.vs/Lorem.Testing.EPiServer.CMS/v16/TestStore/0
+/src/main/Lorem.Testing.EPiServer.CMS.Test/bin/Debug/net5.0
+/src/main/Lorem.Testing.EPiServer.CMS.Test/obj
