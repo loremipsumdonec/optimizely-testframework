@@ -1,4 +1,4 @@
-name: run_test_main
+name: run_tests_main
 
 on:
   push:
@@ -11,19 +11,19 @@ defaults:
     working-directory: ./src/main
 
 jobs:
-  build:
+  test:
 
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Restore dependencies
+    - name: restore dependencies
       run: dotnet restore
-    - name: Build
+    - name: build
       run: dotnet build --no-restore
-    - name: Test
+    - name: test
       run: dotnet test --no-build --verbosity normal
