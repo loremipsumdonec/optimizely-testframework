@@ -1,9 +1,6 @@
-﻿using EPiServer;
-using EPiServer.Core;
-using EPiServer.Framework.Configuration;
+﻿using EPiServer.Framework.Configuration;
 using EPiServer.Framework.Initialization;
 using EPiServer.Security;
-using EPiServer.ServiceLocation;
 using Lorem.Testing.EPiServer.CMS.Commands;
 using System;
 using System.Collections.Generic;
@@ -59,28 +56,6 @@ namespace Lorem.Testing.EPiServer.CMS.TestFrameworks
                 new ClearCategories(),
                 new ClearSites()
             };
-        }
-
-        private void ClearContents()
-        {
-            var repository = ServiceLocator.Current.GetInstance<IContentRepository>();
-
-            var ignoreNames = new List<string>() {
-                "Root",
-                "Recycle Bin",
-                "SysGlobalAssets",
-                "SysContentAssets"
-            };
-
-            foreach (var content in repository.GetChildren<IContent>(ContentReference.RootPage))
-            {
-                if (ignoreNames.Contains(content.Name))
-                {
-                    continue;
-                }
-
-                repository.Delete(content.ContentLink, true, AccessLevel.NoAccess);
-            }
         }
 
         private void CreateCmsDatabase()

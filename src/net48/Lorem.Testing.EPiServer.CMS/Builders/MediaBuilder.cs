@@ -4,12 +4,15 @@ using Lorem.Testing.EPiServer.CMS.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
 {
     public class MediaBuilder<T>
         : FixtureBuilder<T>, IMediaBuilder<T> where T : MediaData
     {
+        private readonly List<MediaData> _medias = new List<MediaData>();
+
         public MediaBuilder(EpiserverFixture fixture)
             : base(fixture)
         {
@@ -20,13 +23,8 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
         {
         }
 
-        public IMediaBuilder<T> Upload<TMediaType>(string file, Action<TMediaType> build = null) where TMediaType : MediaData
+        public IMediaBuilder<TMediaType> Upload<TMediaType>(string file, Action<TMediaType> build = null) where TMediaType : MediaData
         {
-            if(Fixture.Site == null)
-            {
-                throw new InvalidOperationException("you need to create a site before uploading a file");
-            }
-
             if(!File.Exists(file))
             {
                 throw new FileNotFoundException($"could not find file {file}, verify that you have set \"Copy to Output Directory = Copy always\"");
@@ -36,20 +34,37 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                 IpsumGenerator.Generate(3, false).Replace(" ", "_"),
                 file,
                 Fixture.GetContentType(typeof(TMediaType)),
-                Fixture.Site.SiteAssetsRoot
-            )
-            {
-                HasAssetFolder = true,
-            };
+                GetParent()
+            );
 
             if (build != null)
             {
                 command.Build = p => build.Invoke((TMediaType)p);
             }
 
-            command.Execute();
+            var media = command.Execute();
+            _medias.Add(media);
 
-            return this;
+            return new MediaBuilder<TMediaType>(Fixture, _medias);
+        }
+
+        private ContentReference GetParent()
+        {
+            ContentReference parent = ContentReference.GlobalBlockFolder;
+
+            if (Fixture.Site != null)
+            {
+                parent = Fixture.Site.SiteAssetsRoot;
+            }
+
+            var page = Fixture.Latest.LastOrDefault(p => p is PageData);
+
+            if (page != null)
+            {
+                parent = page.ContentLink;
+            }
+
+            return parent;
         }
     }
 }

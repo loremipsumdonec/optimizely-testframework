@@ -40,6 +40,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resources\Images\from_dummy_image_600x400.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Images\from_dummy_image_600x400_b.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

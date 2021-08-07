@@ -142,30 +142,6 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
             return new PageBuilder<TPageType>(Fixture, _pages);
         }
 
-        public IPageBuilder<T> Upload<TMediaType>(IEnumerable<string> file, Action<TMediaType, T> build = null) where TMediaType : MediaData
-        {
-            foreach (T content in Fixture.Latest)
-            {
-                var command = new UploadFile(
-                    IpsumGenerator.Generate(3, false).Replace(" ", "_"),
-                    file.PickRandom(),
-                    Fixture.GetContentType(typeof(TMediaType)),
-                    content.ContentLink
-                );
-
-                if (build != null)
-                {
-                    command.Build = f => build.Invoke((TMediaType)f, content);
-                }
-
-                command.Execute();
-
-                Update(content);
-            }
-
-            return new PageBuilder<T>(Fixture);
-        }
-
         private ContentReference GetParent()
         {
             ContentReference parent = ContentReference.RootPage;
