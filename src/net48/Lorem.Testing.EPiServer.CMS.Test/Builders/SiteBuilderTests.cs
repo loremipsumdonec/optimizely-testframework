@@ -1,6 +1,7 @@
 ﻿using EPiServer.Web;
 using Lorem.Models.Pages;
 using Lorem.Testing.EPiServer.CMS.Builders;
+using Lorem.Testing.EPiServer.CMS.Commands;
 using Lorem.Testing.EPiServer.CMS.Test.Services;
 using System;
 using System.Linq;
@@ -43,6 +44,19 @@ namespace Lorem.Testing.EPiServer.CMS.Test.Builders
             Fixture.CreateSite<StartPage>(_ => buildInvoked = true);
 
             Assert.True(buildInvoked);
+        }
+    
+        [Fact]
+        public void ClearSites_AllSitesRemoved()
+        {
+            Fixture.CreateSite<StartPage>("donec", "http://lorem.local");
+
+            var command = new ClearSites();
+            command.Clear();
+
+            var repository = Fixture.GetInstance<ISiteDefinitionRepository>();
+
+            Assert.Empty(repository.List());
         }
     }
 }

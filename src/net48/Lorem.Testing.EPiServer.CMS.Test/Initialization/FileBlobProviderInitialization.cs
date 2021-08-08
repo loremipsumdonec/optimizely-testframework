@@ -1,6 +1,5 @@
 ﻿using EPiServer.Data;
 using EPiServer.Framework;
-using EPiServer.Framework.Blobs;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
 using System;
@@ -15,14 +14,10 @@ namespace Alloy.Test.Initialization
     {
         public void ConfigureContainer(ServiceConfigurationContext context)
         {
-            context.Services.AddSingleton<FileBlobProviderOptions>((_) =>
-            {
-                var options = new FileBlobProviderOptions();
-                options.Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs");
-                return options;
-            });
-
-            context.Services.AddBlobProvider<FileBlobProvider>("fileBlobProvider");
+            context.Services.AddFileBlobProvider(
+                "fileBlobProvider",
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs")
+            );
         }
 
         public void Initialize(InitializationEngine context)

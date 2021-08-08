@@ -56,6 +56,7 @@ namespace Lorem.Testing.EPiServer.CMS
             BeforeInitialize();
             Initialize();
             AfterInitialize();
+            Reset();
 
             _started = true;
         }

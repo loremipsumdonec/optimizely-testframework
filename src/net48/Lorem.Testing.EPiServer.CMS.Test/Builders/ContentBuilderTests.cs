@@ -1,10 +1,15 @@
-﻿using EPiServer.Core;
+﻿using EPiServer;
+using EPiServer.Core;
+using EPiServer.Framework.Blobs;
 using Lorem.Models.Blocks;
 using Lorem.Models.Media;
 using Lorem.Models.Pages;
 using Lorem.Testing.EPiServer.CMS.Builders;
+using Lorem.Testing.EPiServer.CMS.Commands;
 using Lorem.Testing.EPiServer.CMS.Test.Services;
 using Lorem.Testing.EPiServer.CMS.Utility;
+using System;
+using System.IO;
 using System.Linq;
 using Xunit;
 
@@ -22,6 +27,67 @@ namespace Lorem.Testing.EPiServer.CMS.Test.Builders
         public DefaultEpiserverFixture Fixture { get; set; }
 
         public Resources Resources { get; set; }
+
+        [Fact]
+        public void ClearContents_AllPagesDeleted()
+        {
+            var repository = Fixture.GetInstance<IContentRepository>();
+            Fixture.Create<StartPage>().Create<ArticlePage>();
+
+            Assert.Single(repository.GetChildren<StartPage>(ContentReference.RootPage));
+
+            var command = new ClearContents();
+            command.Clear();
+
+            
+            Assert.Empty(repository.GetChildren<StartPage>(ContentReference.RootPage));
+        }
+
+        [Fact]
+        public void ClearContents_AllBlocksDeleted()
+        {
+            var repository = Fixture.GetInstance<IContentRepository>();
+
+            Fixture.CreateBlock<HeroBlock>();
+            Assert.Single(repository.GetChildren<HeroBlock>(ContentReference.GlobalBlockFolder));
+
+            var command = new ClearContents();
+            command.Clear();
+
+            Assert.Empty(repository.GetChildren<HeroBlock>(ContentReference.GlobalBlockFolder));
+        }
+
+        [Fact]
+        public void ClearContents_AllMediasDeleted()
+        {
+            var repository = Fixture.GetInstance<IContentRepository>();
+
+            Fixture.Upload<ImageFile>(Resources.Get("/images").PickRandom());
+
+            Assert.Single(repository.GetChildren<ImageFile>(ContentReference.GlobalBlockFolder));
+
+            var command = new ClearContents();
+            command.Clear();
+
+            Assert.Empty(repository.GetChildren<ImageFile>(ContentReference.GlobalBlockFolder));
+        }
+
+        [Fact]
+        public void ClearContents_AllMediasFilesDeleted()
+        {
+            var repository = Fixture.GetInstance<IContentRepository>();
+            var registry = Fixture.GetInstance<IBlobProviderRegistry>();
+            var provider = (FileBlobProvider)registry.GetProvider(new Uri("//default"));
+
+            Fixture.Upload<ImageFile>(Resources.Get("/images").PickRandom());
+
+            Assert.Single(Directory.EnumerateDirectories(provider.Path));
+
+            var command = new ClearContents();
+            command.Clear();
+
+            Assert.Empty(Directory.EnumerateDirectories(provider.Path));
+        }
 
         [Fact]
         public void Delete_WithPage_PageInRecycleBin()

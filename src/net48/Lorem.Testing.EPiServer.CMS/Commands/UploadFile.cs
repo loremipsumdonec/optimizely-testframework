@@ -106,6 +106,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                     "There must be a registered FileBlobProvider with name fileBlobProvider to be able to handle MediaData. Create an IConfigurableModule in the test project and add a FileBlobProvider with context.Services.AddFileBlobProvider(\"fileBlobProvider\", \"path where you want to save the files\")"
                 );
             }
+
         }
 
         private ContentReference GetAssetFolder()
