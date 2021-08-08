@@ -35,4 +35,4 @@ jobs:
       run: msbuild
 
     - name: test
-      run: vstest.console.exe Lorem.Testing.EPiServer.CMS.Test\bin\Debug\net48\Lorem.Testing.EPiServer.CMS.Test.dll /TestAdapterPath:Lorem.Testing.EPiServer.CMS.Test\bin\Debug\net48\
+      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test\bin\Debug\net48\Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test\bin\Debug\net48\
