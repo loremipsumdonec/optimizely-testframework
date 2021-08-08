@@ -70,3 +70,9 @@
 /src/net5.0/Lorem.Testing.EPiServer.CMS/obj
 /src/net5.0/Lorem.Testing.EPiServer.CMS.Test/bin/Debug/net5.0
 /src/net5.0/Lorem.Testing.EPiServer.CMS.Test/obj
+/src/net48/.vs/Lorem.Testing.Optimizely.CMS
+/src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/Debug/net48
+/src/net48/Lorem.Testing.Optimizely.CMS.Test/obj
+/src/net48/Lorem.Testing.Optimizely.CMS/.vs
+/src/net48/Lorem.Testing.Optimizely.CMS/bin/Debug/net48
+/src/net48/Lorem.Testing.Optimizely.CMS/obj

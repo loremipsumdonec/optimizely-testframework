@@ -1,0 +1,14 @@
+﻿using EPiServer.DataAbstraction;
+using System;
+
+namespace Lorem.Testing.Optimizely.CMS
+{
+    public interface IEpiserverEngine
+    {
+        void Start();
+
+        void Stop();
+
+        ContentType GetContentType(Type type);
+    }
+}
