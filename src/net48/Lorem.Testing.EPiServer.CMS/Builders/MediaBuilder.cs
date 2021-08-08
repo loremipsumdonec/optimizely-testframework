@@ -64,6 +64,13 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
                 parent = page.ContentLink;
             }
 
+            var media = Fixture.Latest.LastOrDefault(p => p is MediaData);
+
+            if (media != null)
+            {
+                parent = media.ParentLink;
+            }
+
             return parent;
         }
     }
