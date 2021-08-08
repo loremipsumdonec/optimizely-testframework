@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem.Testing.Optimizely.CMS", "Lorem.Testing.EPiServer.CMS\Lorem.Testing.Optimizely.CMS.csproj", "{1450C948-EF8A-4EB1-9A62-1F6B464959B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem.Testing.Optimizely.CMS", "Lorem.Testing.Optimizely.CMS\Lorem.Testing.Optimizely.CMS.csproj", "{1450C948-EF8A-4EB1-9A62-1F6B464959B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem", "Lorem\Lorem.csproj", "{397F65F5-F45E-4A95-B4F4-E1518E8E12AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem.Testing.Optimizely.CMS.Test", "Lorem.Testing.EPiServer.CMS.Test\Lorem.Testing.Optimizely.CMS.Test.csproj", "{7DD481C2-9D42-4998-82C1-47CCC06C5EF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem.Testing.Optimizely.CMS.Test", "Lorem.Testing.Optimizely.CMS.Test\Lorem.Testing.Optimizely.CMS.Test.csproj", "{7DD481C2-9D42-4998-82C1-47CCC06C5EF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
