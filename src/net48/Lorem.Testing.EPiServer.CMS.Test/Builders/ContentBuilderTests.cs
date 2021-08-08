@@ -1,5 +1,6 @@
 ﻿using EPiServer.Core;
 using Lorem.Models.Blocks;
+using Lorem.Models.Media;
 using Lorem.Models.Pages;
 using Lorem.Testing.EPiServer.CMS.Builders;
 using Lorem.Testing.EPiServer.CMS.Test.Services;
@@ -15,9 +16,12 @@ namespace Lorem.Testing.EPiServer.CMS.Test.Builders
         public ContentBuilderTests(DefaultEpiserverEngine engine)
         {
             Fixture = new DefaultEpiserverFixture(engine);
+            Resources = new DefaultResources();
         }
 
         public DefaultEpiserverFixture Fixture { get; set; }
+
+        public Resources Resources { get; set; }
 
         [Fact]
         public void Delete_WithPage_PageInRecycleBin()
@@ -100,5 +104,49 @@ namespace Lorem.Testing.EPiServer.CMS.Test.Builders
 
             Assert.IsPublished(block);
         }
+
+
+        [Fact]
+        public void Expire_WithPublishedMedia_MediaExpired()
+        {
+            var media = Fixture.Upload<ImageFile>(Resources.Get("/images").PickRandom())
+                .Expire()
+                .First();
+
+            Assert.IsExpired(media);
+        }
+
+        [Fact]
+        public void Delete_WithMedia_MediaInRecycleBin()
+        {
+            var media = Fixture.Upload<ImageFile>(Resources.Get("/images").PickRandom())
+                .Delete()
+                .First();
+
+            Assert.Equal(ContentReference.WasteBasket, media.ParentLink);
+        }
+
+        [Fact]
+        public void Move_WithMedia_MediaMovedBackToGlobalBlockFolder()
+        {
+            var media = Fixture.Upload<ImageFile>(Resources.Get("/images").PickRandom())
+                .Delete()
+                .Move(ContentReference.GlobalBlockFolder)
+                .First();
+
+            Assert.Equal(ContentReference.GlobalBlockFolder, media.ParentLink);
+        }
+
+        [Fact]
+        public void Publish_WithExpiredMedia_MediaIsPublished()
+        {
+            var media = Fixture.Upload<ImageFile>(Resources.Get("/images").PickRandom())
+                .Expire()
+                .Publish()
+                .First();
+
+            Assert.IsPublished(media);
+        }
+
     }
 }
