@@ -4,8 +4,10 @@ using EPiServer.Framework.Blobs;
 using EPiServer.Security;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Lorem.Testing.EPiServer.CMS.Commands
 {
@@ -13,7 +15,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
         : IClearCommand
     {
         private readonly IContentRepository _repository;
-        private readonly FileBlobProviderOptions _fileBlobProviderOptions;
+        private readonly FileBlobProvider _fileBlobProvider;
 
         public ClearContents()
             : this(ContentReference.RootPage)
@@ -29,7 +31,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
                     "Recycle-Bin"
                 },
                 ServiceLocator.Current.GetInstance<IContentRepository>(),
-                ServiceLocator.Current.GetInstance<FileBlobProviderOptions>()
+                ServiceLocator.Current.GetInstance<IBlobProviderRegistry>()
             )
         {
         }
@@ -38,10 +40,10 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             ContentReference root,
             List<string> isASysType,
             IContentRepository repository,
-            FileBlobProviderOptions fileBlobProviderOptions)
+            IBlobProviderRegistry registry)
         {
             _repository = repository;
-            _fileBlobProviderOptions = fileBlobProviderOptions;
+            _fileBlobProvider = (FileBlobProvider)registry.GetProvider(new Uri("//default"));
 
             Root = root;
             IsASysType = isASysType;
@@ -77,12 +79,12 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
         private void ClearFiles() 
         {
-            if(Directory.Exists(_fileBlobProviderOptions.Path))
+            if(Directory.Exists(_fileBlobProvider.Path))
             {
-                Directory.Delete(_fileBlobProviderOptions.Path, true);
+                Directory.Delete(_fileBlobProvider.Path, true);
             }
             
-            Directory.CreateDirectory(_fileBlobProviderOptions.Path);
+            Directory.CreateDirectory(_fileBlobProvider.Path);
         }
 
         private void Delete(IContent content)

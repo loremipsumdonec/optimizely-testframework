@@ -27,6 +27,9 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
         #region Media
 
+        public static IMediaBuilder<TMediaType> Upload<TMediaType>(this IFixtureBuilder builder, string file, Action<TMediaType> build = null) 
+            where TMediaType : MediaData => new MediaBuilder<TMediaType>(builder.Fixture).Upload(file, build);
+
         #endregion
 
         #region Content

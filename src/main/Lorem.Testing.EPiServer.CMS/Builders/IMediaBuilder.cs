@@ -3,9 +3,14 @@ using System;
 
 namespace Lorem.Testing.EPiServer.CMS.Builders
 {
-    public interface IMediaBuilder<T>
-        where T : MediaData
+    public interface IMediaBuilder
+        : IFixtureBuilder
     {
-        IMediaBuilder<T> Upload<TMediaType>(string file, Action<TMediaType> build = null) where TMediaType : MediaData;
+    }
+
+    public interface IMediaBuilder<T>
+        : IFixtureBuilder<T> , IMediaBuilder where T : MediaData
+    {
+        IMediaBuilder<TMediaType> Upload<TMediaType>(string file, Action<TMediaType> build = null) where TMediaType : MediaData;
     }
 }

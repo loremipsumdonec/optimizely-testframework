@@ -62,5 +62,8 @@ namespace Lorem.Testing.EPiServer.CMS.Builders
 
             return blockBuilder;
         }
+
+        public static IMediaBuilder<TMediaType> Upload<TMediaType>(this EpiserverFixture fixture, string file, Action<TMediaType> build = null) where TMediaType : MediaData
+            => new MediaBuilder<TMediaType>(fixture).Upload(file, build);
     }
 }

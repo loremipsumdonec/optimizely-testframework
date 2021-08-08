@@ -1,5 +1,6 @@
 ﻿using EPiServer;
 using EPiServer.Core;
+using EPiServer.Data.Entity;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Framework.Blobs;
@@ -98,7 +99,7 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
         private void Validate()
         {
             /*
-            var options = ServiceLocator.Current.GetInstance<BlobOptions>();
+            var options = ServiceLocator.Current.GetInstance<IBlobOptions>();
 
             if (options.DefaultProvider != "fileBlobProvider")
             {
@@ -111,12 +112,14 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
 
         private ContentReference GetAssetFolder()
         {
-            if (HasAssetFolder)
+            var folder = _helper.GetOrCreateAssetFolder(Parent);
+
+            if (folder == null)
             {
                 return Parent;
             }
 
-            return _helper.GetOrCreateAssetFolder(Parent).ContentLink;
+            return folder.ContentLink;
         }
 
         private void Upload(MediaData mediaData)
@@ -134,15 +137,16 @@ namespace Lorem.Testing.EPiServer.CMS.Commands
             }
         }
 
-        private MediaData Save(IContent page)
+        private MediaData Save(IContent content, SaveAction saveAction = SaveAction.Publish)
         {
             var contentReference = _repository.Save(
-                page,
-                SaveAction,
+                content,
+                saveAction,
                 AccessLevel.NoAccess
             );
 
-            return (MediaData)_repository.Get<MediaData>(contentReference).CreateWritableClone();
+            var updated = (IReadOnly)_repository.Get<IContent>(contentReference);
+            return (MediaData)updated.CreateWritableClone();
         }
     }
 }
