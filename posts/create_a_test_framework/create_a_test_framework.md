@@ -11,11 +11,11 @@ repository_name: "episerver-testframework"
 repository_base: "https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/create_a_test_framework"
 
 title: "Test framework for Optimizely CMS 11"
-preamble: "In this post, I intend to show how to build a test framework for Optimizely CMS and how to write different types of integration tests to check its implementation."
+preamble: "As many probably know or have heard, it is good to perform some type of automatic testing to test important functions of your implementation. In this post, I intend to show how to build a test framework for Optimizely CMS."
 
 ---
 
-As many probably know or have heard, it is good to perform some type of automatic testing to check that important functions have not stopped working because of a recent change in the source code. There is a lack for this type of information on the internet so I thought I would simply contribute what I have learned.
+As many probably know or have heard, it is good to perform some type of automatic testing to check that important functions have not stopped working because of a recent change. There is a lack for this type of information on the internet so I thought I would simply contribute what I have learned.
 
 ##  The goal
 
