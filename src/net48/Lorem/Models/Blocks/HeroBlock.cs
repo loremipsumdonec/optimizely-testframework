@@ -6,6 +6,6 @@ namespace Lorem.Models.Blocks
     public class HeroBlock
         : SiteBlock
     {
-        public virtual string Heading { get; set; }
+        public virtual string Preamble { get; set; }
     }
 }

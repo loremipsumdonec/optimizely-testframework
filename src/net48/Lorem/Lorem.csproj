@@ -258,6 +258,7 @@
     <Compile Include="Models\Blocks\HeroBlockWithRequired.cs" />
     <Compile Include="Models\Blocks\SiteBlock.cs" />
     <Compile Include="Models\Media\ImageFile.cs" />
+    <Compile Include="Models\Media\SiteImageFile.cs" />
     <Compile Include="Models\Pages\ArticlePage.cs" />
     <Compile Include="Models\Pages\ArticlePageWithRequired.cs" />
     <Compile Include="Models\Pages\SitePage.cs" />
