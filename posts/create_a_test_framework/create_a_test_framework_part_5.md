@@ -77,20 +77,20 @@ It is important that you and your team decide how you want to write your test ca
 
 ## A real test case
 
-Now it is time to show a real test case that tests an implementation of a bread crumb function, the code for the test case is in the file BreadcrumbsServiceTest.cs and you can find the implementation in the BreadCrumbs directory in the repository.
+Now it is time to show a real test case that tests an implementation of a bread crumb function.
 
 > The test case uses the [xUnit](https://xunit.net/) function [shared test context](https://xunit.net/docs/shared-context)
 
 ```csharp
-[Collection("Episerver")]
+[Collection("Default")]
 public class BreadcrumbsServiceTest
 {
-    public BreadcrumbsServiceTest(IEpiserverFixture fixture) 
+    public BreadcrumbsServiceTest(DefaultEpiserverEngine engine) 
     {
-        Fixture = fixture;
+        Fixture = new DefaultEpiserverFixture(engine);
     }
     
-    public IEpiserverFixture Fixture {get; set;}
+    public EpiserverFixture Fixture {get; set;}
         
     [Fact]
     public void GetBreadCrumbs_OnePageInPathNotVisibleInBreadCrumb_HasExpectedCount()
