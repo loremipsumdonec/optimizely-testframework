@@ -215,7 +215,7 @@ public void StartWithEpiserverEngineFirstIteration_RunMultipleTimesNoUser_Single
 
 As you can see from the picture below, it takes around 18 seconds to run the test 3 times. Here it becomes clear that it takes time to run this type of test. 
 
-If we do a rough calculation and estimate that it takes on average 6 seconds to run a test case, then it will take around a total of 600 seconds (5 minutes) to run 100 test cases. That’s a long time. We will need to do something about this.
+If we do a rough calculation and estimate that it takes on average 6 seconds to run a test case, then it will take around a total of 600 seconds (10 minutes) to run 100 test cases. That’s a long time. We will need to do something about this.
 
 ![Episerver engine start and stop](./resources/episerver_engine_start_and_stop_test_case.png)
 

@@ -15,7 +15,7 @@ preamble: "As many probably know or have heard, it is good to perform some type 
 
 ---
 
-As many probably know or have heard, it is good to perform some type of automatic testing to check that important functions have not stopped working because of a recent change. There is a lack for this type of information on the internet so I thought I would simply contribute what I have learned.
+There is a lack for this type of information on the internet so I thought I would simply contribute what I have learned.
 
 ##  The goal
 
