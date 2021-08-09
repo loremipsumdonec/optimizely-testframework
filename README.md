@@ -1,11 +1,15 @@
-# Testing framework for Episerver Content Cloud
+# Testing framework for Optimizely CMS
 
-This is a project that is meant to show how to set up integration testing for Episerver Content Cloud.
+This is a project where I intend to gather information on how to work with integration testing for Optimizely CMS. I will create posts/tutorials and also add examples of code, as well as a framework that you can use to hopefully simplify it a bit.
 
-The project contains code and posts  that give a description of how to build your own test framework, but there is also code that you can use directly or adapt for your needs. I might post a nuget for the framework if you would like to use it directly.
+## Posts
 
-## .Net 5 public preview
+I have written a post that describes how to start with integration testing for Optimizely CMS 11.
 
-Now that there is a [.NET 5 Preview for CMS 12](https://world.optimizely.com/blogs/martin-ottosen/dates/2021/6/-net-5-public-preview/), I have also posted code that shows how to set up integration testing for it. 
+- https://www.tiff.se/optimizely/create-a-test-framework
 
-> But since it is a preview, there will certainly be a few changes.
+## Framework
+
+I have started a small framework that hopefully simplifies the process of starting and creating data in Optimizely CMS  so that you can then focus on writing clear test cases.
+
+> Will maybe create a nuget for this framework if there is interest in it.
