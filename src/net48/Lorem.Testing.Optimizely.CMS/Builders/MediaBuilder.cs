@@ -37,10 +37,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 GetParent()
             );
 
-            if (build != null)
-            {
-                command.Build = p => build.Invoke((TMediaType)p);
-            }
+            command.Build = CreateBuild(build);
 
             var media = command.Execute();
             _medias.Add(media);
@@ -72,6 +69,20 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             }
 
             return parent;
+        }
+
+        private Action<object> CreateBuild<TMediaType>(Action<TMediaType> build)
+            where TMediaType : MediaData
+        {
+            return p =>
+            {
+                foreach (var builder in Fixture.GetBuilders<TMediaType>())
+                {
+                    builder.Invoke(p);
+                }
+
+                build?.Invoke((TMediaType)p);
+            };
         }
     }
 }

@@ -212,6 +212,5 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 
             Assert.IsPublished(media);
         }
-
     }
 }

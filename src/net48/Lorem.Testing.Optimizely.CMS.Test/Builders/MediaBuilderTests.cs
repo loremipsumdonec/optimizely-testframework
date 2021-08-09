@@ -85,5 +85,30 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
                 Fixture.Contents[2].ParentLink
             );
         }
+
+        [Fact]
+        public void Upload_WhenSiteBlockHasBuilder_BuilderRun()
+        {
+            var heading = IpsumGenerator.Generate(1, 4, false);
+
+            Fixture.RegisterBuilder<SiteImageFile>(p => p.Heading = heading);
+
+            Fixture.Upload<ImageFile>(
+                Resources.Get("/images").PickRandom(),
+                p => Assert.Equal(heading, p.Heading)
+            );
+        }
+
+        [Fact]
+        public void Upload_WhenPageHasBuilder_BuilderRunFirst()
+        {
+            var alt = IpsumGenerator.Generate(12, 14, false);
+            Fixture.RegisterBuilder<ImageFile>(p => p.Alt = alt);
+
+            Fixture.Upload<ImageFile>(
+                Resources.Get("/images").PickRandom(),
+                p => Assert.Equal(alt, p.Alt)
+            );
+        }
     }
 }

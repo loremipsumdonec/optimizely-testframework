@@ -16,6 +16,7 @@ namespace Lorem.Testing.Optimizely.CMS
         public EpiserverEngine Engine { get; protected set; }
 
         private Dictionary<string, object> _register = new Dictionary<string, object>();
+        private Dictionary<Type, List<Action<object>>> _builders = new Dictionary<Type, List<Action<object>>>();
 
         public SiteDefinition Site { get; set; }
 
@@ -39,6 +40,31 @@ namespace Lorem.Testing.Optimizely.CMS
             }
 
             return latest;
+        }
+
+        public void RegisterBuilder<T>(Action<T> build) where T : IContentData
+        {
+            if (!_builders.ContainsKey(typeof(T)))
+            {
+                _builders.Add(typeof(T), new List<Action<object>>());
+            }
+
+            _builders[typeof(T)].Add(p=> build.Invoke((T)p));
+        }
+
+        public IEnumerable<Action<object>> GetBuilders<T>() where T : IContentData
+        {
+            List<Action<object>> builders = new List<Action<object>>();
+
+            foreach(var kv in _builders)
+            {
+                if(kv.Key.IsAssignableFrom(typeof(T)))
+                {
+                    builders.AddRange(kv.Value);
+                }
+            }
+
+            return builders;
         }
 
         public void Add(IEnumerable<IContent> contents)

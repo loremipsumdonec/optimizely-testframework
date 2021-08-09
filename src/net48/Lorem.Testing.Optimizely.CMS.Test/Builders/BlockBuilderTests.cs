@@ -96,5 +96,24 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
                 Fixture.Contents[2].ParentLink
             );
         }
+
+        [Fact]
+        public void CreateBlock_WhenSiteBlockHasBuilder_BuilderRun()
+        {
+            var heading = IpsumGenerator.Generate(1, 4, false);
+
+            Fixture.RegisterBuilder<SiteBlock>(p => p.Heading = heading);
+
+            Fixture.CreateBlock<HeroBlock>(p => Assert.Equal(heading, p.Heading));
+        }
+
+        [Fact]
+        public void CreateBlock_WhenPageHasBuilder_BuilderRunFirst()
+        {
+            var preamble = IpsumGenerator.Generate(12, 14, false);
+            Fixture.RegisterBuilder<HeroBlock>(p => p.Preamble = preamble);
+
+            Fixture.CreateBlock<HeroBlock>(p => Assert.Equal(preamble, p.Preamble));
+        }
     }
 }

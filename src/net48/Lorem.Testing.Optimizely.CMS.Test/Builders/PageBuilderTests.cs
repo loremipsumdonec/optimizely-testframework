@@ -280,5 +280,23 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 
             Assert.Empty(cultures);
         }
+
+        [Fact]
+        public void Create_WhenSitePageHasBuilder_BuilderRun()
+        {
+            var heading = IpsumGenerator.Generate(1, 4, false);
+
+            Fixture.RegisterBuilder<SitePage>(p => p.Heading = heading);
+
+            Fixture.Create<ArticlePage>(p => Assert.Equal(heading, p.Heading));
+        }
+
+        [Fact]
+        public void Create_WhenPageHasBuilder_BuilderRunFirst()
+        {
+            Fixture.RegisterBuilder<StartPage>(p => p.ContentArea = new ContentArea());
+
+            Fixture.Create<StartPage>(p => Assert.NotNull(p.ContentArea));
+        }
     }
 }

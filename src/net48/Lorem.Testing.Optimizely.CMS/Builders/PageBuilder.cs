@@ -185,11 +185,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                     );
 
                     command.Culture = c;
-
-                    if (build != null)
-                    {
-                        command.Build = p => build.Invoke((TPageType)p);
-                    }
+                    command.Build = CreateBuild(build);
 
                     page = (TPageType)command.Execute();
                     Add(page);
@@ -205,6 +201,20 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
 
                 Update((T)(PageData)page, c, p => build.Invoke((TPageType)(PageData)p));
             }
+        }
+
+        private Action<object> CreateBuild<TPageType>(Action<TPageType> build)
+            where TPageType : PageData
+        {
+            return p =>
+            {
+                foreach (var builder in Fixture.GetBuilders<TPageType>())
+                {
+                    builder.Invoke(p);
+                }
+
+                build?.Invoke((TPageType)p);
+            };
         }
 
         private void Add(PageData page) 

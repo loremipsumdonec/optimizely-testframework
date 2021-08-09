@@ -39,10 +39,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 IpsumGenerator.Generate(1, 3, false)
             );
 
-            if (build != null)
-            {
-                command.Build = p => build.Invoke((TBlockType)p);
-            }
+            command.Build = CreateBuild(build);
 
             _blocks.Add(command.Execute());
         }
@@ -71,6 +68,20 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             }
 
             return parent;
+        }
+
+        private Action<object> CreateBuild<TBlockType>(Action<TBlockType> build)
+            where TBlockType : BlockData
+        {
+            return p =>
+            {
+                foreach (var builder in Fixture.GetBuilders<TBlockType>())
+                {
+                    builder.Invoke(p);
+                }
+
+                build?.Invoke((TBlockType)p);
+            };
         }
     }
 }
