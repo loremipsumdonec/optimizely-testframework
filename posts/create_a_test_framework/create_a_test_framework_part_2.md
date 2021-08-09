@@ -122,7 +122,7 @@ public class NoneWebContextHostingEnvironment
 }
 ```
 
-The code below creates a new instance of `NoneWebContextHostingEnvironment` and registers it on ` EPiServer.Web.Hosting.GenericHostingEnvironment.Instance`. When you run the code, you will get a new error message that I think most Episerver developers has seen.
+The code below creates a new instance of `NoneWebContextHostingEnvironment` and registers it on ` EPiServer.Web.Hosting.GenericHostingEnvironment.Instance`. 
 
 ```csharp
 private string GetWebConfig()
@@ -150,12 +150,6 @@ public void StartEpiserver()
 
 	...
 }
-```
-
->  There is no database that Episerver can connect to.
-
-```bash
-System.Data.SqlClient.SqlException : Cannot open database "Lorem" requested by the login. The login failed.
 ```
 ## Create the database automatically
 
