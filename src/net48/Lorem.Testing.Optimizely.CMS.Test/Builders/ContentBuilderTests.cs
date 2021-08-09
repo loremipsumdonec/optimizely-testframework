@@ -171,7 +171,6 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
             Assert.IsPublished(block);
         }
 
-
         [Fact]
         public void Expire_WithPublishedMedia_MediaExpired()
         {
