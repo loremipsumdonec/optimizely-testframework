@@ -1,0 +1,21 @@
+name: nuget
+
+on:
+  create:
+    tags:
+      - v*
+
+defaults:
+  run:
+    working-directory: ./src
+
+jobs:
+  test:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
