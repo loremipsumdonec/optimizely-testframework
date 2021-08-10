@@ -89,3 +89,5 @@
 /src/net48/Lorem.Testing.Optimizely.CMS/bin
 /src/net48/Lorem.Min/bin
 /src/net48/Lorem.Min/obj
+/src/net48/Lorem.Min/App_Data/GeoLiteCity.dat
+/src/net48/Lorem.Min/App_Data/EPiServerErrors.log

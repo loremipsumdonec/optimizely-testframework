@@ -36,3 +36,6 @@ jobs:
 
     - name: test
       run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test\bin\Debug\net48\Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test\bin\Debug\net48\
+
+    - name: test-min
+      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Min\bin\Debug\net471\Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Min\bin\Debug\net471\
