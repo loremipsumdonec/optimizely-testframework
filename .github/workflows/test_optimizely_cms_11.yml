@@ -1,4 +1,4 @@
-name: run_tests_net48
+name: optimizely cms 11
 
 on:
   push:
