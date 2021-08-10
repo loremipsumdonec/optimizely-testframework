@@ -36,19 +36,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\Lorem\Web.config">
+      <Link>Web.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+
     <None Update="Resources\Images\from_dummy_image_600x400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Images\from_dummy_image_600x400_b.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Web.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy /Y $(ProjectDir)..\Lorem\Web.config $(ProjectDir)" />
-  </Target>
 
 </Project>
