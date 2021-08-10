@@ -4,13 +4,8 @@ using System.Collections.Generic;
 
 namespace Lorem.Testing.Optimizely.CMS.Builders
 {
-    public interface IPageBuilder
-        : IFixtureBuilder
-    {
-    }
-
     public interface IPageBuilder<T>
-        : IFixtureBuilder<T>, IPageBuilder where T : PageData
+        : IFixtureBuilder<T> where T : PageData
     {
         IPageBuilder<T> Create(Action<T> build = null);
 

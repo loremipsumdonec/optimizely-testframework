@@ -2,13 +2,8 @@
 
 namespace Lorem.Testing.Optimizely.CMS.Builders
 {
-    public interface IContentBuilder
-        : IFixtureBuilder
-    {
-    }
-
     public interface IContentBuilder<T>
-        : IFixtureBuilder<T>, IContentBuilder where T : IContentData
+        : IFixtureBuilder<T> where T : IContentData
     {
         IContentBuilder<T> Publish();
 
