@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net471</TargetFrameworks>
+    <TargetFrameworks>net48;net472;net471;net461</TargetFrameworks>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>loremipsumdonec</Authors>
     <PackageProjectUrl>https://github.com/loremipsumdonec/episerver-testframework</PackageProjectUrl>
@@ -10,7 +10,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net48' Or '$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="EPiServer.CMS" Version="11.15.1" />
     <PackageReference Include="EPiServer.CMS.AspNet" Version="11.20.4" />
     <PackageReference Include="EPiServer.CMS.TinyMce" Version="2.10.1" />
@@ -19,7 +19,7 @@
     <PackageReference Include="EPiServer.Framework" Version="11.20.4" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net471'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net472' Or '$(TargetFramework)'=='net471' Or '$(TargetFramework)'=='net461'">
     <PackageReference Include="EPiServer.CMS" Version="11.3.0" />
     <PackageReference Include="EPiServer.CMS.AspNet" Version="11.3.0" />
     <PackageReference Include="EPiServer.CMS.TinyMce" Version="1.1.0" />
