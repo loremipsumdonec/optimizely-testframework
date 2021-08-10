@@ -19,7 +19,12 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
         [Fact]
         public void CreateASimpleSiteForExploratoryTesting()
         {
-            Fixture.CreateUser("Administrator", "Administrator123!", "admin@supersecretpassword.io", "WebAdmins", "Administrators");
+            Fixture.CreateUser(
+                "Administrator",
+                "Administrator123!",
+                "admin@supersecretpassword.io",
+                "WebAdmins", "Administrators"
+            );
 
             Fixture.CreateSite<StartPage>()
                 .CreateMany<ArticlePage>(10);
