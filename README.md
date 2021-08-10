@@ -10,6 +10,8 @@ I have written a post that describes how to start with integration testing for O
 
 ## Framework
 
+[![optimizely cms 11](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml) [![optimizely cms 12](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml)
+
 I have started a small framework that hopefully simplifies the process of starting and creating data in Optimizely CMS  so that you can then focus on writing clear test cases.
 
 > Will maybe create a nuget for this framework if there is interest in it.
