@@ -8,6 +8,6 @@ namespace Lorem.Models.Blocks
         : SiteBlock
     {
         [Required]
-        public virtual string Heading { get; set; }
+        public override string Heading { get; set; }
     }
 }

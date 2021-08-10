@@ -10,6 +10,7 @@ using Xunit;
 namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 {
     [Collection("Default")]
+    [Trait("verification", "required")]
     public class MediaBuilderTests
     {
         public MediaBuilderTests(DefaultEpiserverEngine engine)

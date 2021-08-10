@@ -1,20 +1,28 @@
-﻿using EPiServer.Core;
-using Lorem.Models.Pages;
+﻿using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
 using Lorem.Testing.Optimizely.CMS.Test.Services;
-using Lorem.Testing.Optimizely.CMS.Utility;
 using Xunit;
 
 namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 {
     [Collection("Default")]
+    [Trait("type", "exploratory")]
     public class EpiserverFixtureTests
     {
         public EpiserverFixtureTests(DefaultEpiserverEngine engine)
         {
-            Fixture = new DefaultEpiserverFixture(engine);
+            Fixture = new ExploratoryEpiserverFixture(engine);
         }
 
-        public DefaultEpiserverFixture Fixture { get; set; }
+        public ExploratoryEpiserverFixture Fixture { get; set; }
+
+        [Fact]
+        public void CreateASimpleSiteForExploratoryTesting()
+        {
+            Fixture.CreateUser("Administrator", "Administrator123!", "admin@supersecretpassword.io", "WebAdmins", "Administrators");
+
+            Fixture.CreateSite<StartPage>()
+                .CreateMany<ArticlePage>(10);
+        }
     }
 }

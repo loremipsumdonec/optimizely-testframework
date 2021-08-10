@@ -83,3 +83,9 @@
 /src/net5.0/Lorem.Testing.Optimizely.CMS.Test/obj
 /src/net5.0/Lorem.Testing.Optimizely.CMS/obj
 /src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/Release/net48
+/src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/obj
+/src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/Debug/net471
+/src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/Web.config
+/src/net48/Lorem.Testing.Optimizely.CMS/bin
+/src/net48/Lorem.Min/bin
+/src/net48/Lorem.Min/obj

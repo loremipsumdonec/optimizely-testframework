@@ -11,6 +11,7 @@ using Xunit;
 namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 {
     [Collection("Default")]
+    [Trait("verification", "required")]
     public class BlockBuilderTests
     {
         public BlockBuilderTests(DefaultEpiserverEngine engine)
