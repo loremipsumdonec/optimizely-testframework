@@ -7,9 +7,9 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 {
     [Collection("Default")]
     [Trait("type", "exploratory")]
-    public class EpiserverFixtureTests
+    public class ExploratoryTests
     {
-        public EpiserverFixtureTests(DefaultEpiserverEngine engine)
+        public ExploratoryTests(DefaultEpiserverEngine engine)
         {
             Fixture = new ExploratoryEpiserverFixture(engine);
         }

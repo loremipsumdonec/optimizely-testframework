@@ -4,11 +4,11 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'src/net48/**.cs'
+      - 'src/net48/**.*'
   pull_request:
     branches: [ main ]
     paths:
-      - 'src/net48/**.cs'
+      - 'src/net48/**.*'
 
 defaults:
   run:
