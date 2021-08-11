@@ -6,6 +6,26 @@ on:
       - '*'
 
 jobs:
+  extract_version:
+    name: extract_version
+    runs-on: ubuntu-latest
+    steps:
+      - name: version
+        id: version
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+
+      - name: echo version
+        run: echo "version=${{steps.version.outputs.version}}"
+      - shell: bash
+        run: |
+           ${{steps.version.outputs.version}}> version.txt
+
+      - name: Upload version
+        uses: actions/upload-artifact@v1
+        with:
+          name: version
+          path: version.txt
+
   build_release:
     name: build_release
     runs-on: windows-latest
@@ -13,9 +33,17 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       
+      - name: download version
+        uses: actions/download-artifact@v1
+        with:
+          name: version
+
       - name: version
         id: version
-        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+        shell: bash
+        run: |
+          value=`cat version/version.txt`
+          echo ::set-output name=version::$value
 
       - name: echo version
         run: echo "version=${{steps.version.outputs.version}}"
