@@ -18,7 +18,7 @@ jobs:
         run: echo "version=${{steps.version.outputs.version}}"
       - shell: bash
         run: |
-           ${{steps.version.outputs.version}}> version.txt
+           "${{steps.version.outputs.version}}" > version.txt
 
       - name: Upload version
         uses: actions/upload-artifact@v1
