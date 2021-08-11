@@ -1,4 +1,6 @@
-﻿using EPiServer.Core;
+﻿using EPiServer;
+using EPiServer.Core;
+using Lorem.Models.Blocks;
 using Lorem.Models.Media;
 using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
@@ -75,6 +77,18 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
+        public void Upload_AfterCreateBlock_ImageIsInBlockAssetsFolder()
+        {
+            Fixture.CreateBlock<HeroBlock>()
+                .Upload<ImageFile>(Resources.Get("/images").PickRandom());
+
+            var helper = Fixture.GetInstance<ContentAssetHelper>();
+            var contentFolder = helper.GetAssetFolder(Fixture.Contents[0].ContentLink);
+
+            Assert.Equal(contentFolder.ContentLink, Fixture.Contents[1].ParentLink);
+        }
+
+        [Fact]
         public void Upload_ChainUploadAfterCreatePage_ImagesHasSameParent()
         {
             Fixture.Create<StartPage>()
@@ -110,6 +124,27 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
                 Resources.Get("/images").PickRandom(),
                 p => Assert.Equal(alt, p.Alt)
             );
+        }
+
+        [Fact]
+        public void Upload_WhenCreateMany_UploadImageForEachPage()
+        {
+            Fixture.CreateMany<ArticlePage>(3)
+                .Upload<ImageFile>(Resources.Get("/images").PickRandom());
+
+            var helper = Fixture.GetInstance<ContentAssetHelper>();
+            var loader = Fixture.GetInstance<IContentLoader>();
+
+            foreach(var articlePage in Fixture.Contents.Where(p=> p is ArticlePage))
+            {
+                var folder = helper.GetAssetFolder(articlePage.ContentLink);
+
+                var images = loader.GetChildren<ImageFile>(
+                    folder.ContentLink
+                );
+
+                Assert.Single(images);
+            }
         }
     }
 }

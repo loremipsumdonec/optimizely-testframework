@@ -4,7 +4,6 @@ using Lorem.Testing.Optimizely.CMS.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Lorem.Testing.Optimizely.CMS.Builders
 {
@@ -30,11 +29,16 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 throw new FileNotFoundException($"could not find file {file}, verify that you have set \"Copy to Output Directory = Copy always\"");
             }
 
+            if(Fixture.Latest.Count > 0)
+            {
+                return UploadWhenHasLatest(file, build);
+            }
+
             var command = new UploadFile(
-                IpsumGenerator.Generate(3, false).Replace(" ", "_"),
-                file,
-                Fixture.GetContentType(typeof(TMediaType)),
-                GetParent()
+               IpsumGenerator.Generate(3, false).Replace(" ", "_"),
+               file,
+               Fixture.GetContentType(typeof(TMediaType)),
+               GetParent()
             );
 
             command.Build = CreateBuild(build);
@@ -45,7 +49,28 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             return new MediaBuilder<TMediaType>(Fixture, _medias);
         }
 
-        private ContentReference GetParent()
+        private IMediaBuilder<TMediaType> UploadWhenHasLatest<TMediaType>(string file, Action<TMediaType> build) 
+            where TMediaType : MediaData
+        {
+            foreach (var latest in Fixture.Latest)
+            {
+                var command = new UploadFile(
+                   IpsumGenerator.Generate(3, false).Replace(" ", "_"),
+                   file,
+                   Fixture.GetContentType(typeof(TMediaType)),
+                   GetParent(latest)
+                );
+
+                command.Build = CreateBuild(build);
+
+                var media = command.Execute();
+                _medias.Add(media);
+            }
+
+            return new MediaBuilder<TMediaType>(Fixture, _medias);
+        }
+
+        private ContentReference GetParent(IContent content = null)
         {
             ContentReference parent = ContentReference.GlobalBlockFolder;
 
@@ -54,16 +79,17 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 parent = Fixture.Site.SiteAssetsRoot;
             }
 
-            var page = Fixture.Latest.LastOrDefault(p => p is PageData);
-
-            if (page != null)
+            if (content is PageData page)
             {
                 parent = page.ContentLink;
             }
 
-            var media = Fixture.Latest.LastOrDefault(p => p is MediaData);
+            if (content is BlockData block)
+            {
+                parent = ((IContent)block).ContentLink;
+            }
 
-            if (media != null)
+            if (content is MediaData media)
             {
                 parent = media.ParentLink;
             }
