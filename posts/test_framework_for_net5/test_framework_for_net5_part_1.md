@@ -13,17 +13,19 @@ To get started with integration testing, you can start by setting up a new Optim
 
 > Don´t forget to create a database and update the connectionstring in the _appsettings.json_ or _appsettings.Development.json_
 
-An example of a solution that contains an empty Optimizely CMS 12 with an associated test project, you can find the complete project [here](https://github.com/loremipsumdonec/episerver-testframework/tree/posts/test_framework_for_net5/posts/test_framework_for_net5/example).
+An example of a solution that contains an empty Optimizely CMS 12 with an associated test project, you can find the complete project [here](https://github.com/loremipsumdonec/episerver-testframework/tree/main/posts/test_framework_for_net5/example).
 
 ![](./resources/created_a_test_project.png)
 
-If you start the web project, you will get a 404 error, which is not strange as there is no content, but if you look in the database, all tables and views will be there.
+If you start the web project, you will get a _404 error_, which is not strange as there is no content, but if you look in the database, all tables and views will be there.
+
+> Optimizely CMS 12 will automatically create and update the tables in the database, in version 11 and older this was handled with configuration in web.config.
 
 ![](./resources/started_project_and_database_has_tables.png)
 
 ## Let's start
 
-Now it's time to add the first test case where we are testing to start Episerver. We will need to use the `WebApplicationFactory<TEntryPoint>` class and use `Startup` from the web project as the entry point, you can find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/posts/test_framework_for_net5/posts/test_framework_for_net5/example/Lorem.Test/StartEpiserverTest.cs)
+Now it's time to add the first test case where we are testing to start Optimizely CMS. We will need to use the [WebApplicationFactory<TEntryPoint>](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1?view=aspnetcore-5.0) class and use `Startup` from the web project as the entry point, you can find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/posts/test_framework_for_net5/posts/test_framework_for_net5/example/Lorem.Test/StartEpiserverTest.cs)
 
 ```csharp
 [Fact]
@@ -42,7 +44,9 @@ If we run the above test case, we will get the following error message.
 System.InvalidOperationException : No method 'public static IHostBuilder CreateHostBuilder(string[] args)' or 'public static IWebHostBuilder CreateWebHostBuilder(string[] args)' found on 'Lorem.Program'. Alternatively, WebApplicationFactory`1 can be extended and 'CreateHostBuilder' or 'CreateWebHostBuilder' can be overridden to provide your own instance.
 ```
 
-Which is because `WebApplicationFactory<TEntryPoint>` by default tries to find a method named `CreateHostBuilder` in the same assembly as the `Startup` class that we specified as the entry point which look like this.
+Which is because `WebApplicationFactory<TEntryPoint>` by [default](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1.createhostbuilder?view=aspnetcore-5.0#remarks) tries to find `public static IHostBuilder CreateHostBuilder(string[] args)` in the same assembly as the `Startup` class. 
+
+> Optimizly should consider remove the parameter `isDevelopment` so method `CreateHostBuilder` has the "default" signature.
 
 ```csharp
 public static IHostBuilder CreateHostBuilder(string[] args, bool isDevelopment)
@@ -53,23 +57,23 @@ public static IHostBuilder CreateHostBuilder(string[] args, bool isDevelopment)
         return Host.CreateDefaultBuilder(args)
             .ConfigureCmsDefaults()
             .ConfigureWebHostDefaults(webBuilder =>
-            {
-            	webBuilder.UseStartup<Startup>();
-            });
+			{
+				webBuilder.UseStartup<Startup>();
+			});
     }
     else
     {
         return Host.CreateDefaultBuilder(args)
             .ConfigureCmsDefaults()
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+            .ConfigureWebHostDefaults(webBuilder => 
+			{
+				webBuilder.UseStartup<Startup>();
+			});
     }
 }
 ```
 
-The reason is that the `WebApplicationFactory<TEntryPoint>` looks for a method with a `string[]args`  parameter. To solve this we have to remove the `isDevelopment` parameter.
+To solve this we have to remove the `isDevelopment` parameter and change to the following method signature.
 
 ```csharp
 public static IHostBuilder CreateHostBuilder(string[] args)
@@ -83,7 +87,7 @@ public static IHostBuilder CreateHostBuilder(string[] args)
 }
 ```
 
-If we run the test case again, it will work.
+You can find the complete code for the change in the [Program.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/test_framework_for_net5/example/Lorem/Program.cs#L13) file and if we try to run the test case again it will work.
 
 ![](./resources/first_test_succeded.png)
 

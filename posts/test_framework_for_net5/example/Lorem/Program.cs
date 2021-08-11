@@ -21,6 +21,9 @@ namespace Lorem
         }
 
         /*
+        
+        This was how it looked before the above change
+
         public static IHostBuilder CreateHostBuilder(string[] args, bool isDevelopment)
         {
             if (isDevelopment)
