@@ -4,6 +4,7 @@ type: "book"
 book: "/optimizely/test-framework-for-net5"
 theme: "blue"
 state: "done"
+tags: ["optimizely"]
 
 repository_url: "https://github.com/loremipsumdonec/episerver-testframework"
 repository_name: "episerver-testframework"

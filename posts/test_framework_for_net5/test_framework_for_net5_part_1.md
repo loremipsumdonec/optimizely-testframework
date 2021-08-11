@@ -25,7 +25,7 @@ If you start the web project, you will get a _404 error_, which is not strange a
 
 ## Let's start
 
-Now it's time to add the first test case where we are testing to start Optimizely CMS. We will need to use the [WebApplicationFactory<TEntryPoint>](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1?view=aspnetcore-5.0) class and use `Startup` from the web project as the entry point, you can find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/posts/test_framework_for_net5/posts/test_framework_for_net5/example/Lorem.Test/StartEpiserverTest.cs)
+Now it's time to add the first test case where we are testing to start Optimizely CMS. We will need to use the [WebApplicationFactory<TEntryPoint>](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1?view=aspnetcore-5.0) class and use `Startup` from the web project as the entry point, you can find the code in the file [StartEpiserverTest.cs](https://github.com/loremipsumdonec/episerver-testframework/blob/main/posts/test_framework_for_net5/example/Lorem.Test/StartEpiserverTest.cs)
 
 ```csharp
 [Fact]
