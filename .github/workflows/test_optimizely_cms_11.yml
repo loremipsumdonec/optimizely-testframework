@@ -25,20 +25,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: setup-msbuild
+    - name: setup msbuild
       uses: microsoft/setup-msbuild@v1
 
-    - name: Setup VSTest Path
+    - name: setup vstest path
       uses: darenm/Setup-VSTest@v1
 
     - name: restore dependencies
       run: nuget restore
 
-    - name: build
+    - name: build for cms 11
       run: msbuild /property:Configuration=${{env.CONFIGURATION}}
 
     - name: test with latest CMS version
-      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test\bin\Debug\net48\
+      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test\bin\${{env.CONFIGURATION}}\net48\
 
     - name: test with minimum CMS version
-      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Min\bin\Debug\net471\
+      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\
