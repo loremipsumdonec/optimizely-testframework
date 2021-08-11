@@ -77,19 +77,9 @@ To test the code in the Episerver project you will need to add a project referen
 
 ![test project packages](./resources/test_project_packages.png)
 
-### Copy the Web.config
+### Use the Web.config
 
-As default when you build the test project the build will include the configuration file from the Episerver project, but it will change name from Web.config to _*assembly name*.config_.  
-
-Instead of building an implementation or adding another configuration file I have preferred to set up an xcopy the _Pre-build event command line_.
-
-![copy Web.config with xcopy](./resources/test_project_add_xcopy.png)
-
-```bash
-xcopy /Y $(ProjectDir)..\Lorem\Web.config $(ProjectDir)
-```
-
-In addition to copying _Web.config_ it will also need to be included in the project. It is also recommended to set it to _Copy always_ so it is always copied to output when the project is built.
+I recently learned that you can set up [links to files](https://andrewlock.net/including-linked-files-from-outside-the-project-directory-in-asp-net-core/) directly, which is better and easier than doing xcopy like I did before. In addition to adding the _Web.config_ as a link  you should also set it to _Copy always_ so it is copied to output when the project is built.
 
 ![Set copy always on Web.config](./resources/test_project_web_config_copy_always.png)
 
