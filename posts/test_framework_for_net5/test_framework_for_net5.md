@@ -1,9 +1,9 @@
 ---
-date: "2021-08-03"
+date: "2021-08-11"
 type: "book"
 book: "/optimizely/test-framework-for-net5"
 theme: "blue"
-state: "in_progress"
+state: "done"
 
 repository_url: "https://github.com/loremipsumdonec/episerver-testframework"
 repository_name: "episerver-testframework"
@@ -17,7 +17,7 @@ preamble: "Now when Optimizely has released a public preview of Optimizely CMS 1
 
 ## Integration testing in .NET 5
 
-In .NET 5, it is much easier to run integration tests that test from a client's perspective (visit an url). This is more difficult to achieve in the .NET Framework that Optimizely CMS 11 and older use, as you usually must set up a process in IIS. Which means that you get two instances of Optimizely CMS where one is run in an IIS and the other instance is run in the test process. This leads to a lot of other types of problems such as cache management. It is not impossible to achieve but in my opinion is not worth the effort.
+In .NET 5, it is much easier to run integration tests that test from a client's perspective (visit an url). This is more difficult to achieve in the .NET Framework that Optimizely CMS 11 and older, as you usually must start a process in IIS. Which means that you get two instances of Optimizely CMS where one is run in an IIS and the other instance is run in the test process. This leads to a lot of other types of problems such as cache management. It is not impossible to achieve but in my opinion is not worth the effort.
 
 > It is possible to test controllers but I think it increases the complexity of the test cases. I prefer have lightweight controllers and not have any direct logic in these, instead they uses other services and which makes it easier to test (and maintain).
 
