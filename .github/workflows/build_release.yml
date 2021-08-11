@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - '*'
+env:
+  configuration: Release
 
 jobs:
   extract_version:
@@ -46,13 +48,10 @@ jobs:
           value=`cat version/version.txt`
           echo ::set-output name=version::$value
 
-      - name: echo version
-        run: echo "version=${{steps.version.outputs.version}}"
-
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1
 
-      - name: Setup VSTest Path
+      - name: setup vstest path
         uses: darenm/Setup-VSTest@v1
 
       - name: restore dependencies
@@ -60,14 +59,20 @@ jobs:
         working-directory: ./src/net48
 
       - name: build cms 11
-        run: msbuild /property:Configuration=Release
+        run: msbuild /property:Configuration=${{configuration}}
         working-directory: ./src/net48
 
       - name: test with latest CMS version
-        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/Release/net48/Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/Release/net48/
+        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{configuration}}/net48/Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{configuration}}/net48/
 
       - name: test with minimum CMS version
-        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/Release/net471/Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/Release/net471/
+        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{configuration}}/net471/Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{configuration}}/net471/
         
       - name: create nuget
         run: nuget pack ./src/Lorem.Testing.Optimizely.CMS.csproj.nuspec -version ${{steps.version.outputs.version}}
+
+      - name: upload nuget
+        uses: actions/upload-artifact@v1
+        with:
+          name: nuget
+          path: '*.nupkg'
