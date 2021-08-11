@@ -5,15 +5,44 @@ on:
     tags:
       - '*'
 
+defaults:
+  run:
+    working-directory: ./src
+
 jobs:
   build_release:
     name: build_release
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      
       - name: version
         id: version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
       - name: echo version
-        run: echo "version=${{steps.version.outputs.version}}""
+        run: echo "version=${{steps.version.outputs.version}}"
+
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Setup VSTest Path
+        uses: darenm/Setup-VSTest@v1
+
+      - name: restore dependencies
+        run: nuget restore
+        working-directory: ./net48
+
+      - name: build cms 11
+        run: msbuild
+        working-directory: ./net48
+
+      - name: test with latest CMS version
+        run: vstest.console.exe .\net48\Lorem.Testing.Optimizely.CMS.Test\bin\Debug\net48\Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test\bin\Debug\net48\
+
+      - name: test with minimum CMS version
+        run: vstest.console.exe .\net48\Lorem.Testing.Optimizely.CMS.Test.Min\bin\Debug\net471\Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Min\bin\Debug\net471\
+        
+      - name: create nuget
+        run: nuget pack Lorem.Testing.Optimizely.CMS.csproj.nuspec -version ${{steps.version.outputs.version}}
