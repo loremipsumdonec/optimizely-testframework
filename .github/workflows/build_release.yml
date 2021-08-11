@@ -5,7 +5,7 @@ on:
     tags:
       - '*'
 env:
-  configuration: Release
+  CONFIGURATION: Release
 
 jobs:
   extract_version:
@@ -59,14 +59,14 @@ jobs:
         working-directory: ./src/net48
 
       - name: build cms 11
-        run: msbuild /property:Configuration=${{configuration}}
+        run: msbuild /property:Configuration=${{env.CONFIGURATION}}
         working-directory: ./src/net48
 
       - name: test with latest CMS version
-        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{configuration}}/net48/Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{configuration}}/net48/
+        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{env.CONFIGURATION}}/net48/Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{env.CONFIGURATION}}/net48/
 
       - name: test with minimum CMS version
-        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{configuration}}/net471/Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{configuration}}/net471/
+        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/
         
       - name: create nuget
         run: nuget pack ./src/Lorem.Testing.Optimizely.CMS.csproj.nuspec -version ${{steps.version.outputs.version}}
