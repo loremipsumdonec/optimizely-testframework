@@ -1,4 +1,7 @@
-﻿using EPiServer.DataAnnotations;
+﻿using EPiServer.Core;
+using EPiServer.DataAnnotations;
+using EPiServer.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lorem.Models.Pages
 {
@@ -6,6 +9,9 @@ namespace Lorem.Models.Pages
     public class ArticlePage
         : SitePage
     {
+        [UIHint(UIHint.Image)]
+        public virtual ContentReference TopImage { get; set; }
+
         public virtual string Preamble { get; set; }
     }
 }

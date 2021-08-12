@@ -127,7 +127,7 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
-        public void Upload_WhenCreateMany_UploadImageForEachPage()
+        public void Upload_AfterCreateMany_OneImageForEachPage()
         {
             Fixture.CreateMany<ArticlePage>(3)
                 .Upload<ImageFile>(Resources.Get("/images").PickRandom());
@@ -144,6 +144,42 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
                 );
 
                 Assert.Single(images);
+            }
+        }
+
+
+        [Fact]
+        public void Upload_AfterCreateManyWithMultipleCultures_OneImageForEachPage()
+        {
+            int totalPages = 3;
+
+            Fixture.Cultures.Clear();
+            Fixture.Cultures.AddRange(
+                Fixture.GetCmsCultures().PickRandom(4)
+            );
+
+            Fixture.CreateMany<ArticlePage>(totalPages)
+                .Upload<ImageFile>(Resources.Get("/images").PickRandom());
+
+            Assert.Equal(totalPages, Fixture.Contents.Where(c => c is ImageFile).Count());
+        }
+
+        [Fact]
+        public void Upload_AfterCreateMany_BuildHasAccessToPageAndImageAndOneImageForEachPage()
+        {
+            var pages = Fixture.CreateMany<ArticlePage>(3)
+                .Upload<ImageFile>(Resources.Get("/images"),
+                    (i, p) => p.TopImage = i.ContentLink
+                );
+
+            var images = Fixture.Contents.Where(c => c is ImageFile).ToList();
+
+            foreach(var page in pages)
+            {
+                Assert.NotNull(page.TopImage);
+                Assert.Null(
+                    pages.FirstOrDefault(p => p.TopImage.Equals(page.TopImage, true))
+                );
             }
         }
     }

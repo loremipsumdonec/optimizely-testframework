@@ -142,6 +142,24 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             return new PageBuilder<TPageType>(Fixture, _pages);
         }
 
+        public IPageBuilder<T> Upload<TMediaType>(IEnumerable<string> files, Action<TMediaType, T> build)
+            where TMediaType : MediaData
+        {
+            foreach(T current in Fixture.Latest.Select(p => (T)p).ToList())
+            {
+                var builder = new MediaBuilder<TMediaType>(Fixture);
+
+                builder.Upload<TMediaType>(
+                    files.PickRandom(),
+                    m => build.Invoke(m, current)
+                ).First();
+
+                Update(current);
+            }
+
+            return new PageBuilder<T>(Fixture, _pages);
+        }
+
         private ContentReference GetParent()
         {
             ContentReference parent = ContentReference.RootPage;

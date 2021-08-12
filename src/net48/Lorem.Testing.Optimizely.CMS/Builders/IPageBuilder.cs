@@ -24,5 +24,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
         IPageBuilder<T> CreatePath(int depth, Action<T> build = null);
 
         IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType> build = null) where TPageType : PageData;
+
+        IPageBuilder<T> Upload<TMediaType>(IEnumerable<string> files, Action<TMediaType, T> build) where TMediaType : MediaData;
     }
 }
