@@ -6,6 +6,9 @@ using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
 using Lorem.Testing.Optimizely.CMS.Test.Services;
 using Lorem.Testing.Optimizely.CMS.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -178,6 +181,24 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
+        public void Upload_AfterCreateManyWithBuildWithPagesAndMultipleCultures_BuildInvokedForEachCulture()
+        {
+            Fixture.Cultures.Clear();
+            Fixture.Cultures.AddRange(
+                Fixture.GetCmsCultures().PickRandom(4)
+            );
+
+            List<CultureInfo> cultures = new List<CultureInfo>(Fixture.Cultures);
+
+            var pages = Fixture.CreateMany<ArticlePage>(3)
+                .Upload<ImageFile>(Resources.Get("/images"),
+                    (_, p) => cultures.Remove(p.Language)
+                );
+
+            Assert.Empty(cultures);
+        }
+
+        [Fact]
         public void Upload_AfterCreateManyWithBuildWithPagesAndMultipleCultures_SamePageWithDifferentCultureUseSameImage()
         {
             Fixture.Cultures.Clear();
@@ -196,7 +217,8 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
             {
                 foreach(var culture in Fixture.Cultures)
                 {
-                    var pageWithCulture = loader.Get<ArticlePage>(page.ContentLink, culture);
+                    var pageWithCulture = loader.Get<ArticlePage>(page.ContentGuid, culture);
+                    
                     Assert.Equal(
                         page.TopImage.ToReferenceWithoutVersion(), 
                         pageWithCulture.TopImage.ToReferenceWithoutVersion()

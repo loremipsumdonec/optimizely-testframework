@@ -22,12 +22,28 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
         {
         }
 
+        public IMediaBuilder<TMediaType> Upload<TMediaType>(string file, ContentReference parent, Action<TMediaType> build = null) where TMediaType : MediaData
+        {
+            ValidateFile(file);
+
+            var command = new UploadFile(
+               IpsumGenerator.Generate(3, false).Replace(" ", "_"),
+               file,
+               Fixture.GetContentType(typeof(TMediaType)),
+               parent
+            );
+
+            command.Build = CreateBuild(build);
+
+            var media = command.Execute();
+            _medias.Add(media);
+
+            return new MediaBuilder<TMediaType>(Fixture, _medias);
+        }
+
         public IMediaBuilder<TMediaType> Upload<TMediaType>(string file, Action<TMediaType> build = null) where TMediaType : MediaData
         {
-            if(!File.Exists(file))
-            {
-                throw new FileNotFoundException($"could not find file {file}, verify that you have set \"Copy to Output Directory = Copy always\"");
-            }
+            ValidateFile(file);
 
             if(Fixture.Latest.Count > 0)
             {
@@ -47,6 +63,14 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             _medias.Add(media);
 
             return new MediaBuilder<TMediaType>(Fixture, _medias);
+        }
+
+        private static void ValidateFile(string file)
+        {
+            if (!File.Exists(file))
+            {
+                throw new FileNotFoundException($"could not find file {file}, verify that you have set \"Copy to Output Directory = Copy always\"");
+            }
         }
 
         private IMediaBuilder<TMediaType> UploadWhenHasLatest<TMediaType>(string file, Action<TMediaType> build) 

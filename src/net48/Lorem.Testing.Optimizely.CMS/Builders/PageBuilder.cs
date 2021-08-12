@@ -53,12 +53,12 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             {
                 foreach(var culture in Fixture.Cultures)
                 {
-                    var latest = Fixture.GetLatestAs(culture);
+                    var latest = Fixture.GetLatest(culture);
 
                     Update(
                         content,
                         culture,
-                        p => build.Invoke((TPageType)p, Fixture.GetLatestAs(culture).Select(c => (T)c))
+                        p => build.Invoke((TPageType)p, Fixture.GetLatest(culture).Select(c => (T)c))
                     );
                 }
             }
@@ -189,13 +189,23 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             {
                 var builder = new MediaBuilder<TMediaType>(Fixture);
 
-                builder.Upload<TMediaType>(
+                var media = builder.Upload<TMediaType>(
                     files.PickRandom(),
+                    current.ContentLink,
                     m => build.Invoke(m, current)
                 ).First();
 
                 Update(current);
                 Add(current);
+
+                foreach (var culture in current.ExistingLanguages.Where(l => !l.Equals(current.Language)))
+                {
+                    var currentAsCulture = Fixture.Get<T>(current, culture);
+
+                    build.Invoke(media, currentAsCulture);
+
+                    Update(currentAsCulture);
+                }
             }
 
             return new PageBuilder<T>(Fixture, _pages);

@@ -1,5 +1,6 @@
 ﻿using EPiServer;
 using EPiServer.Core;
+using EPiServer.Data.Entity;
 using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
@@ -26,16 +27,28 @@ namespace Lorem.Testing.Optimizely.CMS
 
         public List<IContent> Latest { get; set; } = new List<IContent>();
 
-        public List<IContent> GetLatestAs(CultureInfo culture)
+        public T Get<T>(IContent content, CultureInfo culture) where T: IContentData
         {
-            var repository = GetInstance<IContentLoader>();
+            var loader = GetInstance<IContentLoader>();
 
+            T contentAsCulture = loader.Get<T>(content.ContentGuid, culture);
+
+            if (contentAsCulture is IReadOnly readOnly)
+            {
+                contentAsCulture = (T)readOnly.CreateWritableClone();
+            }
+
+            return contentAsCulture;
+        }
+
+        public List<IContent> GetLatest(CultureInfo culture)
+        { 
             List<IContent> latest = new List<IContent>();
 
             foreach (var content in Latest)
             {
                 latest.Add(
-                    repository.Get<IContent>(content.ContentLink.ToReferenceWithoutVersion(), culture)
+                    Get<IContent>(content, culture)
                 );
             }
 
