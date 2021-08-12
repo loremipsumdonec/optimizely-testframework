@@ -18,6 +18,7 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
             Register("episerver.site.name", "Lorem");
             Register("episerver.site.url", new Uri("http://localhost:65099/"));
 
+            Cultures.Add(CultureInfo.GetCultureInfo("sv"));
             Cultures.Add(CultureInfo.GetCultureInfo("en"));
         }
 

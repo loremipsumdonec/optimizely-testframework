@@ -17,9 +17,17 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
 
         IPageBuilder<TPageType> Create<TPageType>(Action<TPageType> build = null) where TPageType: PageData;
 
-        IPageBuilder<T> CreateMany(int total, Action<T, int> build = null);
+        IPageBuilder<T> CreateMany(int total);
 
-        IPageBuilder<TPageType> CreateMany<TPageType>(int total, Action<TPageType, int> build = null) where TPageType : PageData;
+        IPageBuilder<T> CreateMany(int total, Action<T, int> build);
+
+        IPageBuilder<T> CreateMany(int total, Action<T> build);
+
+        IPageBuilder<TPageType> CreateMany<TPageType>(int total) where TPageType : PageData;
+
+        IPageBuilder<TPageType> CreateMany<TPageType>(int total, Action<TPageType> build) where TPageType : PageData;
+
+        IPageBuilder<TPageType> CreateMany<TPageType>(int total, Action<TPageType, int> build) where TPageType : PageData;
 
         IPageBuilder<T> CreatePath(int depth, Action<T> build = null);
 

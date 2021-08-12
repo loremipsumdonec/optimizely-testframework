@@ -95,26 +95,66 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             return new PageBuilder<TPageType>(Fixture, _pages);
         }
 
-        public IPageBuilder<T> CreateMany(int total, Action<T, int> build = null)
+        public IPageBuilder<T> CreateMany(int total)
+        {
+            return CreateMany<T>(total, (_)=> {});
+        }
+
+        public IPageBuilder<T> CreateMany(int total, Action<T, int> build)
         {
             return CreateMany<T>(total, build);
         }
 
-        public IPageBuilder<TPageType> CreateMany<TPageType>(int total, Action<TPageType, int> build = null) 
+        public IPageBuilder<T> CreateMany(int total, Action<T> build)
+        {
+            return CreateMany<T>(total, (p, _) => build?.Invoke(p));
+        }
+
+        public IPageBuilder<TPageType> CreateMany<TPageType>(int total) where TPageType : PageData
+        {
+            return CreateMany<TPageType>(total, (_, __) => { });
+        }
+
+        public IPageBuilder<TPageType> CreateMany<TPageType>(int total, Action<TPageType> build)
             where TPageType : PageData
         {
-            var parent = GetParent();
+            return CreateMany<TPageType>(total, (p, _) => build?.Invoke(p));
+        }
+
+        public IPageBuilder<TPageType> CreateMany<TPageType>(int total, Action<TPageType, int> build) 
+            where TPageType : PageData
+        {
+            if(Fixture.Latest.Count > 0)
+            {
+                foreach (var parent in Fixture.Latest)
+                {
+                    for (int index = 0; index < total; index++)
+                    {
+                        if (build == null)
+                        {
+                            Create<TPageType>(parent.ContentLink, null);
+                            continue;
+                        }
+
+                        Create<TPageType>(parent.ContentLink, build: p => build.Invoke(p, index));
+                    }
+                }
+
+                return new PageBuilder<TPageType>(Fixture, _pages);
+            }
+
 
             for (int index = 0; index < total; index++)
             {
                 if (build == null)
                 {
-                    Create<TPageType>(parent, null);
+                    Create<TPageType>(ContentReference.RootPage, null);
                     continue;
                 }
 
-                Create<TPageType>(parent, build: p => build.Invoke(p, index));
+                Create<TPageType>(ContentReference.RootPage, build: p => build.Invoke(p, index));
             }
+
 
             return new PageBuilder<TPageType>(Fixture, _pages);
         }
@@ -218,7 +258,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                     continue;
                 }
 
-                Update((T)(PageData)page, c, p => build.Invoke((TPageType)(PageData)p));
+                Update((TPageType)(PageData)page, c, p => build.Invoke((TPageType)(PageData)p));
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using EPiServer.Core;
+﻿using EPiServer;
+using EPiServer.Core;
 using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
 using Lorem.Testing.Optimizely.CMS.Test.Services;
@@ -167,6 +168,24 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
             }
         }
     
+        [Fact]
+        public void CreateMany_ChainCreateMany_PagesHasChildren() 
+        {
+            int expectedChildren = 2;
+            var loader = Fixture.GetInstance<IContentLoader>();
+
+            Fixture.CreateMany<StartPage>(3)
+                .CreateMany<ArticlePage>(expectedChildren);
+
+            foreach(var startPage in Fixture.Contents.Where(p => p is StartPage))
+            {
+                Assert.Equal(
+                    expectedChildren, 
+                    loader.GetChildren<ArticlePage>(startPage.ContentLink).Count()
+                );
+            }
+        }
+
         [Fact]
         public void CreatePath_WithNoBuildAction_HasCreatedAPathWithPages()
         {

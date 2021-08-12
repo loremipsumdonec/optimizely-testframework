@@ -27,7 +27,17 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
             );
 
             Fixture.CreateSite<StartPage>()
-                .CreateMany<ArticlePage>(10);
+                .CreateMany<ArticlePage>(10, p => p.Name = $"{p.Name}-{p.Language.Name}")
+                .Update<StartPage>((p, articlePages) =>
+                {
+                    p.Heading = p.Language.Name;
+
+                    foreach(var articlePage in articlePages)
+                    {
+                        p.Add(articlePage);
+                    }
+                })
+                .CreateMany(2);
         }
     }
 }

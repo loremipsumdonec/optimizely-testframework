@@ -17,6 +17,9 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
         public static IPageBuilder<TPageType> Create<TPageType>(this IFixtureBuilder builder, Action<TPageType> build = null)
             where TPageType : PageData => new PageBuilder<TPageType>(builder.Fixture).Create(build);
 
+        public static IPageBuilder<TPageType> CreateMany<TPageType>(this IFixtureBuilder builder, int total, Action<TPageType> build = null)
+            where TPageType : PageData => new PageBuilder<TPageType>(builder.Fixture).CreateMany(total, build);
+
         public static IPageBuilder<TPageType> CreateMany<TPageType>(this IFixtureBuilder builder, int total, Action<TPageType, int> build = null)
             where TPageType : PageData => new PageBuilder<TPageType>(builder.Fixture).CreateMany(total, build);
 

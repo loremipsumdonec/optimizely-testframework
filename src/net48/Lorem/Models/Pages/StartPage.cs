@@ -7,6 +7,19 @@ namespace Lorem.Models.Pages
     public class StartPage
         : SitePage
     {
+        [CultureSpecific]
         public virtual ContentArea ContentArea {get; set;}
+
+        public void Add(IContent content)
+        {
+            if(ContentArea == null)
+            {
+                ContentArea = new ContentArea();
+            }
+
+            ContentArea.Items.Add(
+                new ContentAreaItem() { ContentLink = content.ContentLink }
+            );
+        }
     }
 }

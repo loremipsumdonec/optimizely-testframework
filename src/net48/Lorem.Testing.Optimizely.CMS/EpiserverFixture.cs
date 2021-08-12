@@ -120,5 +120,15 @@ namespace Lorem.Testing.Optimizely.CMS
             var command = new CreateUser(username, password, email, roles);
             command.Execute();
         }
+    
+        public void Reset()
+        {
+            Latest.Clear();
+
+            if(Site != null)
+            {
+                Latest.Add(Contents.First(p => p.ContentLink.Equals(Site.StartPage, true)));
+            }
+        }
     }
 }
