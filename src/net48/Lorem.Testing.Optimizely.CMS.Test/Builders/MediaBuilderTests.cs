@@ -165,6 +165,47 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
+        public void Upload_AfterCreateManyWithBuildWithPage_HasExpectedPages()
+        {
+            int totalPages = 3;
+
+            var pages = Fixture.CreateMany<ArticlePage>(3)
+                .Upload<ImageFile>(Resources.Get("/images"),
+                    (i, p) => p.TopImage = i.ContentLink
+                );
+
+            Assert.Equal(totalPages, pages.Count());
+        }
+
+        [Fact]
+        public void Upload_AfterCreateManyWithBuildWithPagesAndMultipleCultures_SamePageWithDifferentCultureUseSameImage()
+        {
+            Fixture.Cultures.Clear();
+            Fixture.Cultures.AddRange(
+                Fixture.GetCmsCultures().PickRandom(4)
+            );
+
+            var pages = Fixture.CreateMany<ArticlePage>(3)
+                .Upload<ImageFile>(Resources.Get("/images"),
+                    (i, p) => p.TopImage = i.ContentLink
+                );
+
+            var loader = Fixture.GetInstance<IContentLoader>();
+
+            foreach (var page in pages)
+            {
+                foreach(var culture in Fixture.Cultures)
+                {
+                    var pageWithCulture = loader.Get<ArticlePage>(page.ContentLink, culture);
+                    Assert.Equal(
+                        page.TopImage.ToReferenceWithoutVersion(), 
+                        pageWithCulture.TopImage.ToReferenceWithoutVersion()
+                    );
+                }
+            }
+        }
+
+        [Fact]
         public void Upload_AfterCreateMany_BuildHasAccessToPageAndImageAndOneImageForEachPage()
         {
             var pages = Fixture.CreateMany<ArticlePage>(3)
@@ -178,7 +219,9 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
             {
                 Assert.NotNull(page.TopImage);
                 Assert.Null(
-                    pages.FirstOrDefault(p => p.TopImage.Equals(page.TopImage, true))
+                    pages.FirstOrDefault(
+                        p => p.ContentGuid != page.ContentGuid && p.TopImage.Equals(page.TopImage, true)
+                    )
                 );
             }
         }

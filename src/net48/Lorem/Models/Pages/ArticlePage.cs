@@ -10,6 +10,7 @@ namespace Lorem.Models.Pages
         : SitePage
     {
         [UIHint(UIHint.Image)]
+        [CultureSpecific]
         public virtual ContentReference TopImage { get; set; }
 
         public virtual string Preamble { get; set; }

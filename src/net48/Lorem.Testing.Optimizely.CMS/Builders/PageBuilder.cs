@@ -155,6 +155,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 ).First();
 
                 Update(current);
+                Add(current);
             }
 
             return new PageBuilder<T>(Fixture, _pages);
