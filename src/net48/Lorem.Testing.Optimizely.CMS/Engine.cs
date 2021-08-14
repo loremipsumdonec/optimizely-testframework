@@ -104,7 +104,7 @@ namespace Lorem.Testing.Optimizely.CMS
 
             if (!File.Exists(_webConfig))
             {
-                throw new FileNotFoundException($"Could not load Web.config at expected path {_webConfig}");
+                throw new FileNotFoundException($"Could not load Web.config at expected path {_webConfig}. Check you have included the Web.config as a link in the test project and it's set to `Copy always`. Check the Quickstart for more information.");
             }
         }
 

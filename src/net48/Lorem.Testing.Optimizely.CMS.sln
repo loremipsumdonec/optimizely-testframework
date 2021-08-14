@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem.Testing.Optimizely.CM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lorem.Min", "Lorem.Min\Lorem.Min.csproj", "{7356C81E-224E-4BA0-810F-D2984F5A7D43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lorem.Testing.Optimizely.CMS.Test.Min", "Lorem.Testing.Optimizely.CMS.Test.Min\Lorem.Testing.Optimizely.CMS.Test.Min.csproj", "{410E2629-6BC3-4175-8984-916C7ACF4029}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem.Testing.Optimizely.CMS.Test.Min", "Lorem.Testing.Optimizely.CMS.Test.Min\Lorem.Testing.Optimizely.CMS.Test.Min.csproj", "{410E2629-6BC3-4175-8984-916C7ACF4029}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lorem.Testing.Optimizely.CMS.Test.Invalid", "Lorem.Testing.Optimizely.CMS.Test.Invalid\Lorem.Testing.Optimizely.CMS.Test.Invalid.csproj", "{2E39A155-F11B-4498-BF45-BA85810D3045}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,12 @@ Global
 		{410E2629-6BC3-4175-8984-916C7ACF4029}.Min|Any CPU.Build.0 = Debug|Any CPU
 		{410E2629-6BC3-4175-8984-916C7ACF4029}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{410E2629-6BC3-4175-8984-916C7ACF4029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E39A155-F11B-4498-BF45-BA85810D3045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E39A155-F11B-4498-BF45-BA85810D3045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E39A155-F11B-4498-BF45-BA85810D3045}.Min|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E39A155-F11B-4498-BF45-BA85810D3045}.Min|Any CPU.Build.0 = Debug|Any CPU
+		{2E39A155-F11B-4498-BF45-BA85810D3045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E39A155-F11B-4498-BF45-BA85810D3045}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

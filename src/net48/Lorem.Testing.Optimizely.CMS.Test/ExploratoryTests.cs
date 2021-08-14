@@ -1,4 +1,6 @@
-﻿using Lorem.Models.Media;
+﻿using EPiServer;
+using EPiServer.Core;
+using Lorem.Models.Media;
 using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
 using Lorem.Testing.Optimizely.CMS.Test.Services;
@@ -34,6 +36,9 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
             Fixture.CreateSite<StartPage>()
                 .CreateMany<ArticlePage>(10, p => p.Name = $"{p.Name}-{p.Language.Name}")
                 .Upload<ImageFile>(Resources.Get("/images"), (i, p) => p.TopImage = i.ContentLink);
+
+            var repository = Fixture.GetInstance<IContentLoader>();
+            Assert.Single(repository.GetChildren<StartPage>(ContentReference.RootPage));
 
             Fixture.CreateMany<ArticlePage>(2, p => p.Name = $"{p.Name} MANY");
         }
