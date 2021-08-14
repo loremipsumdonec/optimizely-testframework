@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 
 namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
@@ -33,7 +32,13 @@ namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
         {
             _connectionStringName = connectionStringName;
             _appDataPath = appDataPath;
+
+            ValidateAppDataPath();
         }
+
+        public bool IamAwareThatTheDatabaseWillBeDeletedAndReCreated { get; set; }
+
+        public bool IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted { get; set; }
 
         public void BeforeInitialize(InitializationEngine engine)
         {
@@ -56,14 +61,20 @@ namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
 
         public void AfterInitialize(InitializationEngine engine)
         {
-            SaveStartupReport();
         }
 
         public IEnumerable<IClearCommand> Reset()
         {
+            var clearContents = new ClearContents();
+
+            if (!IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted)
+            {
+                throw new InvalidOperationException($"You need to be aware that the files and folders at the path {clearContents.GetPath()} will be deleted before each test.");
+            }
+
             return new List<IClearCommand>()
             {
-                new ClearContents(),
+                clearContents,
                 new ClearCategories(),
                 new ClearSites()
             };
@@ -71,6 +82,11 @@ namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
 
         private void CreateCmsDatabase()
         {
+            if (!IamAwareThatTheDatabaseWillBeDeletedAndReCreated)
+            {
+                throw new InvalidOperationException($"You need to be aware that the database specified with connectionString {_connectionStringName} will be deleted and re-created at the start of each test session. (\"{_connectionString}\")");
+            }
+
             string createDatabaseSqlStatement = GetCreateDatabaseSqlStatement();
 
             using (SqlConnection connection = new SqlConnection(GetConnectionStringToMaster()))
@@ -135,23 +151,17 @@ namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
 
                     CREATE DATABASE [{0}]", GetDatabaseName());
         }
-
-        private void SaveStartupReport()
+    
+        private void ValidateAppDataPath()
         {
-            var meters = TimeMeters.GetAllRegistered()
-                .OrderByDescending(t => t.Counters.Values.Max(sw => sw.ElapsedMilliseconds))
-                .ToList();
-
-            using (StreamWriter writer = new StreamWriter(@"C:\Temp\episerver_boot.csv"))
+            if(string.IsNullOrEmpty(_appDataPath))
             {
-                foreach (var meter in TimeMeters.GetAllRegistered())
-                {
-                    foreach (string key in meter.Counters.Keys)
-                    {
-                        var counter = meter.Counters[key];
-                        writer.WriteLine($"{meter.Owner};{key};{counter.ElapsedMilliseconds}");
-                    }
-                }
+                return;
+            }
+
+            if(!_appDataPath.EndsWith("blobs"))
+            {
+                throw new ArgumentException($"The specified appDataPath ({_appDataPath}) does not appear to be a correct path to the Optimizely CMS blobs, as the path does not end with \"blobs\"");
             }
         }
     }

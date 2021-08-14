@@ -7,7 +7,6 @@ using EPiServer.Web.Routing;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Lorem.Testing.Optimizely.CMS.Commands
 {
@@ -52,6 +51,11 @@ namespace Lorem.Testing.Optimizely.CMS.Commands
         public ContentReference Root { get; set; }
 
         public List<string> IsASysType { get; set; }
+
+        public string GetPath() 
+        {
+            return _fileBlobProvider.Path;
+        }
 
         public void Clear()
         {

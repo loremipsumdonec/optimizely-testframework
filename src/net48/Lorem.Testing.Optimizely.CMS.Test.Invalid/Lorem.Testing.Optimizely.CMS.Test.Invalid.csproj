@@ -37,7 +37,11 @@
     <Compile Include="..\Lorem.Testing.Optimizely.CMS.Test\Services\*.cs">
       <Link>Services\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
-    
+
+    <Compile Include="..\Lorem.Testing.Optimizely.CMS.Test\GlobalSuppressions.cs">
+      <Link>%(Filename)%(Extension)</Link>
+    </Compile>
+
   </ItemGroup>
 
 </Project>

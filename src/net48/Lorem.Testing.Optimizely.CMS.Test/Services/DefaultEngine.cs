@@ -11,6 +11,10 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
         {
             Add(
                 new CmsTestFramework(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs"))
+                {
+                    IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
+                    IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+                }
             );
         }
     }
