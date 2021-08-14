@@ -29,9 +29,17 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
 
         IPageBuilder<TPageType> CreateMany<TPageType>(int total, Action<TPageType, int> build) where TPageType : PageData;
 
-        IPageBuilder<T> CreatePath(int depth, Action<T> build = null);
+        IPageBuilder<T> CreatePath(int depth);
 
-        IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType> build = null) where TPageType : PageData;
+        IPageBuilder<T> CreatePath(int depth, Action<T> build);
+
+        IPageBuilder<T> CreatePath(int depth, Action<T, int> build);
+
+        IPageBuilder<TPageType> CreatePath<TPageType>(int depth) where TPageType : PageData;
+
+        IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType> build) where TPageType : PageData;
+
+        IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType, int> build) where TPageType : PageData;
 
         IPageBuilder<T> Upload<TMediaType>(IEnumerable<string> files, Action<TMediaType, T> build) where TMediaType : MediaData;
     }

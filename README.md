@@ -14,6 +14,42 @@ I have written a post that describes how to start with integration testing for O
 
 I have started a small framework that hopefully simplifies the process of starting and creating data in Optimizely CMS  so that you can then focus on writing clear test cases.
 
+Example of a test case that tests a `IBreadCrumbService` and verifies that it ignores pages that has `VisibleInBreadCrumb=false`.
+
+```csharp
+[Collection("Default")]
+public class BreadcrumbsServiceTest
+{
+    public BreadcrumbsServiceTest(DefaultEpiserverEngine engine) 
+    {
+        Fixture = new DefaultEpiserverFixture(engine);
+    }
+    
+    public EpiserverFixture Fixture {get;}
+        
+    [Fact]
+    public void GetBreadCrumbs_OnePageInPathNotVisibleInBreadCrumb_HasExpectedCount()
+    {
+        int totalDepth = 3;
+        Fixture.CreatePath<ArticlePage>(totalDepth, (p, depth) => p.VisibleInBreadCrumb = depth != 1);
+
+        var service = Fixture.GetInstance<IBreadCrumbService>();
+        
+        var breadcrumbs = service.GetBreadCrumbs(pages.Last());
+
+        Assert.Equal(totalDepth - 1, breadcrumbs.Count);
+    }
+}
+```
+
+The test case will create three pages in the tree structure below and disable `VisibleInBreadCrumb` on `ArticlePage` at depth 1.
+
+* ArticlePage
+  * ArticlePage 
+    * ArticlePage
+
+
+
 ### Getting started
 
 #### Install
@@ -87,6 +123,8 @@ If you use xUnit, you should use [Shared Context between Tests](https://xunit.ne
 
 > It is not optimal to start and stop Optimizely CMS between each test case, read more about this in the chapter [Fixing the problems](https://www.tiff.se/optimizely/create-a-test-framework/part-4)
 
+Below is an exempel of an test case using the collection fixture feature in xUnit.
+
 ```csharp
 [CollectionDefinition("Default")]
 public class DefaultEngineCollectionFixture 
@@ -97,17 +135,17 @@ public class DefaultEngineCollectionFixture
 
 ```csharp
 [Collection("Default")]
-public class ExploratoryTests
+public class MyFirstIntegrationTests
 {
-    public ExploratoryTests(DefaultEngine engine)
+    public MyFirstIntegrationTests(DefaultEngine engine)
     {
     	Fixture = new DefaultFixture(engine);
     }
 
-	public Fixture Fixture { get; set; }
+	public Fixture Fixture { get; }
 
     [Fact]
-    public void ASimpleTest()
+    public void CreateAStartPage_StartPageExists()
     {
     	Fixture.Create<StartPage>();
     	
@@ -116,4 +154,14 @@ public class ExploratoryTests
     }
 }
 ```
+
+### Features
+
+Det finns ett antal funktioner som förenklar att lägga in innehåll i Optimizely CMS. För att minimera koden samt så
+
+### Pages
+
+### Blocks
+
+### Media
 

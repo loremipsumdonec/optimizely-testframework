@@ -159,12 +159,28 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             return new PageBuilder<TPageType>(Fixture, _pages);
         }
 
-        public IPageBuilder<T> CreatePath(int depth, Action<T> build = null)
+        public IPageBuilder<T> CreatePath(int depth)
+        {
+            return CreatePath<T>(depth, (_)=> { });
+        }
+
+        public IPageBuilder<T> CreatePath(int depth, Action<T> build)
         {
             return CreatePath<T>(depth, build);
         }
 
-        public IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType> build = null)
+        public IPageBuilder<T> CreatePath(int depth, Action<T, int> build)
+        {
+            return CreatePath<T>(depth, build);
+        }
+
+        public IPageBuilder<TPageType> CreatePath<TPageType>(int depth)
+            where TPageType : PageData
+        {
+            return CreatePath<TPageType>(depth, (_) => { });
+        }
+
+        public IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType> build)
             where TPageType : PageData
         {
             var parent = GetParent();
@@ -177,6 +193,24 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 }
 
                 Create(parent, build:build);
+            }
+
+            return new PageBuilder<TPageType>(Fixture, _pages);
+        }
+
+        public IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType, int> build)
+            where TPageType: PageData
+        {
+            var parent = GetParent();
+
+            for (int index = 0; index < depth; index++)
+            {
+                if (_pages.Count > 0)
+                {
+                    parent = _pages.Last().ContentLink;
+                }
+
+                Create<TPageType>(parent, build: p=> build.Invoke(p, index));
             }
 
             return new PageBuilder<TPageType>(Fixture, _pages);

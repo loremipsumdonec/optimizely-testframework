@@ -223,6 +223,17 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
         }
     
         [Fact]
+        public void CreatePath_BuildActionWithDepth_HasAccessToCurrentDepth() 
+        {
+            int totalDepth = 3;
+            int current = 0;
+
+            Fixture.CreatePath<StartPage>(totalDepth, (_, depth) => Assert.Equal(current++, depth));
+
+            Assert.Equal(totalDepth, current);
+        }
+
+        [Fact]
         public void Update_WithLatest_LatestPageIsUpdated()
         {
             string expected = "Updated";
