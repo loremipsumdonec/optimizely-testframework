@@ -65,10 +65,10 @@ jobs:
         working-directory: ./src/net48
 
       - name: test with latest CMS 11 version
-        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{env.CONFIGURATION}}/net48/Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{env.CONFIGURATION}}/net48/
+        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{env.CONFIGURATION}}/net48/Lorem.Testing.Optimizely.CMS.Test.dll /TestCaseFilter:"verification=required" /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test/bin/${{env.CONFIGURATION}}/net48/
 
       - name: test with minimum CMS 11 version
-        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/
+        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestCaseFilter:"verification=required" /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/
         
       - name: create nuget
         run: nuget pack ./src/Lorem.Testing.Optimizely.CMS.csproj.nuspec -version ${{steps.version.outputs.version}}

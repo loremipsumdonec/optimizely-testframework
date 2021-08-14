@@ -38,7 +38,7 @@ jobs:
       run: msbuild /property:Configuration=${{env.CONFIGURATION}}
 
     - name: test with latest CMS version
-      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.CMS.Test.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test\bin\${{env.CONFIGURATION}}\net48\
+      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.CMS.Test.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test\bin\${{env.CONFIGURATION}}\net48\
 
     - name: test with minimum CMS version
-      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\
+      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\
