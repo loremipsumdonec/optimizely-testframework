@@ -22,7 +22,7 @@ The framework is currently not available in any nuget feed.
 
 #### Access to Web.config
 
-The framework needs to have access to the same _Web.config_ used by the web project. The easiest way is to add a link in the test project that points to _Web.config_ in the web project. Edit the project file (_*. csproj_) and add the `ItemGroup` element below where `Include` has the relative path to _Web.config_ in the web project.
+The framework needs to have access to the same _Web.config_ used by the web project. The easiest way is to add a link in the test project that points to _Web.config_ in the web project. Edit the project file (_*. csproj_) and add the `ItemGroup` element below where `Include` has the relative path to _Web.config_ in the web project. Build the test project and check that _Web.config_ is in the output directory.
 
 ```xml
 <Project>
@@ -35,8 +35,6 @@ The framework needs to have access to the same _Web.config_ used by the web proj
     </ItemGroup>
 </Project>
 ```
-
-If you have done it correctly, it will look like below. Build the test project and check that _Web.config_ is in the output directory.
 
 #### Add the engine and fixture
 
@@ -97,7 +95,7 @@ public class DefaultEngineCollectionFixture
 }
 ```
 
-```
+```csharp
 [Collection("Default")]
 public class ExploratoryTests
 {
