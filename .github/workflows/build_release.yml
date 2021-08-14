@@ -69,7 +69,10 @@ jobs:
 
       - name: test with minimum CMS 11 version
         run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestCaseFilter:"verification=required" /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Min/bin/${{env.CONFIGURATION}}/net471/
-        
+
+      - name: test when missing configuration
+        run: vstest.console.exe ./src/net48/Lorem.Testing.Optimizely.CMS.Test.Invalid/bin/${{env.CONFIGURATION}}/net48/Lorem.Testing.Optimizely.CMS.Test.Invalid.dll /TestCaseFilter:"verification=required" /TestAdapterPath:./src/net48/Lorem.Testing.Optimizely.CMS.Test.Invalid/bin/${{env.CONFIGURATION}}/net48/
+      
       - name: create nuget
         run: nuget pack ./src/Lorem.Testing.Optimizely.CMS.csproj.nuspec -version ${{steps.version.outputs.version}}
 

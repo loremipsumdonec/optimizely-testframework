@@ -42,3 +42,6 @@ jobs:
 
     - name: test with minimum CMS version
       run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\Lorem.Testing.Optimizely.CMS.Test.Min.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Min\bin\${{env.CONFIGURATION}}\net471\
+
+    - name: test when missing configuration
+      run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Invalid\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.CMS.Test.Invalid.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Invalid\bin\${{env.CONFIGURATION}}\net48\
