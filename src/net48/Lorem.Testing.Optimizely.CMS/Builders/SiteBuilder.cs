@@ -1,4 +1,5 @@
 ﻿using EPiServer.Core;
+using EPiServer.Web;
 using Lorem.Testing.Optimizely.CMS.Commands;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,17 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 throw new InvalidOperationException("Could not find a page to be used as start page");
             }
 
+            var builders = Fixture.GetBuilders<SiteDefinition>();
+
             var command = new CreateSite(
-                Fixture.Get<string>("episerver.site.name"),
-                Fixture.Get<Uri>("episerver.site.url"),
+                "localhost",
+                new Uri("http://localhost"),
                 startPage.ContentLink,
                 Fixture.Cultures[0]
-            );
+            )
+            {
+                Build = CreateBuild()
+            };
 
             Fixture.Site = command.Execute();
 
@@ -74,6 +80,17 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
                 var command = new UpdateLanguage(culture, true);
                 command.Execute();
             }
+        }
+
+        private Action<object> CreateBuild()
+        {
+            return p =>
+            {
+                foreach (var builder in Fixture.GetBuilders<SiteDefinition>())
+                {
+                    builder.Invoke(p);
+                }
+            };
         }
     }
 }

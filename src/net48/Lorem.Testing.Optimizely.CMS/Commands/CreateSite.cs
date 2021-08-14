@@ -44,39 +44,43 @@ namespace Lorem.Testing.Optimizely.CMS.Commands
 
         public CultureInfo Language { get; set; }
 
+        public Action<SiteDefinition> Build { get; set; }
+
         public SiteDefinition Execute()
         {
             var site = CreateSiteDefinition();
+            Build?.Invoke(site);
+            Save(site);
+
             AddHosts(site);
+            Save(site);
 
             return site;
         }
 
+        private void Save(SiteDefinition site)
+        {
+            _repository.Save(site);
+        }
+
         private SiteDefinition CreateSiteDefinition()
         {
-            var site = new SiteDefinition()
+            return new SiteDefinition()
             {
                 Name = Name,
                 SiteUrl = Url,
                 StartPage = StartPage
             };
-
-            _repository.Save(site);
-
-            return site;
         }
 
         private void AddHosts(SiteDefinition site)
         {
-            site.StartPage = StartPage;
             site.Hosts[0].Language = Language;
             site.Hosts.Add(new HostDefinition()
             {
                 Name = "*",
                 Language = Language
             });
-
-            _repository.Save(site);
         }
     }
 }

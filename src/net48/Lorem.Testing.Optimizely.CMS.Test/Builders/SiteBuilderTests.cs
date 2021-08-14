@@ -20,12 +20,29 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 
         public DefaultEpiserverFixture Fixture { get; set; }
 
-        [Fact]
-        public void CreateSite_WithPage_HasSiteDefinition()
+        [Theory]
+        [InlineData("siteName", "http://site.local")]
+        public void CreateSite_WithBuilder_SiteDefinitionCreatedWithInputFromBuilder(string siteName, string siteUrl)
         {
-            string siteName = Fixture.Get<string>("episerver.site.name");
-            string siteUrl = Fixture.Get<Uri>("episerver.site.url").AbsoluteUri;
+            Fixture.ClearBuilders<SiteDefinition>();
+            Fixture.RegisterBuilder<SiteDefinition>(s => {
+                s.Name = siteName;
+                s.SiteUrl = new Uri(siteUrl);
+            });
 
+            Fixture.CreateSite<StartPage>();
+
+            var repository = Fixture.GetInstance<ISiteDefinitionRepository>();
+            var site = repository.List().FirstOrDefault(s => s.Name == siteName);
+
+            Assert.NotNull(site);
+            Assert.NotNull(site.Hosts.FirstOrDefault(h => h.Url.AbsoluteUri.StartsWith(siteUrl)));
+        }
+
+        [Theory]
+        [InlineData("siteName", "http://site.local")]
+        public void CreateSite_WithInput_SiteDefinitionCreatedWithInput(string siteName, string siteUrl)
+        {
             Fixture.CreateSite<StartPage>(
                 siteName, siteUrl
             );
@@ -34,7 +51,23 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
             var site = repository.List().FirstOrDefault(s => s.Name == siteName);
             
             Assert.NotNull(site);
-            Assert.NotNull(site.Hosts.FirstOrDefault(h => h.Url.AbsoluteUri == siteUrl));
+            Assert.NotNull(site.Hosts.FirstOrDefault(h => h.Url.AbsoluteUri.StartsWith(siteUrl)));
+        }
+
+        [Theory]
+        [InlineData("siteName", "http://site.local")]
+        public void CreateSite_WithInputAndHasSiteDefinitionBuilder_BuilderNotInvoked(string siteName, string siteUrl)
+        {
+            bool invoked = false;
+
+            Fixture.ClearBuilders<SiteDefinition>();
+            Fixture.RegisterBuilder<SiteDefinition>(_ => invoked = true);
+
+            Fixture.CreateSite<StartPage>(
+                siteName, siteUrl
+            );
+
+            Assert.False(invoked);
         }
 
         [Fact]
