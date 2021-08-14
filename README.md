@@ -155,11 +155,12 @@ public class MyFirstIntegrationTests
 }
 ```
 
-### Features
+## Examples
 
-### Pages
+If you need examples check the tests in the test projects.
 
-### Blocks
-
-### Media
+* [PageBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/PageBuilderTests.cs)
+* [BlockBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/BlockBuilderTests.cs)
+* [MediaBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/MediaBuilderTests.cs)
+* [ContentBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/ContentBuilderTests.cs)
 
