@@ -13,12 +13,12 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
     {
         private List<PageData> _pages = new List<PageData>();
 
-        public PageBuilder(EpiserverFixture fixture)
+        public PageBuilder(Fixture fixture)
             : base(fixture)
         {
         }
 
-        public PageBuilder(EpiserverFixture fixture, IEnumerable<PageData> pages)
+        public PageBuilder(Fixture fixture, IEnumerable<PageData> pages)
             : base(fixture, pages)
         {
         }

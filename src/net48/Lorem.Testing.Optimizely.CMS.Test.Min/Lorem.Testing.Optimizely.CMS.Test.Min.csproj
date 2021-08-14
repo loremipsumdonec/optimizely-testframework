@@ -55,7 +55,7 @@
 
   <ItemGroup>
     <Compile Remove="..\Lorem.Testing.Optimizely.CMS.Test\obj\**" />
-    <Compile Remove="..\Lorem.Testing.Optimizely.CMS.Test\Services\ExploratoryEpiserverFixture.cs" />
+    <Compile Remove="..\Lorem.Testing.Optimizely.CMS.Test\Services\ExploratoryFixture.cs" />
   </ItemGroup>
 
   <ItemGroup>

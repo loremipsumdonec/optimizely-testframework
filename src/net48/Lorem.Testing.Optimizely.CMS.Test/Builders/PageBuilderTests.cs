@@ -17,12 +17,12 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
     [Trait("verification", "required")]
     public class PageBuilderTests
     {
-        public PageBuilderTests(DefaultEpiserverEngine engine)
+        public PageBuilderTests(DefaultEngine engine)
         {
-            Fixture = new DefaultEpiserverFixture(engine);
+            Fixture = new DefaultFixture(engine);
         }
 
-        public DefaultEpiserverFixture Fixture { get; set; }
+        public DefaultFixture Fixture { get; set; }
 
         [Fact]
         public void Create_IsReadOnlyIsFalse()

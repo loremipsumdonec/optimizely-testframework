@@ -3,7 +3,7 @@ using System;
 
 namespace Lorem.Testing.Optimizely.CMS
 {
-    public interface IEpiserverEngine
+    public interface IEngine
     {
         void Start();
 

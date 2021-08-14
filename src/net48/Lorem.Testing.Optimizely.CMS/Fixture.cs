@@ -12,17 +12,17 @@ using System.Linq;
 
 namespace Lorem.Testing.Optimizely.CMS
 {
-    public abstract class EpiserverFixture
+    public abstract class Fixture
     {
         private Dictionary<string, object> _register = new Dictionary<string, object>();
         private Dictionary<Type, List<Action<object>>> _builders = new Dictionary<Type, List<Action<object>>>();
 
-        public EpiserverFixture(EpiserverEngine engine)
+        public Fixture(IEngine engine)
         {
             Engine = engine;
         }
 
-        public EpiserverEngine Engine { get; }
+        public IEngine Engine { get; }
 
         public SiteDefinition Site { get; set; }
 

@@ -4,7 +4,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
 {
     public interface IFixtureBuilder
     {
-        EpiserverFixture Fixture { get; }
+        Fixture Fixture { get; }
     }
 
     public interface IFixtureBuilder<T> 

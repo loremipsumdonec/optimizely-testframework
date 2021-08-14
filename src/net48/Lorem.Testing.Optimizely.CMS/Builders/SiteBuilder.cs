@@ -11,7 +11,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
     public class SiteBuilder<T>
         : FixtureBuilder<T>, ISiteBuilder<T> where T : PageData
     {
-        public SiteBuilder(EpiserverFixture fixture)
+        public SiteBuilder(Fixture fixture)
             : base(fixture)
         {
         }

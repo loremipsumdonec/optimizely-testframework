@@ -15,22 +15,22 @@ using System.Reflection;
 
 namespace Lorem.Testing.Optimizely.CMS
 {
-    public class EpiserverEngine
-        : IEpiserverEngine
+    public abstract class Engine
+        : IEngine
     {
         private string _webConfig;
         private InitializationEngine _engine;
         private List<Assembly> _assemblies;
-        private readonly List<IEpiserverTestFramework> _frameworks = new List<IEpiserverTestFramework>();
+        private readonly List<ITestFramework> _frameworks = new List<ITestFramework>();
         private bool _started;
         private List<ContentType> _contentTypes;
 
-        public EpiserverEngine(params IEpiserverTestFramework[] frameworks)
+        public Engine(params ITestFramework[] frameworks)
         {
-            _frameworks = new List<IEpiserverTestFramework>(frameworks);
+            _frameworks = new List<ITestFramework>(frameworks);
         }
 
-        public void Add(IEpiserverTestFramework testFramework)
+        public void Add(ITestFramework testFramework)
         {
             _frameworks.Add(testFramework);
         }

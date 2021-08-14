@@ -12,12 +12,12 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
     {
         private readonly List<MediaData> _medias = new List<MediaData>();
 
-        public MediaBuilder(EpiserverFixture fixture)
+        public MediaBuilder(Fixture fixture)
             : base(fixture)
         {
         }
 
-        public MediaBuilder(EpiserverFixture fixture, IEnumerable<MediaData> medias)
+        public MediaBuilder(Fixture fixture, IEnumerable<MediaData> medias)
             : base(fixture, medias)
         {
         }

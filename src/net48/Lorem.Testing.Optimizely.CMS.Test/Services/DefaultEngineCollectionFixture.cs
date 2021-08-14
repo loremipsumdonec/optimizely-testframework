@@ -3,8 +3,8 @@
 namespace Lorem.Testing.Optimizely.CMS.Test.Services
 {
     [CollectionDefinition("Default")]
-    public class DefaultEpiserverEngineCollectionFixture
-        : ICollectionFixture<DefaultEpiserverEngine>
+    public class DefaultEngineCollectionFixture
+        : ICollectionFixture<DefaultEngine>
     {
     }
 }

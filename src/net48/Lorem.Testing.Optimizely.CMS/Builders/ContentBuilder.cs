@@ -11,12 +11,12 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
     {
         private List<IContent> _contents = new List<IContent>();
 
-        public ContentBuilder(EpiserverFixture fixture)
+        public ContentBuilder(Fixture fixture)
             : base(fixture)
         {
         }
 
-        public ContentBuilder(EpiserverFixture fixture, IEnumerable<IContent> latest)
+        public ContentBuilder(Fixture fixture, IEnumerable<IContent> latest)
             : base(fixture, latest)
         {
         }

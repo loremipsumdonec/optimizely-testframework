@@ -11,12 +11,12 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
     [Trait("verification", "required")]
     public class EpiserverFixtureTests
     {
-        public EpiserverFixtureTests(DefaultEpiserverEngine engine)
+        public EpiserverFixtureTests(DefaultEngine engine)
         {
-            Fixture = new DefaultEpiserverFixture(engine);
+            Fixture = new DefaultFixture(engine);
         }
 
-        public DefaultEpiserverFixture Fixture { get; set; }
+        public DefaultFixture Fixture { get; set; }
     
         [Fact]
         public void Reset_NextPageHasRootPageAsParent()

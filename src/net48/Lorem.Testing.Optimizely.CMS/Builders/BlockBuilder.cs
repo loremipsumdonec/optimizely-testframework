@@ -12,12 +12,12 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
     {
         private readonly List<BlockData> _blocks = new List<BlockData>();
 
-        public BlockBuilder(EpiserverFixture fixture)
+        public BlockBuilder(Fixture fixture)
             : base(fixture)
         {
         }
 
-        public BlockBuilder(EpiserverFixture fixture, IEnumerable<BlockData> blocks)
+        public BlockBuilder(Fixture fixture, IEnumerable<BlockData> blocks)
             : base(fixture, blocks.Select(b=> (IContent)b))
         {
         }

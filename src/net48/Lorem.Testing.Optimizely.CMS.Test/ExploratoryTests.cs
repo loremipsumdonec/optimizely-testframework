@@ -11,13 +11,13 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
     [Trait("type", "exploratory")]
     public class ExploratoryTests
     {
-        public ExploratoryTests(DefaultEpiserverEngine engine)
+        public ExploratoryTests(DefaultEngine engine)
         {
-            Fixture = new ExploratoryEpiserverFixture(engine);
+            Fixture = new ExploratoryFixture(engine);
             Resources = new DefaultResources();
         }
 
-        public ExploratoryEpiserverFixture Fixture { get; set; }
+        public ExploratoryFixture Fixture { get; set; }
 
         public Resources Resources { get; set; }
 

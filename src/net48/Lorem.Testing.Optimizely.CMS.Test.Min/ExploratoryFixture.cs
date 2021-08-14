@@ -1,5 +1,7 @@
 ﻿using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
+using EPiServer.Web;
+using Lorem.Models.Pages;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,17 +9,21 @@ using System.Linq;
 
 namespace Lorem.Testing.Optimizely.CMS.Test.Services
 {
-    public class ExploratoryEpiserverFixture
-        : EpiserverFixture
+    public class ExploratoryFixture
+        : Fixture
     {
-        public ExploratoryEpiserverFixture(EpiserverEngine engine)
+        public ExploratoryFixture(Engine engine)
             : base(engine)
         {
-            Register("episerver.site.name", "Lorem");
-            Register("episerver.site.url", new Uri("http://localhost:65099/"));
-
             Cultures.Add(CultureInfo.GetCultureInfo("sv"));
             Cultures.Add(CultureInfo.GetCultureInfo("en"));
+
+            RegisterBuilder<SiteDefinition>(s => {
+                s.Name = "Lorem";
+                s.SiteUrl = new Uri("http://localhost:61352");
+            });
+
+            RegisterBuilder<StartPage>(p => p.Heading = "Welcome to Lorem minimum");
 
             Start();
         }

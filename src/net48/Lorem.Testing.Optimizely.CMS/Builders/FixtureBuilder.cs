@@ -9,19 +9,19 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
     public class FixtureBuilder<T>
         : IFixtureBuilder<T>
     {
-        public FixtureBuilder(EpiserverFixture fixture)
+        public FixtureBuilder(Fixture fixture)
         {
             Fixture = fixture;
         }
 
-        public FixtureBuilder(EpiserverFixture fixture, IEnumerable<IContent> latest)
+        public FixtureBuilder(Fixture fixture, IEnumerable<IContent> latest)
         {
             Fixture = fixture;
 
             Fixture.Add(latest);
         }
 
-        public EpiserverFixture Fixture { get; }
+        public Fixture Fixture { get; }
 
         public IFixtureBuilder<T> Pick(int total = 1)
         {

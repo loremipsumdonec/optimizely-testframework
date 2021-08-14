@@ -13,7 +13,7 @@ using System.Linq;
 namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
 {
     public class CmsTestFramework
-        : IEpiserverTestFramework
+        : ITestFramework
     {
         private readonly string _connectionStringName;
         private string _connectionString;

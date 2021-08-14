@@ -1,11 +1,10 @@
-﻿using EPiServer.Framework;
-using EPiServer.Framework.Initialization;
+﻿using EPiServer.Framework.Initialization;
 using Lorem.Testing.Optimizely.CMS.Commands;
 using System.Collections.Generic;
 
 namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
 {
-    public interface IEpiserverTestFramework
+    public interface ITestFramework
     {
         void BeforeInitialize(InitializationEngine engine);
 

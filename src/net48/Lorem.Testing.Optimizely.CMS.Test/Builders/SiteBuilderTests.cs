@@ -13,12 +13,12 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
     [Trait("verification", "required")]
     public class SiteBuilderTests
     {
-        public SiteBuilderTests(DefaultEpiserverEngine engine)
+        public SiteBuilderTests(DefaultEngine engine)
         {
-            Fixture = new DefaultEpiserverFixture(engine);
+            Fixture = new DefaultFixture(engine);
         }
 
-        public DefaultEpiserverFixture Fixture { get; set; }
+        public DefaultFixture Fixture { get; set; }
 
         [Theory]
         [InlineData("siteName", "http://site.local")]

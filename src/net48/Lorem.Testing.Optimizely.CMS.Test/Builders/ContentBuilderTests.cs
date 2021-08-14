@@ -19,13 +19,13 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
     [Trait("verification", "required")]
     public class ContentBuilderTests
     {
-        public ContentBuilderTests(DefaultEpiserverEngine engine)
+        public ContentBuilderTests(DefaultEngine engine)
         {
-            Fixture = new DefaultEpiserverFixture(engine);
+            Fixture = new DefaultFixture(engine);
             Resources = new DefaultResources();
         }
 
-        public DefaultEpiserverFixture Fixture { get; set; }
+        public DefaultFixture Fixture { get; set; }
 
         public Resources Resources { get; set; }
 
