@@ -2,9 +2,9 @@
 using Lorem.Testing.Optimizely.CMS.Commands;
 using System.Collections.Generic;
 
-namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
+namespace Lorem.Testing.Optimizely.CMS.Modules
 {
-    public interface ITestFramework
+    public interface ITestModule
     {
         void BeforeInitialize(InitializationEngine engine);
 

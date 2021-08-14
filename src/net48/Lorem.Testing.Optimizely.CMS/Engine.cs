@@ -5,7 +5,7 @@ using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Hosting;
 using Lorem.Testing.Optimizely.CMS.Commands;
-using Lorem.Testing.Optimizely.CMS.TestFrameworks;
+using Lorem.Testing.Optimizely.CMS.Modules;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,18 +21,18 @@ namespace Lorem.Testing.Optimizely.CMS
         private string _webConfig;
         private InitializationEngine _engine;
         private List<Assembly> _assemblies;
-        private readonly List<ITestFramework> _frameworks = new List<ITestFramework>();
+        private readonly List<ITestModule> _modules = new List<ITestModule>();
         private bool _started;
         private List<ContentType> _contentTypes;
 
-        public Engine(params ITestFramework[] frameworks)
+        public Engine(params ITestModule[] frameworks)
         {
-            _frameworks = new List<ITestFramework>(frameworks);
+            _modules = new List<ITestModule>(frameworks);
         }
 
-        public void Add(ITestFramework testFramework)
+        public void Add(ITestModule testFramework)
         {
-            _frameworks.Add(testFramework);
+            _modules.Add(testFramework);
         }
 
         public void Start()
@@ -62,7 +62,7 @@ namespace Lorem.Testing.Optimizely.CMS
         {
             List<IClearCommand> clearCommands = new List<IClearCommand>();
 
-            foreach (var testFramework in _frameworks)
+            foreach (var testFramework in _modules)
             {
                 clearCommands.AddRange(
                     testFramework.Reset()
@@ -138,7 +138,7 @@ namespace Lorem.Testing.Optimizely.CMS
 
         private void BeforeInitialize()
         {
-            foreach(var testFramework in _frameworks)
+            foreach(var testFramework in _modules)
             {
                 testFramework.BeforeInitialize(_engine);
             }
@@ -159,7 +159,7 @@ namespace Lorem.Testing.Optimizely.CMS
 
         private void AfterInitialize()
         {
-            foreach (var testFramework in _frameworks)
+            foreach (var testFramework in _modules)
             {
                 testFramework.AfterInitialize(_engine);
             }

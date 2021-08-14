@@ -1,4 +1,4 @@
-﻿using Lorem.Testing.Optimizely.CMS.TestFrameworks;
+﻿using Lorem.Testing.Optimizely.CMS.Modules;
 using System;
 using System.IO;
 
@@ -10,7 +10,7 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
         public DefaultEngine()
         {
             Add(
-                new CmsTestFramework(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs"))
+                new CmsTestModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs"))
                 {
                     IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
                     IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true

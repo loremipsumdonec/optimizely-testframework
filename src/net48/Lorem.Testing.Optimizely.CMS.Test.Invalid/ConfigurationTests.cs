@@ -1,5 +1,5 @@
 ﻿using Lorem.Testing.Optimizely.CMS.Test.Services;
-using Lorem.Testing.Optimizely.CMS.TestFrameworks;
+using Lorem.Testing.Optimizely.CMS.Modules;
 using System;
 using System.IO;
 using Xunit;
@@ -25,7 +25,7 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Invalid
         public void CreateCmsModule_WithAppDataPathNotEndingWithBlobs_ThrowsArgumentException(string invalidPath)
         {
             Assert.Throws<ArgumentException>(
-                () => new CmsTestFramework(invalidPath)
+                () => new CmsTestModule(invalidPath)
             );
         }
 
@@ -33,7 +33,7 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Invalid
         [InlineData("/valid/blobs")]
         public void CreateCmsModule_WithAppDataPathEndingWithBlobs_Success(string validPath)
         {
-            var _ = new CmsTestFramework(validPath);
+            var _ = new CmsTestModule(validPath);
         }
     }
 }

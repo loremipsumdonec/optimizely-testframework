@@ -9,26 +9,26 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
+namespace Lorem.Testing.Optimizely.CMS.Modules
 {
-    public class CmsTestFramework
-        : ITestFramework
+    public class CmsTestModule
+        : ITestModule
     {
         private readonly string _connectionStringName;
         private string _connectionString;
         private string _appDataPath;
 
-        public CmsTestFramework()
+        public CmsTestModule()
             : this("EPiServerDB", null)
         {
         }
 
-        public CmsTestFramework(string appDataPath)
+        public CmsTestModule(string appDataPath)
             : this("EPiServerDB", appDataPath)
         {
         }
 
-        public CmsTestFramework(string connectionStringName, string appDataPath)
+        public CmsTestModule(string connectionStringName, string appDataPath)
         {
             _connectionStringName = connectionStringName;
             _appDataPath = appDataPath;
