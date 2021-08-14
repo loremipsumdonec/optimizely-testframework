@@ -157,8 +157,6 @@ public class MyFirstIntegrationTests
 
 ### Features
 
-Det finns ett antal funktioner som förenklar att lägga in innehåll i Optimizely CMS. För att minimera koden samt så
-
 ### Pages
 
 ### Blocks
