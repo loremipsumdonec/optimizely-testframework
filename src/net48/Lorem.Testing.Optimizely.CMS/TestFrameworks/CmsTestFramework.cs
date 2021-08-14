@@ -2,6 +2,7 @@
 using EPiServer.Framework.Initialization;
 using EPiServer.Security;
 using Lorem.Testing.Optimizely.CMS.Commands;
+using Lorem.Testing.Optimizely.CMS.Initialization;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,15 +17,22 @@ namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
     {
         private readonly string _connectionStringName;
         private string _connectionString;
+        private string _appDataPath;
 
         public CmsTestFramework()
-            : this("EPiServerDB")
+            : this("EPiServerDB", null)
         {
         }
 
-        public CmsTestFramework(string connectionStringName)
+        public CmsTestFramework(string appDataPath)
+            : this("EPiServerDB", appDataPath)
+        {
+        }
+
+        public CmsTestFramework(string connectionStringName, string appDataPath)
         {
             _connectionStringName = connectionStringName;
+            _appDataPath = appDataPath;
         }
 
         public void BeforeInitialize(InitializationEngine engine)
@@ -34,11 +42,14 @@ namespace Lorem.Testing.Optimizely.CMS.TestFrameworks
             CreateCmsDatabase();
         }
 
-        private static void RemoveInitializationModules(InitializationEngine engine)
+        private void RemoveInitializationModules(InitializationEngine engine)
         {
             var modules = engine.Modules.ToList();
 
             modules.RemoveAll(m => m.GetType().FullName.StartsWith("EPiServer.Enterprise.Internal.DefaultSiteContentInitialization"));
+
+            var fileBlobProviderInitialization = (FileBlobProviderInitialization)modules.First(m=> m is FileBlobProviderInitialization);
+            fileBlobProviderInitialization.AppDataPath = _appDataPath;
 
             engine.Modules = modules;
         }

@@ -11,15 +11,15 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
         : EpiserverFixture
     {
         public ExploratoryEpiserverFixture(EpiserverEngine engine)
+            : base(engine)
         {
-            Engine = engine;
-            Engine.Start();
-
             Register("episerver.site.name", "Lorem");
             Register("episerver.site.url", new Uri("http://localhost:65099/"));
 
             Cultures.Add(CultureInfo.GetCultureInfo("sv"));
             Cultures.Add(CultureInfo.GetCultureInfo("en"));
+
+            Start();
         }
 
         public IEnumerable<CultureInfo> GetCmsCultures()

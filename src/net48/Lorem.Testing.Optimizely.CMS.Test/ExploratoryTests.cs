@@ -1,6 +1,8 @@
-﻿using Lorem.Models.Pages;
+﻿using Lorem.Models.Media;
+using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
 using Lorem.Testing.Optimizely.CMS.Test.Services;
+using Lorem.Testing.Optimizely.CMS.Utility;
 using Xunit;
 
 namespace Lorem.Testing.Optimizely.CMS.Test.Builders
@@ -12,9 +14,12 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
         public ExploratoryTests(DefaultEpiserverEngine engine)
         {
             Fixture = new ExploratoryEpiserverFixture(engine);
+            Resources = new DefaultResources();
         }
 
         public ExploratoryEpiserverFixture Fixture { get; set; }
+
+        public Resources Resources { get; set; }
 
         [Fact]
         public void CreateASimpleSiteForExploratoryTesting()
@@ -28,16 +33,9 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Builders
 
             Fixture.CreateSite<StartPage>()
                 .CreateMany<ArticlePage>(10, p => p.Name = $"{p.Name}-{p.Language.Name}")
-                .Update<StartPage>((p, articlePages) =>
-                {
-                    p.Heading = p.Language.Name;
+                .Upload<ImageFile>(Resources.Get("/images"), (i, p) => p.TopImage = i.ContentLink);
 
-                    foreach(var articlePage in articlePages)
-                    {
-                        p.Add(articlePage);
-                    }
-                })
-                .CreateMany(2);
+            Fixture.CreateMany<ArticlePage>(2, p => p.Name = $"{p.Name} MANY");
         }
     }
 }

@@ -12,16 +12,16 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
         : EpiserverFixture
     {
         public ExploratoryEpiserverFixture(EpiserverEngine engine)
+            : base(engine)
         {
-            Engine = engine;
-            Engine.Start();
-
             Register("episerver.site.name", "Lorem min");
             Register("episerver.site.url", new Uri("http://localhost:61352/"));
 
             Cultures.Add(CultureInfo.GetCultureInfo("en"));
 
             RegisterBuilder<StartPage>(p => p.Heading = "Welcome to Lorem minimum");
+
+            Start();
         }
 
         public IEnumerable<CultureInfo> GetCmsCultures()

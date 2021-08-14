@@ -1,4 +1,6 @@
 ﻿using Lorem.Testing.Optimizely.CMS.TestFrameworks;
+using System;
+using System.IO;
 
 namespace Lorem.Testing.Optimizely.CMS.Test.Services
 {
@@ -6,8 +8,10 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
         : EpiserverEngine
     {
         public DefaultEpiserverEngine()
-            : base(new CmsTestFramework())
         {
+            Add(
+                new CmsTestFramework(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs"))
+            );
         }
     }
 }

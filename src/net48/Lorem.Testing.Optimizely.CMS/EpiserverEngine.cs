@@ -25,10 +25,6 @@ namespace Lorem.Testing.Optimizely.CMS
         private bool _started;
         private List<ContentType> _contentTypes;
 
-        public EpiserverEngine()
-        {
-        }
-
         public EpiserverEngine(params IEpiserverTestFramework[] frameworks)
         {
             _frameworks = new List<IEpiserverTestFramework>(frameworks);
@@ -51,6 +47,7 @@ namespace Lorem.Testing.Optimizely.CMS
             LoadHostingEnvironment();
             LoadConfigurationSource();
             LoadAssemblies();
+
             LoadInitializationEngine();
 
             BeforeInitialize();
@@ -135,7 +132,7 @@ namespace Lorem.Testing.Optimizely.CMS
 
         private void LoadInitializationEngine()
         {
-            _engine = new InitializationEngine(new List<IInitializableModule>(), HostType.TestFramework, _assemblies);
+            _engine = new InitializationEngine((IEnumerable<IInitializableModule>) null, HostType.TestFramework, _assemblies);
             _engine.ScanAssemblies();
         }
 

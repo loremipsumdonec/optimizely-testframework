@@ -1,4 +1,5 @@
-﻿using EPiServer.Framework.Initialization;
+﻿using EPiServer.Framework;
+using EPiServer.Framework.Initialization;
 using Lorem.Testing.Optimizely.CMS.Commands;
 using System.Collections.Generic;
 

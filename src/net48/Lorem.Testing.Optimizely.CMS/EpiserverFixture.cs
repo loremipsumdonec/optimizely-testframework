@@ -14,10 +14,15 @@ namespace Lorem.Testing.Optimizely.CMS
 {
     public abstract class EpiserverFixture
     {
-        public EpiserverEngine Engine { get; protected set; }
-
         private Dictionary<string, object> _register = new Dictionary<string, object>();
         private Dictionary<Type, List<Action<object>>> _builders = new Dictionary<Type, List<Action<object>>>();
+
+        public EpiserverFixture(EpiserverEngine engine)
+        {
+            Engine = engine;
+        }
+
+        public EpiserverEngine Engine { get; }
 
         public SiteDefinition Site { get; set; }
 
@@ -26,6 +31,11 @@ namespace Lorem.Testing.Optimizely.CMS
         public List<IContent> Contents { get; set; } = new List<IContent>();
 
         public List<IContent> Latest { get; set; } = new List<IContent>();
+
+        protected void Start()
+        {
+            Engine.Start();
+        }
 
         public T Get<T>(IContent content, CultureInfo culture) where T: IContentData
         {
@@ -55,7 +65,18 @@ namespace Lorem.Testing.Optimizely.CMS
             return latest;
         }
 
-        public void RegisterBuilder<T>(Action<T> build) where T : IContentData
+        public void ClearBuilders<T>()
+        {
+            foreach (var kv in _builders)
+            {
+                if (kv.Key.IsAssignableFrom(typeof(T)))
+                {
+                    kv.Value.Clear();
+                }
+            }
+        }
+
+        public void RegisterBuilder<T>(Action<T> build)
         {
             if (!_builders.ContainsKey(typeof(T)))
             {
@@ -65,7 +86,7 @@ namespace Lorem.Testing.Optimizely.CMS
             _builders[typeof(T)].Add(p=> build.Invoke((T)p));
         }
 
-        public IEnumerable<Action<object>> GetBuilders<T>() where T : IContentData
+        public IEnumerable<Action<object>> GetBuilders<T>()
         {
             List<Action<object>> builders = new List<Action<object>>();
 

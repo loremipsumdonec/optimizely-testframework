@@ -1,23 +1,30 @@
 ﻿using EPiServer.Data;
 using EPiServer.Framework;
+using EPiServer.Framework.Blobs;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
-using System;
-using System.IO;
 
-namespace Alloy.Test.Initialization
+namespace Lorem.Testing.Optimizely.CMS.Initialization
 {
-    [InitializableModule]
     [ModuleDependency(typeof(DataInitialization))]
     public class FileBlobProviderInitialization
         : IConfigurableModule
     {
+        public string AppDataPath { get; set; }
+
         public void ConfigureContainer(ServiceConfigurationContext context)
         {
-            context.Services.AddFileBlobProvider(
-                "fileBlobProvider",
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs")
-            );
+            if(!string.IsNullOrEmpty(AppDataPath))
+            {
+                context.Services.AddFileBlobProvider(
+                    "fileBlobProvider",
+                    AppDataPath
+                );
+
+                return;
+            }
+
+            context.Services.AddBlobProvider<FileBlobProvider>("fileBlobProvider");
         }
 
         public void Initialize(InitializationEngine context)
