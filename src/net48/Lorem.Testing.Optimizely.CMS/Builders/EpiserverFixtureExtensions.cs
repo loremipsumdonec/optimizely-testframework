@@ -1,4 +1,6 @@
 ﻿using EPiServer.Core;
+using EPiServer.ServiceLocation;
+using Lorem.Testing.Optimizely.CMS.Services;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -127,5 +129,11 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
         }
 
         #endregion
+
+        public static NestedContext CreateNestedContext(this Fixture fixture)
+        {
+            var instance = (ServiceLocatorDecorator)ServiceLocator.Current;
+            return instance.Push();
+        }
     }
 }

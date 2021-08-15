@@ -23,6 +23,8 @@
     <PackageReference Include="Microsoft.Owin.Security.Cookies" Version="3.0.1" />
     
     <PackageReference Include="Microsoft.Owin.Security.OAuth" Version="3.0.1" />
+    
+    <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit.analyzers" Version="0.10.0" />
     <PackageReference Include="xunit.assert.source" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>

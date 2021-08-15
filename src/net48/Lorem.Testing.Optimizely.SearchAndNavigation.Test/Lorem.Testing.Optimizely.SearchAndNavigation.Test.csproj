@@ -16,6 +16,7 @@
     <PackageReference Include="EPiServer.Find.Cms" Version="13.4.4" />
     <PackageReference Include="EPiServer.Framework" Version="11.20.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit.analyzers" Version="0.10.0" />
     <PackageReference Include="xunit.assert.source" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>

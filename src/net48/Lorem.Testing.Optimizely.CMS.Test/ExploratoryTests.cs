@@ -5,6 +5,9 @@ using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
 using Lorem.Testing.Optimizely.CMS.Test.Services;
 using Lorem.Testing.Optimizely.CMS.Utility;
+using Moq;
+using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace Lorem.Testing.Optimizely.CMS.Test.Builders
