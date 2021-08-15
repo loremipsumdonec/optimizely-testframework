@@ -45,12 +45,10 @@ namespace Lorem.Testing.Optimizely.CMS.Modules
             FileConfigurationSource instance = (FileConfigurationSource)ConfigurationSource.Instance;
             var currentAppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            var episerverFindCmsSection = new EPiServerFindCmsConfigurationSection(instance.ConfigurationInstance.GetSection("episerver.find.cms"));
-            episerverFindCmsSection.DisableEventedIndexing = true;
-
-#if NET48_OR_GREATER
-            episerverFindCmsSection.DisableScheduledPageQueue = true;
-#endif
+            var episerverFindCmsSection = new EPiServerFindCmsConfigurationSection(instance.ConfigurationInstance.GetSection("episerver.find.cms"))
+            {
+                DisableEventedIndexing = true
+            };
 
             currentAppConfig.Sections.Remove("episerver.find.cms");
             currentAppConfig.Sections.Add("episerver.find.cms", episerverFindCmsSection);

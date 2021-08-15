@@ -33,22 +33,6 @@ namespace Lorem.Testing.Optimizely.SearchAndNavigation.Configuration
             }
         }
 
-#if NET48_OR_GREATER
-
-        public new bool DisableScheduledPageQueue
-        {
-            get
-            {
-                return base.DisableScheduledPageQueue;
-            }
-            set
-            {
-                SetPropertyValue(Properties["disableScheduledPageQueue"], value, true);
-            }
-        }
-
-#endif
-
         public new bool DeleteLanguageRoutingDuplicatesOnIndex
         {
             get

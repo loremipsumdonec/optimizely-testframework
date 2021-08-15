@@ -1,11 +1,10 @@
 ﻿using EPiServer.ServiceLocation;
-using EPiServer.ServiceLocation.AutoDiscovery;
 using StructureMap;
 using System;
 using System.Collections.Generic;
+
 namespace Lorem.Testing.Optimizely.CMS.Services
 {
-
     public class ServiceLocatorDecorator
         : IServiceLocator
     {
