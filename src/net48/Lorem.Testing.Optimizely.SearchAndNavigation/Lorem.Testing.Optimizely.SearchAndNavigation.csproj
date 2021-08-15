@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>loremipsumdonec</Authors>
+    <PackageProjectUrl>https://github.com/loremipsumdonec/episerver-testframework</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/loremipsumdonec/episerver-testframework</RepositoryUrl>
+    <PackageTags>Optimizely CMS testing</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPiServer.Find" Version="13.4.4" />
+    <PackageReference Include="EPiServer.Find.Cms" Version="13.4.4" />
+  </ItemGroup>
+
+<!--
+  <ItemGroup Condition="'$(TargetFramework)'=='net48' Or '$(TargetFramework)'=='netstandard2.0'">
+    <PackageReference Include="EPiServer.Find.Cms" Version="13.4.4" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="11.23.1" />
+    <PackageReference Include="EPiServer.Framework" Version="11.20.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net472' Or '$(TargetFramework)'=='net471' Or '$(TargetFramework)'=='net461'">
+    <PackageReference Include="EPiServer.Find.Cms" Version="13.4.4" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="11.23.1" />
+    <PackageReference Include="EPiServer.Framework" Version="11.14.0" />
+  </ItemGroup>
+-->
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lorem.Testing.Optimizely.CMS\Lorem.Testing.Optimizely.CMS.csproj" />
+  </ItemGroup>
+
+</Project>
