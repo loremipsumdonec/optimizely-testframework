@@ -13,9 +13,9 @@
     <releaseNotes></releaseNotes>
     <tags>Optimizely Test</tags>
     <dependencies>
-        <dependency id="Lorem.Testing.Optimizely.CMS" version="[1.0, 2.0)" />
-        <dependency id="EPiServer.Find" version="[13.0.0, 14.0)" />
-        <dependency id="EPiServer.Find.CMS" version="[13.0.0, 12.0)" />
+        <dependency id="Lorem.Testing.Optimizely.CMS" version="[0.9, 1.0)" />
+        <dependency id="EPiServer.Find" version="[13.0.1, 14.0)" />
+        <dependency id="EPiServer.Find.CMS" version="[13.0.1, 14.0)" />
     </dependencies>
   </metadata>
   <files>
