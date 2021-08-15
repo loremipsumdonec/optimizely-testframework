@@ -47,4 +47,7 @@ jobs:
       run: vstest.console.exe Lorem.Testing.Optimizely.CMS.Test.Invalid\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.CMS.Test.Invalid.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.CMS.Test.Invalid\bin\${{env.CONFIGURATION}}\net48\
     
     - name: test with latest Search and Navigation version
-      run: vstest.console.exe Lorem.Testing.Optimizely.SearchAndNavigation.Test\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.SearchAndNavigation.Test.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.SearchAndNavigation\bin\${{env.CONFIGURATION}}\net48\
+      run: vstest.console.exe Lorem.Testing.Optimizely.SearchAndNavigation.Test\bin\${{env.CONFIGURATION}}\net48\Lorem.Testing.Optimizely.SearchAndNavigation.Test.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.SearchAndNavigation.Test\bin\${{env.CONFIGURATION}}\net48\
+
+    - name: test with minimum Search and Navigation version
+      run: vstest.console.exe Lorem.Testing.Optimizely.SearchAndNavigation.Test.Min\bin\${{env.CONFIGURATION}}\net471\Lorem.Testing.Optimizely.SearchAndNavigation.Test.Min.dll /TestCaseFilter:"verification=required" /TestAdapterPath:Lorem.Testing.Optimizely.SearchAndNavigation.Test.Min\bin\${{env.CONFIGURATION}}\net471\
