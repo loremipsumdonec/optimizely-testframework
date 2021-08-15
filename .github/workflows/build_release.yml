@@ -61,7 +61,7 @@ jobs:
         working-directory: ./src/net48
 
       - name: build for cms 11
-        run: msbuild /property:Configuration=${{env.CONFIGURATION}}
+        run: msbuild /property:Configuration=${{env.CONFIGURATION}} -m
         working-directory: ./src/net48
 
       - name: create Lorem.Testing.Optimizely.CMS nuget
