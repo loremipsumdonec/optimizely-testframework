@@ -9,8 +9,6 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
     {
         public DefaultEngine()
         {
-            Add(new SearchAndNavigationTestModule());
-
             Add(
                 new CmsTestModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\Lorem\App_Data\blobs"))
                 {
@@ -18,6 +16,8 @@ namespace Lorem.Testing.Optimizely.CMS.Test.Services
                     IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
                 }
             );
+
+            Add(new SearchAndNavigationTestModule());
         }
     }
 }

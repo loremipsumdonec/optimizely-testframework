@@ -1,5 +1,6 @@
 ﻿using EPiServer;
 using EPiServer.Core;
+using EPiServer.ServiceLocation;
 using Lorem.Models.Pages;
 using Lorem.Testing.Optimizely.CMS.Builders;
 using Lorem.Testing.Optimizely.CMS.Test.Services;
@@ -23,27 +24,29 @@ namespace Lorem.Testing.Optimizely.CMS.Test
         [Fact]
         public void CreateNestedContext_WithUsing_GetChildrenAfterDispose()
         {
-            var repository = new Mock<IContentRepository>();
-            repository.Setup(r => r.GetChildren<IContent>(It.IsAny<ContentReference>()))
-                .Throws(new FileNotFoundException("Only for testing"));
+            var mock = new Mock<IContentRepository>();
 
-            Fixture.Create<StartPage>().CreateMany<ArticlePage>(2);
-            var startPage = Fixture.Get<StartPage>().First();
+            mock.Setup(r => r.GetChildren<StartPage>(It.IsAny<ContentReference>()))
+                .Throws(new FileNotFoundException("Only for testing")
+            );
+
+            Fixture.Create<StartPage>();
 
             using (var context = Fixture.CreateNestedContext())
             {
-                context.Container.Configure(_ => _.For<IContentRepository>().Use(repository.Object));
+                context.Container.Configure(_ => _.For<IContentRepository>().Use(mock.Object));
 
-                var r = Fixture.GetInstance<IContentRepository>();
+                var testDoubleRepository = ServiceLocator.Current.GetInstance<IContentRepository>();
+
                 Assert.Throws<FileNotFoundException>(
-                    () => r.GetChildren<IContent>(startPage.ContentLink)
+                    () => testDoubleRepository.GetChildren<StartPage>(ContentReference.RootPage)
                 );
             }
 
-            var rr = Fixture.GetInstance<IContentRepository>();
-            var pages = rr.GetChildren<IContent>(startPage.ContentLink);
+            var repository = ServiceLocator.Current.GetInstance<IContentRepository>();
+            var pages = repository.GetChildren<StartPage>(ContentReference.RootPage);
 
-            Assert.Equal(2, pages.Count());
+            Assert.Single(pages);
         }
     }
 }

@@ -12,20 +12,18 @@ I have written a post that describes how to start with integration testing for O
 
 [![optimizely cms 11](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml) [![optimizely cms 12](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml)
 
-I have started a small framework that hopefully simplifies the process of starting and creating data in Optimizely CMS  so that you can then focus on writing clear test cases.
-
-Example of a test case that tests a `IBreadCrumbService` and verifies that it ignores pages that has `VisibleInBreadCrumb=false`.
+I have started a small framework that hopefully simplifies the process of starting with integration testing with Optimizely CMS. Example of a test case that tests a `IBreadCrumbService` and verifies that it ignores pages that has `VisibleInBreadCrumb=false`.
 
 ```csharp
 [Collection("Default")]
 public class BreadcrumbsServiceTest
 {
-    public BreadcrumbsServiceTest(DefaultEpiserverEngine engine) 
+    public BreadcrumbsServiceTest(DefaultEngine engine) 
     {
-        Fixture = new DefaultEpiserverFixture(engine);
+        Fixture = new DefaultFixture(engine);
     }
     
-    public EpiserverFixture Fixture {get;}
+    public DefaultFixture Fixture {get;}
         
     [Fact]
     public void GetBreadCrumbs_OnePageInPathNotVisibleInBreadCrumb_HasExpectedCount()
@@ -48,13 +46,56 @@ The test case will create three pages in the tree structure below and disable `V
   * ArticlePage 
     * ArticlePage
 
+In addition to providing support for creating content such as pages, blocks and uploading files, it is also possible to replace  services with test doubles. For example, if you use Moq, you can temporarily replace a service like `IContentRepository`. 
 
+```csharp
+[Collection("Default")]
+public class FixtureNestedContextTests
+{
+    public FixtureNestedContextTests(DefaultEngine engine) 
+    {
+        Fixture = new DefaultFixture(engine);
+    }
+    
+    public DefaultFixture Fixture {get;}
+        
+    [Fact]
+    public void CreateNestedContext_WithUsing_GetChildrenAfterDispose()
+    {
+        var mock = new Mock<IContentRepository>();
+
+        mock.Setup(r => 
+            r.GetChildren<StartPage>(It.IsAny<ContentReference>()))
+            .Throws(new FileNotFoundException("Only for testing"));
+
+        Fixture.Create<StartPage>();
+
+        using (var context = Fixture.CreateNestedContext())
+        {
+            context.Container.Configure(_ => _.For<IContentRepository>().Use(mock.Object));
+
+            var testDoubleRepository = ServiceLocator.Current.GetInstance<IContentRepository>();
+
+            Assert.Throws<FileNotFoundException>(
+                () => testDoubleRepository.GetChildren<StartPage>(ContentReference.RootPage)
+            );
+        }
+
+        var repository = ServiceLocator.Current.GetInstance<IContentRepository>();
+        var pages = repository.GetChildren<StartPage>(ContentReference.RootPage);
+
+        Assert.Single(pages);
+    }
+}
+```
 
 ### Getting started
 
 #### Install
 
-The framework is currently not available in any nuget feed.
+> The framework is currently not available in any public nuget feed. 
+
+Create a test project and then install the nuget `Lorem.Testing.Optimizely.CMS`. If the project uses Search and Navigation and you need to test code that can directly or indirectly call Search and Navigation, then you will also need to install `Lorem.Testing.Optimizely.SearchAndNavigation`.
 
 #### Access to Web.config
 
@@ -133,6 +174,8 @@ public class DefaultEngineCollectionFixture
 }
 ```
 
+
+
 ```csharp
 [Collection("Default")]
 public class MyFirstIntegrationTests
@@ -157,7 +200,49 @@ public class MyFirstIntegrationTests
 
 ## Examples
 
-If you need examples check the tests in the test projects.
+### Engine
+
+The following section shows examples of regular configurations for `Lorem.Testing.Optimizely.CMS.Engine`.
+
+#### Default Engine
+
+```csharp
+public class DefaultEngine : Lorem.Testing.Optimizely.CMS.Engine
+{
+    public DefaultEngine()
+    {
+    	Add(new CmsTestModule()
+            {
+                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
+                IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+            });
+    }
+}
+```
+
+#### Engine with support for Search and Navigation
+
+For this configuration you will need to install the nuget `Lorem.Testing.Optimizely.SearchAndNavigation`.
+
+```csharp
+public class DefaultEngine : Lorem.Testing.Optimizely.CMS.Engine
+{
+    public DefaultEngine()
+    {
+    	Add(new CmsTestModule()
+            {
+                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
+                IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+            });
+        
+        Add(new SearchAndNavigationTestModule());
+    }
+}
+```
+
+### Functions
+
+If you need examples of functions thats available check the tests in the test projects.
 
 * [PageBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/PageBuilderTests.cs)
 * [BlockBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/BlockBuilderTests.cs)
