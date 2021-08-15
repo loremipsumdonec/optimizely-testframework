@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Lorem.Testing.Optimizely.SearchAndNavigation</id>
+    <version>$version$</version>
+    <authors>loremipsumdonec</authors>
+    <owners>loremipsumdonec</owners>
+    <licenseUrl>https://github.com/loremipsumdonec/episerver-testframework/blob/main/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/loremipsumdonec/episerver-testframework</projectUrl>
+    <repository type="git" url="https://github.com/loremipsumdonec/episerver-testframework.git" />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This nuget will add support for Search and Navigation in the integration test framework Lorem.Testing.Optimizely.CMS</description>
+    <releaseNotes></releaseNotes>
+    <tags>Optimizely Test</tags>
+    <dependencies>
+        <dependency id="Lorem.Testing.Optimizely.CMS" version="[1.0, 2.0)" />
+        <dependency id="EPiServer.Find" version="[13.0.0, 14.0)" />
+        <dependency id="EPiServer.Find.CMS" version="[13.0.0, 12.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="net48\Lorem.Testing.Optimizely.SearchAndNavigation\bin\Release\net48\Lorem.Testing.Optimizely.SearchAndNavigation.dll" target="lib\net48\" />
+    <file src="net48\Lorem.Testing.Optimizely.SearchAndNavigation\bin\Release\net472\Lorem.Testing.Optimizely.SearchAndNavigation.dll" target="lib\net472\" />
+    <file src="net48\Lorem.Testing.Optimizely.SearchAndNavigation\bin\Release\net471\Lorem.Testing.Optimizely.SearchAndNavigation.dll" target="lib\net471\" />
+    <file src="net48\Lorem.Testing.Optimizely.SearchAndNavigation\bin\Release\net461\Lorem.Testing.Optimizely.SearchAndNavigation.dll" target="lib\net461\" />
+  </files>
+</package>

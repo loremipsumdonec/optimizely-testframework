@@ -13,17 +13,11 @@
     <PackageReference Include="EPiServer.CMS.UI" Version="11.3.0" />
     <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="11.3.0" />
     <PackageReference Include="EPiServer.Framework" Version="11.3.0" />
-    
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    
     <PackageReference Include="Microsoft.Owin" Version="4.1.1" />
-    
     <PackageReference Include="Microsoft.Owin.Security" Version="3.0.1" />
-    
     <PackageReference Include="Microsoft.Owin.Security.Cookies" Version="3.0.1" />
-    
     <PackageReference Include="Microsoft.Owin.Security.OAuth" Version="3.0.1" />
-    
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit.analyzers" Version="0.10.0" />
     <PackageReference Include="xunit.assert.source" Version="2.4.1">
