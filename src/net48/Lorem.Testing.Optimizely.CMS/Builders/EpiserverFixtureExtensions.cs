@@ -42,7 +42,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
             return new PageBuilder<T>(fixture).Create(build);
         }
 
-        public static IPageBuilder<T> CreateMany<T>(this Fixture fixture, int total) where T : PageData 
+        public static IPageBuilder<T> CreateMany<T>(this Fixture fixture, int total) where T : PageData
         {
             fixture.Reset();
             return new PageBuilder<T>(fixture).CreateMany<T>(total);
@@ -80,7 +80,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
 
         public static IPageBuilder<T> Update<T>(this Fixture fixture, Action<T> build) where T : PageData
         {
-            var contents = fixture.Contents.Where(c => c is T).Select(c => (T)c).ToList();
+            var contents = fixture.Contents.OfType<T>().ToList();
             fixture.Add(contents);
 
             return new PageBuilder<T>(fixture).Update(build);
@@ -88,7 +88,7 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
 
         public static IPageBuilder<T> Get<T>(this Fixture fixture) where T : PageData
         {
-            var contents = fixture.Contents.Where(c => c is T).Select(c => (T)c).ToList();
+            var contents = fixture.Contents.OfType<T>().ToList();
             fixture.Add(contents);
 
             return new PageBuilder<T>(fixture);
@@ -130,10 +130,5 @@ namespace Lorem.Testing.Optimizely.CMS.Builders
 
         #endregion
 
-        public static NestedContext CreateNestedContext(this Fixture fixture)
-        {
-            var instance = (ServiceLocatorDecorator)ServiceLocator.Current;
-            return instance.Push();
-        }
     }
 }

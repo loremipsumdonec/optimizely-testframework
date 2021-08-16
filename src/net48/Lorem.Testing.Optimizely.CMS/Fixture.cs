@@ -5,6 +5,7 @@ using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 using Lorem.Testing.Optimizely.CMS.Commands;
+using Lorem.Testing.Optimizely.CMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,10 +15,10 @@ namespace Lorem.Testing.Optimizely.CMS
 {
     public abstract class Fixture
     {
-        private Dictionary<string, object> _register = new Dictionary<string, object>();
-        private Dictionary<Type, List<Action<object>>> _builders = new Dictionary<Type, List<Action<object>>>();
+        private readonly Dictionary<string, object> _register = new Dictionary<string, object>();
+        private readonly Dictionary<Type, List<Action<object>>> _builders = new Dictionary<Type, List<Action<object>>>();
 
-        public Fixture(IEngine engine)
+        protected Fixture(IEngine engine)
         {
             Engine = engine;
         }
@@ -52,7 +53,7 @@ namespace Lorem.Testing.Optimizely.CMS
         }
 
         public List<IContent> GetLatest(CultureInfo culture)
-        { 
+        {
             List<IContent> latest = new List<IContent>();
 
             foreach (var content in Latest)
@@ -114,7 +115,7 @@ namespace Lorem.Testing.Optimizely.CMS
 
         public void Add(IContent content)
         {
-            var exists = Contents.FirstOrDefault(c => c.ContentLink.CompareToIgnoreWorkID(content.ContentLink));
+            var exists = Contents.Find(c => c.ContentLink.CompareToIgnoreWorkID(content.ContentLink));
 
             if (exists != null)
             {
@@ -149,12 +150,22 @@ namespace Lorem.Testing.Optimizely.CMS
             return ServiceLocator.Current.GetInstance<T>();
         }
 
+        public NestedContext ReplaceServiceWith<T>(T instance)
+        {
+            var locator = (ServiceLocatorDecorator)ServiceLocator.Current;
+            var context = locator.Push();
+
+            context.Container.Configure(_ => _.For(typeof(T)).Use(instance));
+
+            return context;
+        }
+
         public void CreateUser(string username, string password, string email, params string[] roles)
         {
             var command = new CreateUser(username, password, email, roles);
             command.Execute();
         }
-    
+
         public void Reset()
         {
             Latest.Clear();

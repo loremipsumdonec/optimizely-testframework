@@ -22,20 +22,18 @@ namespace Lorem.Testing.Optimizely.CMS.Test
         public DefaultFixture Fixture { get; set; }
 
         [Fact]
-        public void CreateNestedContext_WithUsing_GetChildrenAfterDispose()
+        public void ReplaceServiceWith_WithUsing_GetChildrenAfterDispose()
         {
             var mock = new Mock<IContentRepository>();
 
-            mock.Setup(r => r.GetChildren<StartPage>(It.IsAny<ContentReference>()))
-                .Throws(new FileNotFoundException("Only for testing")
-            );
+            mock.Setup(
+                r => r.GetChildren<StartPage>(It.IsAny<ContentReference>())
+            ).Throws(new FileNotFoundException("Only for testing"));
 
             Fixture.Create<StartPage>();
 
-            using (var context = Fixture.CreateNestedContext())
+            using (Fixture.ReplaceServiceWith(mock.Object))
             {
-                context.Container.Configure(_ => _.For<IContentRepository>().Use(mock.Object));
-
                 var testDoubleRepository = ServiceLocator.Current.GetInstance<IContentRepository>();
 
                 Assert.Throws<FileNotFoundException>(
