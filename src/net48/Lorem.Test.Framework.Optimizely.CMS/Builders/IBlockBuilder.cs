@@ -8,5 +8,8 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
     {
         IBlockBuilder<TBlockType> CreateBlock<TBlockType>(Action<TBlockType> build = null)
             where TBlockType : BlockData;
+
+        IBlockBuilder<T> Update<TPageType>(Action<TPageType, T> build)
+            where TPageType : PageData;
     }
 }

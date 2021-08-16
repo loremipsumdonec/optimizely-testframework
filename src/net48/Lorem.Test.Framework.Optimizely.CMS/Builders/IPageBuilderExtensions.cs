@@ -1,5 +1,4 @@
 ﻿using EPiServer.Core;
-using System;
 
 namespace Lorem.Test.Framework.Optimizely.CMS.Builders
 {

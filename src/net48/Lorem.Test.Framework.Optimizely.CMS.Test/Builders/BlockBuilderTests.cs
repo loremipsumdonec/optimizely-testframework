@@ -4,7 +4,10 @@ using Lorem.Models.Pages;
 using Lorem.Test.Framework.Optimizely.CMS.Builders;
 using Lorem.Test.Framework.Optimizely.CMS.Test.Services;
 using Lorem.Test.Framework.Optimizely.CMS.Utility;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -22,7 +25,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         public DefaultFixture Fixture { get; set; }
 
         [Fact]
-        public void Create_NoBuildAction_BlockExistsInLatest()
+        public void CreateBlock_NoBuildAction_BlockExistsInLatest()
         {
             Fixture.CreateBlock<HeroBlock>();
 
@@ -31,7 +34,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
-        public void Create_NoBuildAction_BlockIsPublished()
+        public void CreateBlock_NoBuildAction_BlockIsPublished()
         {
             Fixture.CreateBlock<HeroBlock>();
 
@@ -39,7 +42,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
-        public void Create_WithBuildAction_BlockIsPublished()
+        public void CreateBlock_WithBuildAction_BlockIsPublished()
         {
             string heading = IpsumGenerator.Generate(2, 5, false);
 
@@ -53,7 +56,57 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
-        public void Create_WhenBlockHasRequired_ThrowsValidationException()
+        public void CreateBlock_NoCulturesInFixture_ThrowInvalidOperationException()
+        {
+            Fixture.Cultures.Clear();
+
+            Assert.Throws<InvalidOperationException>(() => Fixture.CreateBlock<HeroBlock>());
+        }
+
+        [Fact]
+        public void CreateBlock_WithCulture_PageHasSameCultureAsLanguage()
+        {
+            Fixture.CreateBlock<HeroBlock>();
+
+            Assert.Equal(
+                Fixture.Cultures[0],
+                ((ILocale)Fixture.Latest.First()).Language
+            );
+        }
+
+        [Fact]
+        public void CreateBlock_WithMultipleCultures_BlockHasAllCulturesAsExistingLanguages()
+        {
+            Fixture.Cultures.Clear();
+            Fixture.Cultures.AddRange(
+                Fixture.GetCmsCultures().PickRandom(4)
+            );
+
+            Fixture.CreateBlock<HeroBlock>();
+
+            Assert.Equal(
+                Fixture.Cultures.OrderBy(c => c.Name),
+                ((ILocalizable)Fixture.Latest.First()).ExistingLanguages.OrderBy(c => c.Name)
+            );
+        }
+
+        [Fact]
+        public void CreateBlock_WithBuildActionAndMultipleCultures_BuildInvokedForEachCulture()
+        {
+            Fixture.Cultures.Clear();
+            Fixture.Cultures.AddRange(
+                Fixture.GetCmsCultures().PickRandom(4)
+            );
+
+            var cultures = new List<CultureInfo>(Fixture.Cultures);
+
+            Fixture.CreateBlock<HeroBlock>(b => cultures.Remove(((ILocale)b).Language));
+
+            Assert.Empty(cultures);
+        }
+
+        [Fact]
+        public void CreateBlock_WhenBlockHasRequired_ThrowsValidationException()
         {
             Assert.Throws<ValidationException>(
                 () => Fixture.CreateBlock<HeroBlockWithRequired>()
@@ -61,7 +114,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
-        public void Create_WhenBlockHasRequired_BuildIsInvoked()
+        public void CreateBlock_WhenBlockHasRequired_BuildIsInvoked()
         {
             bool buildIsInvoked = false;
 
@@ -83,6 +136,27 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
             var contentFolder = helper.GetAssetFolder(Fixture.Contents[0].ContentLink);
 
             Assert.Equal(contentFolder.ContentLink, block.GetParentLink());
+        }
+
+        [Fact]
+        public void CreateBlock_AfterCreateMany_BlockIsInGlobalBlockFolder()
+        {
+            var heroBlock = Fixture.CreateMany<StartPage>(2)
+                .CreateBlock<HeroBlock>()
+                .First();
+
+            Assert.Equal(ContentReference.GlobalBlockFolder, heroBlock.GetParentLink());
+        }
+
+        [Fact]
+        public void CreateBlock_AfterCreateManyAndSiteExists_BlockIsInSiteAssetsRoot()
+        {
+            var heroBlock = Fixture.CreateSite<StartPage>()
+                .CreateMany<ArticlePage>(2)
+                .CreateBlock<HeroBlock>()
+                .First();
+
+            Assert.Equal(Fixture.Site.SiteAssetsRoot, heroBlock.GetParentLink());
         }
 
         [Fact]
@@ -109,12 +183,31 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
-        public void CreateBlock_WhenPageHasBuilder_BuilderRunFirst()
+        public void CreateBlock_WhenBlockHasBuilder_BuilderRunFirst()
         {
             var preamble = IpsumGenerator.Generate(12, 14, false);
             Fixture.RegisterBuilder<HeroBlock>(p => p.Preamble = preamble);
 
             Fixture.CreateBlock<HeroBlock>(p => Assert.Equal(preamble, p.Preamble));
+        }
+    
+        [Fact]
+        public void Update_WithPageTypeHasAccessToBlock_PageUpdated() 
+        {
+            Fixture.Create<StartPage>()
+                .CreateBlock<HeroBlock>()
+                .Update<StartPage>((p, b) =>
+                {
+                    p.ContentArea = new ContentArea();
+
+                    p.ContentArea.Items.Add(
+                        new ContentAreaItem() { ContentLink = b.GetContentLink() }
+                    );
+                });
+
+            var startPage = Fixture.Get<StartPage>().First();
+
+            Assert.Single(startPage.ContentArea.Items);
         }
     }
 }

@@ -76,6 +76,21 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         }
 
         [Fact]
+        public void Create_WithBuildActionAndMultipleCultures_BuildInvokedForEachCulture() 
+        {
+            Fixture.Cultures.Clear();
+            Fixture.Cultures.AddRange(
+                Fixture.GetCmsCultures().PickRandom(4)
+            );
+
+            var cultures = new List<CultureInfo>(Fixture.Cultures);
+
+            Fixture.Create<StartPage>(p=> cultures.Remove(p.Language));
+
+            Assert.Empty(cultures);
+        }
+
+        [Fact]
         public void Create_NoBuildAction_PageExistsInLatest()
         {
             Fixture.Create<StartPage>();

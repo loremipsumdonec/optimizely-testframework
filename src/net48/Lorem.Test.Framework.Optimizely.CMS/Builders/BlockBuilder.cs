@@ -1,8 +1,10 @@
-﻿using EPiServer.Core;
+﻿using EPiServer;
+using EPiServer.Core;
 using Lorem.Test.Framework.Optimizely.CMS.Commands;
 using Lorem.Test.Framework.Optimizely.CMS.Utility;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Lorem.Test.Framework.Optimizely.CMS.Builders
@@ -10,7 +12,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
     public class BlockBuilder<T>
         : FixtureBuilder<T>, IBlockBuilder<T> where T: BlockData
     {
-        private readonly List<BlockData> _blocks = new List<BlockData>();
+        private List<BlockData> _blocks = new List<BlockData>();
 
         public BlockBuilder(Fixture fixture)
             : base(fixture)
@@ -25,23 +27,75 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
         public IBlockBuilder<TBlockType> CreateBlock<TBlockType>(Action<TBlockType> build = null)
             where TBlockType : BlockData
         {
-            CreateBlock(GetParent(), build);
+            CreateBlock(GetParent(), build:build);
 
             return new BlockBuilder<TBlockType>(Fixture, _blocks);
         }
 
-        private void CreateBlock<TBlockType>(ContentReference parent, Action<TBlockType> build = null)
+        public IBlockBuilder<T> Update<TPageType>(Action<TPageType, T> build)
+            where TPageType : PageData
+        {
+            var block = Fixture.Latest.OfType<T>().FirstOrDefault();
+
+            TPageType page;
+
+            var builder = new PageBuilder<TPageType>(Fixture)
+                .Update<TPageType>(p => {
+                    build.Invoke(p, block);
+                    page = p;
+                });
+
+            Fixture.Latest.Clear();
+            Add(block);
+
+            return new BlockBuilder<T>(Fixture, _blocks);
+        }
+
+        private void CreateBlock<TBlockType>(ContentReference parent, CultureInfo culture = null, Action < TBlockType> build = null)
             where TBlockType : BlockData
         {
-            var command = new CreateBlock(
-                Fixture.GetContentType(typeof(TBlockType)),
-                parent,
-                IpsumGenerator.Generate(1, 3, false)
-            );
+            TBlockType block = default;
 
-            command.Build = CreateBuild(build);
+            if (Fixture.Cultures.Count == 0)
+            {
+                throw new InvalidOperationException("Need atleast one culture");
+            }
 
-            _blocks.Add(command.Execute());
+            List<CultureInfo> cultures = new List<CultureInfo>(Fixture.Cultures);
+
+            if (culture != null)
+            {
+                cultures.Clear();
+                cultures.Add(culture);
+            }
+
+            foreach(var c in cultures)
+            {
+                if(block is null)
+                {
+                    var command = new CreateBlock(
+                        Fixture.GetContentType(typeof(TBlockType)),
+                        parent,
+                        IpsumGenerator.Generate(1, 3, false)
+                    );
+
+                    command.Culture = c;
+                    command.Build = CreateBuild(build);
+
+                    block = (TBlockType)command.Execute();
+                    Add(block);
+
+                    continue;
+                }
+
+                if (build == null)
+                {
+                    Update(block, c, null);
+                    continue;
+                }
+
+                Update((TBlockType)(BlockData)block, c, p => build.Invoke((TBlockType)(BlockData)p));
+            }
         }
 
         private ContentReference GetParent()
@@ -53,18 +107,21 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
                 parent = Fixture.Site.SiteAssetsRoot;
             }
 
-            var page = Fixture.Latest.LastOrDefault(p => p is PageData);
-
-            if (page != null)
+            if(Fixture.Latest.Count() == 1) 
             {
-                parent = page.ContentLink;
-            }
+                var page = Fixture.Latest.LastOrDefault(p => p is PageData);
 
-            var block = Fixture.Latest.LastOrDefault(p => p is BlockData);
+                if (page != null)
+                {
+                    parent = page.ContentLink;
+                }
 
-            if (block != null)
-            {
-                parent = block.ParentLink;
+                var block = Fixture.Latest.LastOrDefault(p => p is BlockData);
+
+                if (block != null)
+                {
+                    parent = block.ParentLink;
+                }
             }
 
             return parent;
@@ -82,6 +139,25 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
 
                 build?.Invoke((TBlockType)p);
             };
+        }
+
+        private void Update(BlockData block, CultureInfo culture, Action<object> build = null)
+        {
+            var command = new UpdateContent((IContent)block)
+            {
+                Culture = culture,
+                Build = build
+            };
+
+            BlockData content = (BlockData)command.Execute();
+
+            Add(content);
+        }
+
+        private void Add(BlockData block)
+        {
+            _blocks = _blocks.Where(b => !b.GetContentGuid().Equals(block.GetContentGuid())).ToList();
+            _blocks.Add(block);
         }
     }
 }

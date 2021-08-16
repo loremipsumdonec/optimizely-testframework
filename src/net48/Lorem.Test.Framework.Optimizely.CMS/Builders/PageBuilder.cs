@@ -39,10 +39,35 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
                     command.Build = p => build.Invoke((T)p);
                 }
 
-                command.Execute();
+                Add((PageData)command.Execute());
             }
 
-            return this;
+            _pages.ForEach(p => Fixture.Add(p));
+
+            return new PageBuilder<T>(Fixture);
+        }
+
+        public IPageBuilder<T> Update<TPageType>(Action<TPageType> build) where TPageType : PageData
+        {
+            foreach (var content in Fixture.Contents
+                .Where(c => c is TPageType)
+                .Select(c => (TPageType)c))
+            {
+                foreach (var culture in Fixture.Cultures)
+                {
+                    var latest = Fixture.GetLatest(culture);
+
+                    Update(
+                        content,
+                        culture,
+                        p=> build.Invoke((TPageType)p)
+                    );
+                }
+            }
+
+            _pages.ForEach(p => Fixture.Add(p));
+
+            return new PageBuilder<T>(Fixture);
         }
 
         public IPageBuilder<T> Update<TPageType>(Action<TPageType, IEnumerable<T>> build) where TPageType : PageData
@@ -63,6 +88,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
                 }
             }
 
+            _pages.ForEach(p => Fixture.Add(p));
             return new PageBuilder<T>(Fixture);
         }
 

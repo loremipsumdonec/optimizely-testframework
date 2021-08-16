@@ -104,20 +104,6 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
             return new BlockBuilder<TBlockType>(fixture).CreateBlock(build);
         }
 
-        public static IBlockBuilder<TBlockType> CreateBlock<TBlockType, TPageType>(this Fixture fixture, Action<TBlockType, TPageType> build)
-            where TBlockType : BlockData where TPageType : PageData
-        {
-            var page = fixture.Get<TPageType>().Last();
-            var blockBuilder = fixture.Get<TPageType>().CreateBlock<TBlockType>((b) => build.Invoke(b, page));
-            var latest = fixture.Latest.Last();
-
-            var pageBuilder = new PageBuilder<TPageType>(fixture).Update(page);
-
-            fixture.Add(latest);
-
-            return blockBuilder;
-        }
-
         #endregion
 
         #region Media

@@ -49,7 +49,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Commands
 
         public ContentReference Parent { get; set; }
 
-        public CultureInfo Language { get; set; }
+        public CultureInfo Culture { get; set; }
 
         public SaveAction SaveAction { get; set; } = SaveAction.Publish | SaveAction.ForceCurrentVersion;
 
@@ -86,7 +86,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Commands
             return _repository.GetDefault<IContent>(
                     parent,
                     ContentType.ID,
-                    Language);
+                    Culture);
         }
 
         private BlockData Save(IContent content, SaveAction saveAction = SaveAction.Publish)
