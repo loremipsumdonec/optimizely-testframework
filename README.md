@@ -42,9 +42,7 @@ public class BreadcrumbsServiceTest
 
 The test case will create three pages in the tree structure below and disable `VisibleInBreadCrumb` on `ArticlePage` at depth 1.
 
-* ArticlePage
-  * ArticlePage 
-    * ArticlePage
+![readme_create_path_example](.\posts\resources\readme_create_path_example.png)
 
 In addition to providing support for creating content such as pages, blocks and uploading files, it is also possible to replace  services with test doubles. For example, if you use [Moq](https://github.com/moq/moq4), you can temporarily replace a service like `IContentRepository`. 
 
@@ -256,6 +254,34 @@ public class DefaultFixture
     }
 }
 ```
+
+### Fixture creating a user
+```csharp
+public class ExploratoryFixture
+    : Fixture
+{
+    public ExploratoryFixture(IEngine engine)
+        : base(engine)
+    {
+        Cultures.Add(CultureInfo.GetCultureInfo("en"));
+
+        RegisterBuilder<SiteDefinition>(s => {
+            s.Name = "Lorem";
+            s.SiteUrl = new Uri("http://localhost:65099");
+        });
+
+        Start();
+        
+        CreateUser(
+            "Administrator",
+            "Administrator123!",
+            "admin@supersecretpassword.io",
+            "WebAdmins", "Administrators"
+        );
+    }
+}
+```
+
 
 ### Functions
 
