@@ -46,7 +46,7 @@ The test case will create three pages in the tree structure below and disable `V
   * ArticlePage 
     * ArticlePage
 
-In addition to providing support for creating content such as pages, blocks and uploading files, it is also possible to replace  services with test doubles. For example, if you use Moq, you can temporarily replace a service like `IContentRepository`. 
+In addition to providing support for creating content such as pages, blocks and uploading files, it is also possible to replace  services with test doubles. For example, if you use [Moq](https://github.com/moq/moq4), you can temporarily replace a service like `IContentRepository`. 
 
 ```csharp
 [Collection("Default")]
