@@ -5,9 +5,9 @@
     <version>$version$</version>
     <authors>loremipsumdonec</authors>
     <owners>loremipsumdonec</owners>
-    <licenseUrl>https://github.com/loremipsumdonec/episerver-testframework/blob/main/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/loremipsumdonec/episerver-testframework</projectUrl>
-    <repository type="git" url="https://github.com/loremipsumdonec/episerver-testframework.git" />
+    <licenseUrl>https://github.com/loremipsumdonec/optimizely-testframework/blob/main/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/loremipsumdonec/optimizely-testframework</projectUrl>
+    <repository type="git" url="https://github.com/loremipsumdonec/optimizely-testframework.git" />
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This nuget will add support for Search and Navigation in the integration test framework Lorem.Test.Framework.Optimizely.CMS</description>
     <releaseNotes></releaseNotes>
