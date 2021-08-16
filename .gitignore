@@ -388,3 +388,4 @@ FodyWeavers.xsd
 *.sln.iml
 samples/net48/Alloy/Alloy.Test/Web.config
 posts/create_a_test_framework/example/Lorem.Test/Web.config
+/samples/net48/Alloy/Alloy/App_Data/blobs

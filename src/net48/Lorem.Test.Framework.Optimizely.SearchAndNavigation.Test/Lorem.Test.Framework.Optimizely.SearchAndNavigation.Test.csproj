@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPiServer.CMS" Version="11.20.7" />
+    <PackageReference Include="EPiServer.CMS.AspNet" Version="11.20.7" />
+    <PackageReference Include="EPiServer.CMS.TinyMce" Version="2.13.4" />
+    <PackageReference Include="EPiServer.CMS.UI" Version="11.35.3" />
+    <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="11.35.3" />
+    <PackageReference Include="EPiServer.Find" Version="13.4.4" />
+    <PackageReference Include="EPiServer.Find.Cms" Version="13.4.4" />
+    <PackageReference Include="EPiServer.Framework" Version="11.20.7" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="xunit.analyzers" Version="0.10.0" />
+    <PackageReference Include="xunit.assert.source" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.core" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="1.3.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Lorem.SearchAndNavigation\Web.config">
+      <Link>Web.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Compile Include="..\Lorem.Test.Framework.Optimizely.CMS.Test\**\*.cs">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+    <None Include="..\Lorem.Test.Framework.Optimizely.CMS.Test\Resources\**\*.*">
+      <Link>Resources\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\Lorem.Test.Framework.Optimizely.CMS.Test\obj\**" />
+    <Compile Remove="..\Lorem.Test.Framework.Optimizely.CMS.Test\ExploratoryTests.cs" />
+    <Compile Remove="..\Lorem.Test.Framework.Optimizely.CMS.Test\Services\DefaultEngine.cs" />
+    <Compile Remove="..\Lorem.Test.Framework.Optimizely.CMS.Test\Services\ExploratoryFixture.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lorem.SearchAndNavigation\Lorem.SearchAndNavigation.csproj" />
+    <ProjectReference Include="..\Lorem.Test.Framework.Optimizely.CMS\Lorem.Test.Framework.Optimizely.CMS.csproj" />
+    <ProjectReference Include="..\Lorem.Test.Framework.Optimizely.SearchAndNavigation\Lorem.Test.Framework.Optimizely.SearchAndNavigation.csproj" />
+  </ItemGroup>
+
+</Project>

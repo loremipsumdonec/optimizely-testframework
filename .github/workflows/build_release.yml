@@ -64,17 +64,17 @@ jobs:
         run: msbuild /property:Configuration=${{env.CONFIGURATION}} /p:Version=${{steps.version.outputs.version}} -m
         working-directory: ./src/net48
 
-      - name: create Lorem.Testing.Optimizely.CMS nuget
-        run: nuget pack ./src/Lorem.Testing.Optimizely.CMS.nuspec -version ${{steps.version.outputs.version}}
+      - name: create Lorem.Test.Framework.Optimizely.CMS nuget
+        run: nuget pack ./src/Lorem.Test.Framework.Optimizely.CMS.nuspec -version ${{steps.version.outputs.version}}
 
-      - name: create Lorem.Testing.Optimizely.SearchAndNavigation nuget
-        run: nuget pack ./src/Lorem.Testing.Optimizely.SearchAndNavigation.nuspec -version ${{steps.version.outputs.version}}
+      - name: create Lorem.Test.Framework.Optimizely.SearchAndNavigation nuget
+        run: nuget pack ./src/Lorem.Test.Framework.Optimizely.SearchAndNavigation.nuspec -version ${{steps.version.outputs.version}}
 
       - name: add github nuget registry as nuget source
         run: dotnet nuget add source --username loremipsumdonec --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/loremipsumdonec/index.json"
 
-      - name: publish nuget Lorem.Testing.Optimizely.CMS to github nuget registry
-        run: dotnet nuget push "Lorem.Testing.Optimizely.CMS.${{steps.version.outputs.version}}.nupkg" --api-key ${{ secrets.PUBLISH_NUGET_TOKEN }} --source "github"
+      - name: publish nuget Lorem.Test.Framework.Optimizely.CMS to github nuget registry
+        run: dotnet nuget push "Lorem.Test.Framework.Optimizely.CMS.${{steps.version.outputs.version}}.nupkg" --api-key ${{ secrets.PUBLISH_NUGET_TOKEN }} --source "github"
 
-      - name: publish nuget Lorem.Testing.Optimizely.SearchAndNavigation to github nuget registry
-        run: dotnet nuget push "Lorem.Testing.Optimizely.SearchAndNavigation.${{steps.version.outputs.version}}.nupkg" --api-key ${{ secrets.PUBLISH_NUGET_TOKEN }} --source "github"
+      - name: publish nuget Lorem.Test.Framework.Optimizely.SearchAndNavigation to github nuget registry
+        run: dotnet nuget push "Lorem.Test.Framework.Optimizely.SearchAndNavigation.${{steps.version.outputs.version}}.nupkg" --api-key ${{ secrets.PUBLISH_NUGET_TOKEN }} --source "github"
