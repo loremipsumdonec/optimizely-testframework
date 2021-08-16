@@ -70,7 +70,7 @@ public class FixtureNestedContextTests
 
         Fixture.Create<StartPage>();
 
-        using (Fixture.ReplaceServiceWith(mock.Object))
+        using (Fixture.ReplaceServiceWith<IContentRepository>(mock.Object))
         {
             var testDoubleRepository = ServiceLocator.Current.GetInstance<IContentRepository>();
 
