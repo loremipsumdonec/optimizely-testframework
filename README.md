@@ -113,12 +113,12 @@ The framework needs to have access to the same _Web.config_ used by the web proj
 
 #### Add the engine and fixture
 
-The next step is that you need to implement two classes that inherit from `Lorem.Testing.Optimizely.CMS.Engine` and `Lorem.Testing.Optimizely.CMS.Fixture`.  The class `Lorem.Testing.Optimizely.CMS.Engine` is responsible for the the startup of Optimizely CMS. While  `Lorem.Testing.Optimizely.CMS.Fixture` will be the primary service that will be used in the test cases.
+The next step is that you need to implement two classes that inherit from `Lorem.Test.Optimizely.CMS.Engine` and `Lorem.Test.Optimizely.CMS.Fixture`.  The class `Lorem.Test.Optimizely.CMS.Engine` is responsible for the the startup of Optimizely CMS. While  `Lorem.Test.Optimizely.CMS.Fixture` will be the primary service that will be used in the test cases.
 
-Below is an example of a class that inherits from `Lorem.Testing.Optimizely.CMS.Engine` that uses the `CmsTestModule`, which is responsible for setting up the database and clearing the content.
+Below is an example of a class that inherits from `Lorem.Test.Optimizely.CMS.Engine` that uses the `CmsTestModule`, which is responsible for setting up the database and clearing the content.
 
 ```csharp
-public class DefaultEngine : Lorem.Testing.Optimizely.CMS.Engine
+public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
 {
     public DefaultEngine()
     {
@@ -138,7 +138,7 @@ By default, `CmsTestModule` will use the information contained in _Web.config_. 
 The class that inherits from `Lorem.Testing.Optimizely.CMS.Fixture` is responsible for configuration such as languages to be used, see this as global settings. Each test case will then have its own instance.
 
 ```csharp
-public class DefaultFixture : Lorem.Testing.Optimizely.CMS.Fixture
+public class DefaultFixture : Lorem.Test.Optimizely.CMS.Fixture
 {
     public DefaultFixture(IEngine engine)
     	: base(engine)
@@ -198,14 +198,12 @@ public class MyFirstIntegrationTests
 
 ## Examples
 
-### Engine
+The following section shows examples of regular configurations for `Lorem.Test.Optimizely.CMS.Engine` and `Lorem.Test.Framework.Optimizely.CMS.Fixture`.
 
-The following section shows examples of regular configurations for `Lorem.Testing.Optimizely.CMS.Engine`.
-
-#### Default Engine
+### Default Engine
 
 ```csharp
-public class DefaultEngine : Lorem.Testing.Optimizely.CMS.Engine
+public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
 {
     public DefaultEngine()
     {
@@ -218,12 +216,12 @@ public class DefaultEngine : Lorem.Testing.Optimizely.CMS.Engine
 }
 ```
 
-#### Engine with support for Search and Navigation
+### Engine with support for Search and Navigation
 
 For this configuration you will need to install the nuget `Lorem.Testing.Optimizely.SearchAndNavigation`.
 
 ```csharp
-public class DefaultEngine : Lorem.Testing.Optimizely.CMS.Engine
+public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
 {
     public DefaultEngine()
     {
@@ -238,12 +236,33 @@ public class DefaultEngine : Lorem.Testing.Optimizely.CMS.Engine
 }
 ```
 
+### Default fixture
+
+```csharp
+public class DefaultFixture
+    : Fixture
+{
+    public DefaultFixture(IEngine engine)
+        : base(engine)
+    {
+        Cultures.Add(CultureInfo.GetCultureInfo("en"));
+
+        RegisterBuilder<SiteDefinition>(s => {
+            s.Name = "Lorem";
+            s.SiteUrl = new Uri("http://localhost:65099");
+        });
+
+        Start();
+    }
+}
+```
+
 ### Functions
 
 If you need examples of functions thats available check the tests in the test projects.
 
-* [PageBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/PageBuilderTests.cs)
-* [BlockBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/BlockBuilderTests.cs)
-* [MediaBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/MediaBuilderTests.cs)
-* [ContentBuilderTests](https://github.com/loremipsumdonec/episerver-testframework/blob/main/src/net48/Lorem.Testing.Optimizely.CMS.Test/Builders/ContentBuilderTests.cs)
+* [PageBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/PageBuilderTests.cs)
+* [BlockBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/BlockBuilderTests.cs)
+* [MediaBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/MediaBuilderTests.cs)
+* [ContentBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/ContentBuilderTests.cs)
 
