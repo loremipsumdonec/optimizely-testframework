@@ -12,7 +12,7 @@ I have written a post that describes how to start with integration testing for O
 
 [![optimizely cms 11](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml) [![optimizely cms 12](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml)
 
-I have started a small framework that hopefully simplifies the process of starting with integration testing with Optimizely CMS. Example of a test case that tests a `IBreadCrumbService` and verifies that it ignores pages that has `VisibleInBreadCrumb=false`.
+I have created a small framework that hopefully simplifies the process to start with integration testing for Optimizely CMS. Below is an example of a test case that tests a `IBreadCrumbService` and verifies that it ignores pages that has `VisibleInBreadCrumb=false`.
 
 ```csharp
 [Collection("Default")]
@@ -91,11 +91,17 @@ public class FixtureNestedContextTests
 
 > The framework is currently not available in any public nuget feed. 
 
-Create a test project and then install the nuget `Lorem.Testing.Optimizely.CMS`. If the project uses Search and Navigation and you need to test code that can directly or indirectly call Search and Navigation, then you will also need to install `Lorem.Testing.Optimizely.SearchAndNavigation`.
+Create a test project and install the packages listed below, need to be same version as web project. Then install `Lorem.Test.Optimizely.CMS` and add a project reference to _web project_.
+
+- EPiServer.CMS.Core
+- EPiServer.CMS.AspNet
+- EPiServer.CMS.UI.Core
+- EPiServer.CMS.UI.AspNetIdentity
+- EPiServer.Framework
 
 #### Access to Web.config
 
-The framework needs to have access to the same _Web.config_ used by the web project. The easiest way is to add a link in the test project that points to _Web.config_ in the web project. Edit the project file (_*. csproj_) and add the `ItemGroup` element below where `Include` has the relative path to _Web.config_ in the web project. Build the test project and check that _Web.config_ is in the output directory.
+The framework needs to have access to the same _Web.config_ used by the web project. The easiest way is to add a link in the test project that points to _Web.config_. Edit the project file (_*. csproj_) and add an `ItemGroup` element where attribute `Include` has the relative path to _Web.config_. Build the test project and check that _Web.config_ is in the output directory.
 
 ```xml
 <Project>
@@ -109,9 +115,9 @@ The framework needs to have access to the same _Web.config_ used by the web proj
 </Project>
 ```
 
-#### Add the engine and fixture
+#### Create an engine
 
-The next step is that you need to implement two classes that inherit from `Lorem.Test.Optimizely.CMS.Engine` and `Lorem.Test.Optimizely.CMS.Fixture`.  The class `Lorem.Test.Optimizely.CMS.Engine` is responsible for the the startup of Optimizely CMS. While  `Lorem.Test.Optimizely.CMS.Fixture` will be the primary service that will be used in the test cases.
+The next step is to implement a class that inherits from `Lorem.Test.Optimizely.CMS.Engine`. This class will be responsible for the startup of Optimizely CMS. 
 
 Below is an example of a class that inherits from `Lorem.Test.Optimizely.CMS.Engine` that uses the `CmsTestModule`, which is responsible for setting up the database and clearing the content.
 
@@ -131,9 +137,40 @@ public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
 
 By default, `CmsTestModule` will use the information contained in _Web.config_. If you have a relative app data path in _Web.config_, it will be from the test project's output directory.
 
-> As a small safe guard that you understand that `CmsModule` will recreate the database and delete files, you need to set the following properties on `CmsModule` to `true` `IamAwareThatTheDatabaseWillBeDeletedAndReCreated` and `IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted`.
+> As a small safeguard so that you understand that `CmsModule` will recreate the database and delete files, you need to set the following properties on `CmsModule` to `true` `IamAwareThatTheDatabaseWillBeDeletedAndReCreated` and `IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted`.
 
-The class that inherits from `Lorem.Testing.Optimizely.CMS.Fixture` is responsible for configuration such as languages to be used, see this as global settings. Each test case will then have its own instance.
+Also check so that the *Web.config* has the following configuration, this will make Optimizely CMS create the necessary tables in the database.
+
+```xml
+<episerver.framework createDatabaseSchema="true" updateDatabaseSchema="true">
+```
+##### With Search & Navigation
+
+If your project uses Search & Navigation, then you will need to install `Lorem.Test.Optimizely.SearchAndNavigation` and add the following packages to the test project.
+
+* EPiServer.Find.Cms
+
+Then you can activate the module by adding `SearchAndNavigationTestModule` in `Lorem.Test.Optimizely.CMS.Engine`.
+
+```csharp
+public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
+{
+    public DefaultEngine()
+    {
+    	Add(new CmsTestModule()
+            {
+                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
+                IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+            });
+        
+        Add(SearchAndNavigationTestModule());
+    }
+}
+```
+
+#### Create the fixture
+
+The next class that needs to be created is the fixture, this class needs to inherit from `Lorem.Test.Optimizely.CMS.Fixture`. This class will be responsible for the configuration such as languages, builders etc. Each test case will then have its own instance.
 
 ```csharp
 public class DefaultFixture : Lorem.Test.Optimizely.CMS.Fixture

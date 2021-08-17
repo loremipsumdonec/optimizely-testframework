@@ -5,9 +5,6 @@ using Lorem.Models.Pages;
 using Lorem.Test.Framework.Optimizely.CMS.Builders;
 using Lorem.Test.Framework.Optimizely.CMS.Test.Services;
 using Lorem.Test.Framework.Optimizely.CMS.Utility;
-using Moq;
-using System.IO;
-using System.Linq;
 using Xunit;
 
 namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
@@ -29,13 +26,6 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Builders
         [Fact]
         public void CreateASimpleSiteForExploratoryTesting()
         {
-            Fixture.CreateUser(
-                "Administrator",
-                "Administrator123!",
-                "admin@supersecretpassword.io",
-                "WebAdmins", "Administrators"
-            );
-
             Fixture.CreateSite<StartPage>()
                 .CreateMany<ArticlePage>(10, p => p.Name = $"{p.Name}-{p.Language.Name}")
                 .Upload<ImageFile>(Resources.Get("/images"), (i, p) => p.TopImage = i.ContentLink);

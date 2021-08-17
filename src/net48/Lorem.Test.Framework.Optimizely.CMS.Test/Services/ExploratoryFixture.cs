@@ -26,6 +26,13 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Test.Services
             RegisterBuilder<StartPage>(p => p.Heading = "Welcome to Lorem maximum");
 
             Start();
+
+            CreateUser(
+                "Administrator",
+                "Administrator123!",
+                "admin@supersecretpassword.io",
+                "WebAdmins", "Administrators"
+            );
         }
 
         public IEnumerable<CultureInfo> GetCmsCultures()

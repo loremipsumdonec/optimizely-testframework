@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
@@ -7,10 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPiServer.CMS" Version="11.3.0" />
+    <PackageReference Include="EPiServer.CMS.Core" Version="11.3.0" />
     <PackageReference Include="EPiServer.CMS.AspNet" Version="11.3.0" />
-    <PackageReference Include="EPiServer.CMS.TinyMce" Version="1.1.0" />
-    <PackageReference Include="EPiServer.CMS.UI" Version="11.3.0" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="11.3.0" />
     <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="11.3.0" />
     <PackageReference Include="EPiServer.Framework" Version="11.3.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />

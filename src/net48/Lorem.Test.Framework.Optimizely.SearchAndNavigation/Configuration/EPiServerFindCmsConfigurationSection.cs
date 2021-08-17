@@ -12,7 +12,6 @@ namespace Lorem.Test.Framework.Optimizely.SearchAndNavigation.Configuration
         public EPiServerFindCmsConfigurationSection(ConfigurationSection source)
         {
             Properties.Add(new ConfigurationProperty("disableEventedIndexing", typeof(bool)));
-            Properties.Add(new ConfigurationProperty("disableScheduledPageQueue", typeof(bool)));
             Properties.Add(new ConfigurationProperty("deleteLanguageRoutingDuplicatesOnIndex", typeof(bool)));
 
             if (source != null)

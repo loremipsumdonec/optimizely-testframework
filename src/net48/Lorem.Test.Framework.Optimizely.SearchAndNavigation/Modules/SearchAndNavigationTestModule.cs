@@ -32,6 +32,17 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Modules
             var episerverFindSection = (EPiServer.Find.Configuration)instance.ConfigurationInstance.GetSection("episerver.find");
 
             var currentAppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if(currentAppConfig.AppSettings.Settings["episerver:FindServiceUrl"] != null)
+            {
+                currentAppConfig.AppSettings.Settings.Remove("episerver:FindServiceUrl");
+            }
+
+            if (currentAppConfig.AppSettings.Settings["episerver:FindDefaultIndex"] != null)
+            {
+                currentAppConfig.AppSettings.Settings.Remove("episerver:FindDefaultIndex");
+            }
+
             currentAppConfig.AppSettings.Settings.Add("episerver:FindServiceUrl", episerverFindSection.ServiceUrl);
             currentAppConfig.AppSettings.Settings.Add("episerver:FindDefaultIndex", episerverFindSection.DefaultIndex);
 
