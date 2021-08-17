@@ -94,7 +94,7 @@ public class FixtureNestedContextTests
 Create a test project and install the packages listed below, need to be same version as web project. Then install `Lorem.Test.Optimizely.CMS` and add a project reference to _web project_.
 
 - EPiServer.CMS.Core
-- EPiServer.CMS.AspNet
+- EPiServer.CMS.AspNet (why?)
 - EPiServer.CMS.UI.Core
 - EPiServer.CMS.UI.AspNetIdentity
 - EPiServer.Framework
@@ -150,6 +150,7 @@ If your project uses Search & Navigation, then you will need to install `Lorem.T
 
 * EPiServer.Find.Cms
 
+
 Then you can activate the module by adding `SearchAndNavigationTestModule` in `Lorem.Test.Optimizely.CMS.Engine`.
 
 ```csharp
@@ -167,6 +168,23 @@ public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
     }
 }
 ```
+
+If you don´t add `EPiServer.Find.Cms` to the test project you will get the following error message.
+
+```text
+EPiServer.Framework.TypeScanner.TypeScannerReflectionException : Failed to load types from EPiServer.Find.Framework
+```
+
+And if you don't add the `SearchAndNavigationTestModule` in your engine you will get the following error message.
+
+```text
+EPiServer.Framework.Initialization.InitializationException : Initialize action failed for Initialize on class EPiServer.Find.Cms.Module.IndexingModule .... The serviceUrl cannot be empty
+```
+
+The reason for this error is because the `EPiServer.Find.Cms.Module.IndexingModule`  is creating an `EPiServer.Find.Client`  by calling the method `CreateFromConfig`.  Which in turn are using the `ConfigurationManager` to retrieve the settings.(simplified explanation).
+
+> When you are running the tests it's console application, not a web application, and then expects an _App.config_. The `SearchAndNavigationTestModule` is only copying the information from the _Web.config_ to the active _App.config_, see the [code for more information](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Framework.Optimizely.SearchAndNavigation/Modules/SearchAndNavigationTestModule.cs#L30)
+>
 
 #### Create the fixture
 
@@ -187,9 +205,18 @@ public class DefaultFixture : Lorem.Test.Optimizely.CMS.Fixture
         });
     	
     	Start();
+            
+        CreateUser(
+            "Administrator",
+            "Administrator123!",
+            "admin@supersecretpassword.io",
+            "WebAdmins", "Administrators"
+        );
     }
 }
 ```
+
+> Don't forget to change the `SiteUrl` and `Name` to the real values for your project
 
 #### Create a test case
 
@@ -206,8 +233,6 @@ public class DefaultEngineCollectionFixture
 {
 }
 ```
-
-
 
 ```csharp
 [Collection("Default")]
