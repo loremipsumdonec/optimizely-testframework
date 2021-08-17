@@ -2,6 +2,7 @@
 using EPiServer.Framework.Initialization;
 using Lorem.Test.Framework.Optimizely.CMS.Commands;
 using Lorem.Test.Framework.Optimizely.SearchAndNavigation.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 
@@ -23,6 +24,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Modules
         {
             CopyEpiserverFindConfigurationSection();
             CopyEPiServerFindCmsConfigurationSection();
+            CopyEPiServerDBConnectionString();
         }
 
         private void CopyEpiserverFindConfigurationSection()
@@ -66,6 +68,19 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Modules
             currentAppConfig.Save(ConfigurationSaveMode.Modified);
 
             ConfigurationManager.RefreshSection("episerver.find.cms");
+        }
+
+        private void CopyEPiServerDBConnectionString()
+        {
+            FileConfigurationSource instance = (FileConfigurationSource)ConfigurationSource.Instance;
+            var currentAppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            currentAppConfig.ConnectionStrings.ConnectionStrings.Add(
+                instance.ConfigurationInstance.ConnectionStrings.ConnectionStrings["EPiServerDB"]
+            );
+
+            currentAppConfig.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("connectionStrings");
         }
 
         public IEnumerable<IClearCommand> Reset()

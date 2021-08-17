@@ -5,7 +5,7 @@ using Xunit;
 namespace Lorem.Test.Framework.Optimizely.SearchAndNavigation.Test
 {
     [Collection("Default")]
-    /*[Trait("verification", "required")]*/
+    [Trait("verification", "required")]
     public class SearchAndNavigationConfigurationTests
     {
         public SearchAndNavigationConfigurationTests(DefaultEngine engine)
