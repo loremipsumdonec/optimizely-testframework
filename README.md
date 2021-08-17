@@ -94,7 +94,7 @@ public class FixtureNestedContextTests
 Create a test project and install the packages listed below, need to be same version as web project. Then install `Lorem.Test.Optimizely.CMS` and add a project reference to _web project_.
 
 - EPiServer.CMS.Core
-- EPiServer.CMS.AspNet (why?)
+- EPiServer.CMS.AspNet
 - EPiServer.CMS.UI.Core
 - EPiServer.CMS.UI.AspNetIdentity
 - EPiServer.Framework
