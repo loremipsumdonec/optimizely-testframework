@@ -8,7 +8,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Utility
     {
         private readonly List<string> _files;
 
-        public Resources(string path)
+        protected Resources(string path)
         {
             Path = path;
             _files = new List<string>();

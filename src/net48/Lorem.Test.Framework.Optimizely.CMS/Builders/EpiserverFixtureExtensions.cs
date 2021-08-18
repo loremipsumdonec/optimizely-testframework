@@ -66,7 +66,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
             return new PageBuilder<T>(fixture).CreatePath(depth);
         }
 
-        public static IPageBuilder<T> CreatePath<T>(this Fixture fixture, int depth, Action<T> build = null) where T : PageData
+        public static IPageBuilder<T> CreatePath<T>(this Fixture fixture, int depth, Action<T> build) where T : PageData
         {
             fixture.Reset();
             return new PageBuilder<T>(fixture).CreatePath(depth, build);

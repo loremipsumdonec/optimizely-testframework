@@ -9,14 +9,6 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
     {
         IPageBuilder<T> Create(Action<T> build = null);
 
-        IPageBuilder<T> Update(Action<T> build);
-
-        IPageBuilder<T> Update<TPageType>(Action<TPageType> build) where TPageType : PageData;
-
-        IPageBuilder<T> Update<TPageType>(Action<TPageType, IEnumerable<T>> build) where TPageType : PageData;
-
-        IPageBuilder<T> Update(T page);
-
         IPageBuilder<TPageType> Create<TPageType>(Action<TPageType> build = null) where TPageType: PageData;
 
         IPageBuilder<T> CreateMany(int total);
@@ -42,6 +34,14 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
         IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType> build) where TPageType : PageData;
 
         IPageBuilder<TPageType> CreatePath<TPageType>(int depth, Action<TPageType, int> build) where TPageType : PageData;
+
+        IPageBuilder<T> Update(Action<T> build);
+
+        IPageBuilder<T> Update<TPageType>(Action<TPageType> build) where TPageType : PageData;
+
+        IPageBuilder<T> Update<TPageType>(Action<TPageType, IEnumerable<T>> build) where TPageType : PageData;
+
+        IPageBuilder<T> Update(T page);
 
         IPageBuilder<T> Upload<TMediaType>(IEnumerable<string> files, Action<TMediaType, T> build) where TMediaType : MediaData;
     }

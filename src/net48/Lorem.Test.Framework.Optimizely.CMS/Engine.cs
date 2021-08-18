@@ -21,11 +21,11 @@ namespace Lorem.Test.Framework.Optimizely.CMS
         private string _webConfig;
         private InitializationEngine _engine;
         private List<Assembly> _assemblies;
-        private readonly List<ITestModule> _modules = new List<ITestModule>();
+        private readonly List<ITestModule> _modules;
         private bool _started;
         private List<ContentType> _contentTypes;
 
-        public Engine(params ITestModule[] frameworks)
+        protected Engine(params ITestModule[] frameworks)
         {
             _modules = new List<ITestModule>(frameworks);
         }

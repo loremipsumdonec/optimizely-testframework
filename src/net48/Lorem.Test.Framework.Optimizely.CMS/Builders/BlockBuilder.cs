@@ -39,7 +39,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
 
             TPageType page;
 
-            var builder = new PageBuilder<TPageType>(Fixture)
+            new PageBuilder<TPageType>(Fixture)
                 .Update<TPageType>(p => {
                     build.Invoke(p, block);
                     page = p;
@@ -107,7 +107,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
                 parent = Fixture.Site.SiteAssetsRoot;
             }
 
-            if(Fixture.Latest.Count() == 1) 
+            if(Fixture.Latest.Count == 1) 
             {
                 var page = Fixture.Latest.LastOrDefault(p => p is PageData);
 

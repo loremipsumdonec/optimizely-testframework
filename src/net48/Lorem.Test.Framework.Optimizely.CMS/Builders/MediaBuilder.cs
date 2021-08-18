@@ -110,7 +110,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
 
             if (content is BlockData block)
             {
-                parent = ((IContent)block).ContentLink;
+                parent = block.GetContentLink();
             }
 
             if (content is MediaData media)

@@ -28,91 +28,6 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
             return Create<T>(build);
         }
 
-        public IPageBuilder<T> Update(Action<T> build)
-        {
-            foreach(var content in Fixture.Latest)
-            {
-                var command = new UpdateContent(content);
-
-                if (build != null)
-                {
-                    command.Build = p => build.Invoke((T)p);
-                }
-
-                Add((PageData)command.Execute());
-            }
-
-            _pages.ForEach(p => Fixture.Add(p));
-
-            return new PageBuilder<T>(Fixture);
-        }
-
-        public IPageBuilder<T> Update<TPageType>(Action<TPageType> build) where TPageType : PageData
-        {
-            foreach (var content in Fixture.Contents
-                .Where(c => c is TPageType)
-                .Select(c => (TPageType)c))
-            {
-                foreach (var culture in Fixture.Cultures)
-                {
-                    var latest = Fixture.GetLatest(culture);
-
-                    Update(
-                        content,
-                        culture,
-                        p=> build.Invoke((TPageType)p)
-                    );
-                }
-            }
-
-            _pages.ForEach(p => Fixture.Add(p));
-
-            return new PageBuilder<T>(Fixture);
-        }
-
-        public IPageBuilder<T> Update<TPageType>(Action<TPageType, IEnumerable<T>> build) where TPageType : PageData
-        {
-            foreach(var content in Fixture.Contents
-                .Where(c => c is TPageType)
-                .Select(c => (TPageType)c))
-            {
-                foreach(var culture in Fixture.Cultures)
-                {
-                    var latest = Fixture.GetLatest(culture);
-
-                    Update(
-                        content,
-                        culture,
-                        p => build.Invoke((TPageType)p, Fixture.GetLatest(culture).Select(c => (T)c))
-                    );
-                }
-            }
-
-            _pages.ForEach(p => Fixture.Add(p));
-            return new PageBuilder<T>(Fixture);
-        }
-
-        private void Update(PageData page, CultureInfo culture, Action<object> build = null)
-        {
-            var command = new UpdateContent(page)
-            {
-                Culture = culture,
-                Build = build
-            };
-
-            PageData content = (PageData)command.Execute();
-
-            Add(content);
-        }
-
-        public IPageBuilder<T> Update(T page)
-        {
-            var command = new UpdateContent(page);
-            command.Execute();
-
-            return this;
-        }
-
         public IPageBuilder<TPageType> Create<TPageType>(Action<TPageType> build = null) 
             where TPageType : PageData
         {
@@ -240,6 +155,84 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
             }
 
             return new PageBuilder<TPageType>(Fixture, _pages);
+        }
+
+
+        public IPageBuilder<T> Update(Action<T> build)
+        {
+            foreach (var content in Fixture.Latest)
+            {
+                var command = new UpdateContent(content);
+
+                if (build != null)
+                {
+                    command.Build = p => build.Invoke((T)p);
+                }
+
+                Add((PageData)command.Execute());
+            }
+
+            _pages.ForEach(p => Fixture.Add(p));
+
+            return new PageBuilder<T>(Fixture);
+        }
+
+        public IPageBuilder<T> Update<TPageType>(Action<TPageType> build) where TPageType : PageData
+        {
+            foreach (var content in Fixture.Contents.OfType<TPageType>())
+            {
+                foreach (var culture in Fixture.Cultures)
+                {
+                    Update(
+                        content,
+                        culture,
+                        p => build.Invoke((TPageType)p)
+                    );
+                }
+            }
+
+            _pages.ForEach(p => Fixture.Add(p));
+
+            return new PageBuilder<T>(Fixture);
+        }
+
+        public IPageBuilder<T> Update<TPageType>(Action<TPageType, IEnumerable<T>> build) where TPageType : PageData
+        {
+            foreach (var content in Fixture.Contents.OfType<TPageType>())
+            {
+                foreach (var culture in Fixture.Cultures)
+                {
+                    Update(
+                        content,
+                        culture,
+                        p => build.Invoke((TPageType)p, Fixture.GetLatest(culture).Select(c => (T)c))
+                    );
+                }
+            }
+
+            _pages.ForEach(p => Fixture.Add(p));
+            return new PageBuilder<T>(Fixture);
+        }
+
+        private void Update(PageData page, CultureInfo culture, Action<object> build = null)
+        {
+            var command = new UpdateContent(page)
+            {
+                Culture = culture,
+                Build = build
+            };
+
+            PageData content = (PageData)command.Execute();
+
+            Add(content);
+        }
+
+        public IPageBuilder<T> Update(T page)
+        {
+            var command = new UpdateContent(page);
+            command.Execute();
+
+            return this;
         }
 
         public IPageBuilder<T> Upload<TMediaType>(IEnumerable<string> files, Action<TMediaType, T> build)

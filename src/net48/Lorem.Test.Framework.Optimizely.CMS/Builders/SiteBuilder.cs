@@ -11,6 +11,8 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
     public class SiteBuilder<T>
         : FixtureBuilder<T>, ISiteBuilder<T> where T : PageData
     {
+        public const string DEFAULT_URI = "http://localhost";
+
         public SiteBuilder(Fixture fixture)
             : base(fixture)
         {
@@ -20,9 +22,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
         {
             Enable(Fixture.Cultures);
 
-            var startPage = Fixture.Latest
-                .Where(p => p is PageData)
-                .Select(p => (PageData)p)
+            var startPage = Fixture.Latest.OfType<PageData>()
                 .LastOrDefault();
 
             if(startPage == null)
@@ -30,11 +30,9 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
                 throw new InvalidOperationException("Could not find a page to be used as start page");
             }
 
-            var builders = Fixture.GetBuilders<SiteDefinition>();
-
             var command = new CreateSite(
                 "localhost",
-                new Uri("http://localhost"),
+                new Uri(DEFAULT_URI),
                 startPage.ContentLink,
                 Fixture.Cultures[0]
             )
@@ -51,9 +49,7 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Builders
         {
             Enable(Fixture.Cultures);
 
-            var startPage = Fixture.Latest
-                .Where(p => p is PageData)
-                .Select(p => (PageData)p)
+            var startPage = Fixture.Latest.OfType<PageData>()
                 .LastOrDefault();
 
             if (startPage == null)

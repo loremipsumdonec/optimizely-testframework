@@ -1,12 +1,8 @@
-﻿using EPiServer.ServiceLocation;
-using EPiServer.ServiceLocation.AutoDiscovery;
-using StructureMap;
+﻿using StructureMap;
 using System;
-using System.Collections.Generic;
 namespace Lorem.Test.Framework.Optimizely.CMS.Services
 {
-
-    public class NestedContext
+    public sealed class NestedContext
         : IDisposable
     {
         private readonly ServiceLocatorDecorator _locator;

@@ -15,8 +15,8 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Modules
         : ITestModule
     {
         private readonly string _connectionStringName;
+        private readonly string _appDataPath;
         private string _connectionString;
-        private string _appDataPath;
 
         public CmsTestModule()
             : this("EPiServerDB", null)

@@ -26,12 +26,6 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Utility
             return email.ToLower();
         }
 
-        public static string Generate(int minWords, int maxWords, bool includeDot = true)
-        {
-            Random random = new Random(Seed++ + DateTime.Now.Second);
-            return Generate(random.Next(minWords, maxWords), includeDot);
-        }
-
         public static string GenerateName()
         {
             Random random = new Random(Seed++ + DateTime.Now.Second);
@@ -42,6 +36,12 @@ namespace Lorem.Test.Framework.Optimizely.CMS.Utility
             string lastname = lastnames[randomLastnameIndex];
 
             return $"{firstname} {lastname}";
+        }
+
+        public static string Generate(int minWords, int maxWords, bool includeDot = true)
+        {
+            Random random = new Random(Seed++ + DateTime.Now.Second);
+            return Generate(random.Next(minWords, maxWords), includeDot);
         }
 
         public static string Generate(int totalWords, bool includeDot = true)
