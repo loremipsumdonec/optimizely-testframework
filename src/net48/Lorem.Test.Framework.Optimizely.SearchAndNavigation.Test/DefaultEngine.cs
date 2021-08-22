@@ -1,4 +1,5 @@
 ﻿using Lorem.Test.Framework.Optimizely.CMS.Modules;
+using Lorem.Test.Framework.Optimizely.SearchAndNavigation.Modules;
 using System;
 using System.IO;
 

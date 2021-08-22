@@ -1,12 +1,12 @@
 ﻿using EPiServer.Framework.Configuration;
 using EPiServer.Framework.Initialization;
 using Lorem.Test.Framework.Optimizely.CMS.Commands;
+using Lorem.Test.Framework.Optimizely.CMS.Modules;
 using Lorem.Test.Framework.Optimizely.SearchAndNavigation.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 
-namespace Lorem.Test.Framework.Optimizely.CMS.Modules
+namespace Lorem.Test.Framework.Optimizely.SearchAndNavigation.Modules
 {
     public class SearchAndNavigationTestModule
         : ITestModule
