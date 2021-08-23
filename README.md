@@ -122,7 +122,7 @@ The next step is to implement a class that inherits from `Lorem.Test.Optimizely.
 Below is an example of a class that inherits from `Lorem.Test.Optimizely.CMS.Engine` that uses the `CmsTestModule`, which is responsible for setting up the database and clearing the content.
 
 ```csharp
-public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
+public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
 {
     public DefaultEngine()
     {
@@ -154,7 +154,7 @@ If your project uses Search & Navigation, then you will need to install `Lorem.T
 Then you can activate the module by adding `SearchAndNavigationTestModule` in `Lorem.Test.Optimizely.CMS.Engine`.
 
 ```csharp
-public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
+public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
 {
     public DefaultEngine()
     {
@@ -191,7 +191,7 @@ The reason for this error is because the `EPiServer.Find.Cms.Module.IndexingModu
 The next class that needs to be created is the fixture, this class needs to inherit from `Lorem.Test.Optimizely.CMS.Fixture`. This class will be responsible for the configuration such as languages, builders etc. Each test case will then have its own instance.
 
 ```csharp
-public class DefaultFixture : Lorem.Test.Optimizely.CMS.Fixture
+public class DefaultFixture : Lorem.Test.Framework.Optimizely.CMS.Fixture
 {
     public DefaultFixture(IEngine engine)
     	: base(engine)
@@ -263,7 +263,7 @@ The following section shows examples of regular configurations for `Lorem.Test.O
 ### Default Engine
 
 ```csharp
-public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
+public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
 {
     public DefaultEngine()
     {
@@ -281,7 +281,7 @@ public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
 For this configuration you will need to install the nuget `Lorem.Testing.Optimizely.SearchAndNavigation`.
 
 ```csharp
-public class DefaultEngine : Lorem.Test.Optimizely.CMS.Engine
+public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
 {
     public DefaultEngine()
     {
