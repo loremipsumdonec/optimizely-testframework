@@ -349,8 +349,8 @@ public class ExploratoryFixture
 
 If you need examples of functions thats available check the tests in the test projects.
 
-* [PageBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/PageBuilderTests.cs)
-* [BlockBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/BlockBuilderTests.cs)
-* [MediaBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/MediaBuilderTests.cs)
-* [ContentBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/blob/main/src/net48/Lorem.Test.Optimizely.CMS.Test/Builders/ContentBuilderTests.cs)
+* [PageBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/tree/main/src/net48/Lorem.Test.Framework.Optimizely.CMS.Test/Builders/PageBuilderTests.cs)
+* [BlockBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/tree/main/src/net48/Lorem.Test.Framework.Optimizely.CMS.Test/Builders/BlockBuilderTests.cs)
+* [MediaBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/tree/main/src/net48/Lorem.Test.Framework.Optimizely.CMS.Test/Builders/MediaBuilderTests.cs)
+* [ContentBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/tree/main/src/net48/Lorem.Test.Framework.Optimizely.CMS.Test/Builders/ContentBuilderTests.cs)
 
