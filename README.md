@@ -12,7 +12,7 @@ I have written a post that describes how to start with integration testing for O
 
 [![optimizely cms 11](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml)
 
-I have created a small framework that hopefully simplifies the process to start with integration testing for Optimizely CMS. Below is an example of a test case that tests a `IBreadCrumbService` and verifies that it ignores pages that has `VisibleInBreadCrumb=false`.
+I have created a small framework that hopefully simplifies the process to start with integration testing for Optimizely CMS. Below is an example of a test case that tests a breadcrumb function.
 
 ```csharp
 [Collection("Default")]
@@ -21,21 +21,29 @@ public class BreadcrumbsServiceTest
     public BreadcrumbsServiceTest(DefaultEngine engine) 
     {
         Fixture = new DefaultFixture(engine);
+        Dispatcher = Fixture.GetInstance<IQueryDispatcher>();
     }
     
     public DefaultFixture Fixture {get;}
+
+    public IQueryDispatcher Dispatcher {get;}
         
     [Fact]
-    public void GetBreadCrumbs_OnePageInPathNotVisibleInBreadCrumb_HasExpectedCount()
+    public void GetBreadcrumbs_AllPagesVisibileInBreadcrum_HasExpectedBreadcrumbs()
     {
-        int totalDepth = 3;
-        Fixture.CreatePath<ArticlePage>(totalDepth, (p, depth) => p.VisibleInBreadCrumb = depth != 1);
+        Fixture.CreatePath<StandardPage>(4, p =>
+        {
+            p.VisibleInBreadcrum = true;
+            p.Heading = IpsumGenerator.Generate(3);
+        });
 
-        var service = Fixture.GetInstance<IBreadCrumbService>();
-        
-        var breadcrumbs = service.GetBreadCrumbs(pages.Last());
+        GetBreadcrumbs query = new GetBreadcrumbs(
+            Fixture.Contents[0].ContentLink,
+            Fixture.Contents.Last()
+        );
 
-        Assert.Equal(totalDepth - 1, breadcrumbs.Count);
+        var model = Dispatcher.Dispatch<BreadcrumbsModel>(query);
+        Assert.Equal(4, model.Breadcrumbs.Count);
     }
 }
 ```
@@ -87,11 +95,12 @@ public class FixtureNestedContextTests
 
 ### Getting started
 
-#### Install
+You can now get the following packages from [nuget.optimizely.com](https://nuget.optimizely.com/)
 
-> The framework is currently not available in any public nuget feed. 
+- [Lorem.Test.Framework.Optimizely.CMS](https://nuget.optimizely.com/package/?id=Lorem.Test.Framework.Optimizely.CMS)
+- [Lorem.Test.Framework.Optimizely.SearchAndNavigation](https://nuget.optimizely.com/package/?id=Lorem.Test.Framework.Optimizely.SearchAndNavigation)
 
-Create a test project and install the packages listed below, need to be same version as web project. Then install `Lorem.Test.Optimizely.CMS` and add a project reference to _web project_.
+Create a test project and install the packages listed below, need to be same version as web project. Then install `Lorem.Test.Framework.Optimizely.CMS` and add a project reference to _web project_.
 
 - EPiServer.CMS.Core
 - EPiServer.CMS.AspNet
@@ -107,7 +116,7 @@ The framework needs to have access to the same _Web.config_ used by the web proj
 <Project>
 	...
     <ItemGroup>
-        <None Include="..\Lorem\Web.config">
+        <None Include="..\Optimizely\Web.config">
             <Link>Web.config</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
@@ -117,9 +126,9 @@ The framework needs to have access to the same _Web.config_ used by the web proj
 
 #### Create an engine
 
-The next step is to implement a class that inherits from `Lorem.Test.Optimizely.CMS.Engine`. This class will be responsible for the startup of Optimizely CMS. 
+The next step is to implement a class that inherits from `Lorem.Test.Framework.Optimizely.CMS.Engine`. This class will be responsible for the startup of Optimizely CMS. 
 
-Below is an example of a class that inherits from `Lorem.Test.Optimizely.CMS.Engine` that uses the `CmsTestModule`, which is responsible for setting up the database and clearing the content.
+Below is an example of a class that inherits from `Lorem.Test.Framework.Optimizely.CMS.Engine` that uses the `CmsTestModule`, which is responsible for setting up the database and clearing the content.
 
 ```csharp
 public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
@@ -145,12 +154,11 @@ Also check so that the *Web.config* has the following configuration, this will m
 ```
 ##### With Search & Navigation
 
-If your project uses Search & Navigation, then you will need to install `Lorem.Test.Optimizely.SearchAndNavigation` and add the following packages to the test project.
+If your project uses Search & Navigation, then you will need to install `Lorem.Test.Framework.Optimizely.SearchAndNavigation` and add the following packages to the test project.
 
 * EPiServer.Find.Cms
 
-
-Then you can activate the module by adding `SearchAndNavigationTestModule` in `Lorem.Test.Optimizely.CMS.Engine`.
+Then you can activate the module by adding `SearchAndNavigationTestModule` in `Lorem.Test.Framework.Optimizely.Engine`.
 
 ```csharp
 public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
@@ -256,7 +264,7 @@ public class MyFirstIntegrationTests
 
 ## Examples
 
-The following section shows examples of regular configurations for `Lorem.Test.Optimizely.CMS.Engine` and `Lorem.Test.Framework.Optimizely.CMS.Fixture`.
+The following section shows examples of regular configurations for `Lorem.Test.Framework.Optimizely.CMS.Engine` and `Lorem.Test.Framework.Optimizely.CMS.Fixture`.
 
 ### Default Engine
 
@@ -275,7 +283,7 @@ public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
 
 ### Engine with support for Search and Navigation
 
-For this configuration you will need to install the nuget `Lorem.Testing.Optimizely.SearchAndNavigation`.
+For this configuration you will need to install the nuget `Lorem.Test.Framework.Optimizely.SearchAndNavigation`.
 
 ```csharp
 public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
