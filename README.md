@@ -10,7 +10,7 @@ I have written a post that describes how to start with integration testing for O
 
 ## Framework
 
-[![optimizely cms 11](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml) [![optimizely cms 12](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_12.yml)
+[![optimizely cms 11](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml/badge.svg)](https://github.com/loremipsumdonec/episerver-testframework/actions/workflows/test_optimizely_cms_11.yml)
 
 I have created a small framework that hopefully simplifies the process to start with integration testing for Optimizely CMS. Below is an example of a test case that tests a `IBreadCrumbService` and verifies that it ignores pages that has `VisibleInBreadCrumb=false`.
 
@@ -128,8 +128,7 @@ public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
     {
     	Add(new CmsTestModule()
             {
-                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
-                IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true
             });
     }
 }
@@ -160,8 +159,7 @@ public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
     {
     	Add(new CmsTestModule()
             {
-                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
-                IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true
             });
         
         Add(SearchAndNavigationTestModule());
@@ -269,8 +267,7 @@ public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
     {
     	Add(new CmsTestModule()
             {
-                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
-                IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true
             });
     }
 }
@@ -287,8 +284,7 @@ public class DefaultEngine : Lorem.Test.Framework.Optimizely.CMS.Engine
     {
     	Add(new CmsTestModule()
             {
-                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true,
-                IamAwareThatTheFilesAndFoldersAtAppDataPathWillBeDeleted = true
+                IamAwareThatTheDatabaseWillBeDeletedAndReCreated = true
             });
         
         Add(new SearchAndNavigationTestModule());
