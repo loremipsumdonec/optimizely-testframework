@@ -51,4 +51,4 @@ I have not written a complete documentation of all the features yet, so if you n
 * [MediaBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/tree/main/src/net48/Lorem.Test.Framework.Optimizely.CMS.Test/Builders/MediaBuilderTests.cs)
 * [ContentBuilderTests](https://github.com/loremipsumdonec/optimizely-testframework/tree/main/src/net48/Lorem.Test.Framework.Optimizely.CMS.Test/Builders/ContentBuilderTests.cs)
 
- To get started, visit the Github repository https://github.com/loremipsumdonec/optimizely-testframework. If you have any problems or questions, post an issue in the project's github.
+ To get started, visit the [GitHub repository](https://github.com/loremipsumdonec/optimizely-testframework), and if you have any problems or questions, create an [issue]([Issues · loremipsumdonec/optimizely-testframework · GitHub](https://github.com/loremipsumdonec/optimizely-testframework/issues)) in the repository.
