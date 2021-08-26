@@ -19,6 +19,8 @@ The framework simplifies the process of managing pages, blocks, and files. Befor
 - [Lorem.Test.Framework.Optimizely.CMS](https://nuget.optimizely.com/package/?id=Lorem.Test.Framework.Optimizely.CMS)
 - [Lorem.Test.Framework.Optimizely.SearchAndNavigation](https://nuget.optimizely.com/package/?id=Lorem.Test.Framework.Optimizely.SearchAndNavigation)
 
+**Example of a test case**
+
 ```csharp
 [Fact]
 public void GetBreadcrumbs_AllPagesVisibileInBreadcrum_HasExpectedBreadcrumbs()
