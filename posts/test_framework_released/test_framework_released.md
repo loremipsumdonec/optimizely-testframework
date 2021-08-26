@@ -1,5 +1,5 @@
 ---
-date: "2021-08-26"
+date: "2021-08-27"
 type: "book"
 book: "/optimizely/test-framework-released"
 theme: "green"
