@@ -14,7 +14,9 @@ title: "Released a test framework"
 preamble: "In the recent weeks, I have taken the time to build a test framework that can be used for integration testing of Optimizely CMS. Hopefully it simplifies for you to begin testing with Optimizely CMS."
 ---
 
-The framework simplifies the process of managing pages, blocks, and files. Before each test session the framework will recreate the database and delete any files in App_Data/blobs folder. So that the test session begins with a clean environment, and between each test case it will delete the contents in the database. You can now get the following packages from [nuget.optimizely.com](https://nuget.optimizely.com/)
+The framework simplifies the process of managing pages, blocks, and files. Before each test session the framework will recreate the database and delete any files in _App_Data/blobs_ folder. So that the test session begins with a clean environment, and between each test case it will delete the contents in the database. 
+
+You can now get the following packages from [nuget.optimizely.com](https://nuget.optimizely.com/)
 
 - [Lorem.Test.Framework.Optimizely.CMS](https://nuget.optimizely.com/package/?id=Lorem.Test.Framework.Optimizely.CMS)
 - [Lorem.Test.Framework.Optimizely.SearchAndNavigation](https://nuget.optimizely.com/package/?id=Lorem.Test.Framework.Optimizely.SearchAndNavigation)
